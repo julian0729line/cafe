@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-olive:        #4A5728;
+  --color-olive-dark:   #343E1C;
+  --color-olive-light:  #6B7A3C;
+  --color-olive-muted:  #8A9A52;
+  --color-red-brand:    #C1121F;
+  --color-red-dark:     #960E17;
+  --color-off-white:    #F5F5F0;
+  --color-background:   #343E1C;
+  --color-foreground:   #F5F5F0;
+  --font-playfair:      var(--font-playfair);
+  --font-sans:          var(--font-dm-sans);
+}
+
+body {
+  background: #343E1C;
+  color: #F5F5F0;
+  font-family: var(--font-dm-sans), Arial, sans-serif;
+}
+
+/* ── Fuentes ── */
+.font-playfair { font-family: var(--font-playfair), Georgia, serif; }
+.font-sans-app  { font-family: var(--font-dm-sans), Arial, sans-serif; }
+
+/* ── Marquee ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 28s linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ── Fade up al cargar ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+.fade-up-1 { animation-delay: 0.1s; }
+.fade-up-2 { animation-delay: 0.25s; }
+.fade-up-3 { animation-delay: 0.4s; }
+.fade-up-4 { animation-delay: 0.55s; }
+
+/* ── Botón con fill deslizante ── */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.3s ease;
+}
+.btn-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #F5F5F0;
+  transform: translateX(-101%);
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  z-index: -1;
+}
+.btn-fill:hover::before  { transform: translateX(0); }
+.btn-fill:hover          { color: #343E1C; }
+
+.btn-fill-red::before    { background: #C1121F; }
+.btn-fill-red:hover      { color: #F5F5F0; }
+
+/* ── Línea animada bajo texto ── */
+.underline-slide {
+  background-image: linear-gradient(#C1121F, #C1121F);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.3s ease;
+}
+.underline-slide:hover { background-size: 100% 2px; }
+
+/* ── Noise overlay ── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+}
+
+/* ── Input con label flotante ── */
+.input-group { position: relative; }
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  transform: translateY(-1.6rem) scale(0.75);
+  color: #C1121F;
+  letter-spacing: 0.15em;
+}
+.input-group label {
+  position: absolute;
+  left: 1rem;
+  top: 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8A9A52;
+  pointer-events: none;
+  transform-origin: left;
+  transition: all 0.2s ease;
+}
