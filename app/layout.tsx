@@ -18,6 +18,18 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Café Literario — 16 años siendo tu lugar",
   description: "Un espacio donde el café y las palabras construyen comunidad. Desde 2008.",
+  openGraph: {
+    title: "Café Literario — 16 años siendo tu lugar",
+    description: "Un espacio donde el café y las palabras construyen comunidad. Desde 2008.",
+    type: "website",
+    locale: "es_CO",
+    siteName: "Café Literario",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Café Literario — 16 años siendo tu lugar",
+    description: "Un espacio donde el café y las palabras construyen comunidad. Desde 2008.",
+  },
 };
 
 export default function RootLayout({

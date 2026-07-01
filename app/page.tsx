@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Reveal } from './components/Reveal'
 
 const TICKER_ITEMS = [
   'Café Literario', '16 Años', 'Desde 2008', 'Libros & Espresso',
@@ -61,7 +62,7 @@ export default function HomePage() {
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map(({ href, label }) => (
             <a key={href} href={href}
-              className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#8A9A52] underline-slide">
+              className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#A6B86B] underline-slide">
               {label}
             </a>
           ))}
@@ -69,11 +70,11 @@ export default function HomePage() {
 
         <div className="flex items-center gap-1">
           <Link href="/login"
-            className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#8A9A52] px-5 py-2.5 underline-slide">
+            className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#A6B86B] px-5 py-2.5 underline-slide">
             Ingresar
           </Link>
           <Link href="/register"
-            className="btn-fill btn-fill-red font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0] border-2 border-[#C1121F] px-5 py-2.5">
+            className="press btn-fill btn-fill-red font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0] border-2 border-[#C1121F] px-5 py-2.5">
             Únete
           </Link>
         </div>
@@ -94,7 +95,7 @@ export default function HomePage() {
           </div>
 
           <div className="relative z-10">
-            <p className="fade-up fade-up-1 font-sans-app text-[10px] font-bold tracking-[0.4em] uppercase text-[#6B7A3C] mb-5">
+            <p className="fade-up fade-up-1 font-sans-app text-[10px] font-bold tracking-[0.4em] uppercase text-[#A6B86B] mb-5">
               Café Literario · Desde 2008
             </p>
 
@@ -104,31 +105,26 @@ export default function HomePage() {
             </h1>
             <h1 className="fade-up fade-up-2 font-sans-app font-black leading-[0.88] tracking-tighter text-[#F5F5F0] uppercase mb-8"
               style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)' }}>
-              y un lugar<span className="text-[#C1121F]"> para ti.</span>
+              y un lugar<span className="text-[#FF7F70]"> para ti.</span>
             </h1>
 
-            <p className="fade-up fade-up-3 font-playfair italic text-[#8A9A52] text-xl max-w-lg leading-relaxed mb-12">
+            <p className="fade-up fade-up-3 font-playfair italic text-[#A6B86B] text-xl max-w-lg leading-relaxed mb-12">
               Un espacio donde cada taza cuenta una historia y cada página abre un mundo.
             </p>
 
             <div className="fade-up fade-up-4 flex flex-wrap items-center gap-5">
               <a href="#ubicacion"
-                className="btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-8 py-4 flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
+                className="press btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-8 py-4 flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
                 <span>Cómo llegar</span>
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </a>
               <a href="#menu"
-                className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
+                className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
                 Ver el menú
               </a>
             </div>
           </div>
 
-        </div>
-
-        <div className="absolute bottom-8 right-8 z-10 flex flex-col items-center gap-2 opacity-30">
-          <div className="w-[1px] h-12 bg-[#F5F5F0] animate-pulse" />
-          <span className="font-sans-app text-[9px] tracking-[0.3em] uppercase text-[#F5F5F0] rotate-90 origin-center mt-4">scroll</span>
         </div>
 
       </section>
@@ -149,7 +145,7 @@ export default function HomePage() {
       <section id="historia" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
-          <div className="grid grid-cols-2 gap-px bg-[#4A5728]">
+          <Reveal className="grid grid-cols-2 gap-px bg-[#4A5728]">
             {[
               { num: '2008', label: 'año de apertura' },
               { num: '16', label: 'años en el mercado' },
@@ -161,29 +157,26 @@ export default function HomePage() {
                   style={{ fontSize: num === '∞' ? '4rem' : '3.5rem' }}>
                   {num}
                 </span>
-                <span className="font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#6B7A3C] mt-3">
+                <span className="font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] mt-3">
                   {label}
                 </span>
               </div>
             ))}
-          </div>
+          </Reveal>
 
-          <div>
-            <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#6B7A3C] mb-6">
-              Nuestra historia
-            </p>
-            <h2 className="font-playfair font-bold text-4xl text-[#F5F5F0] leading-snug mb-6">
+          <Reveal delay={120}>
+            <h2 className="text-balance font-playfair font-bold text-4xl text-[#F5F5F0] leading-snug mb-6">
               No somos solo un café.<br />
-              <span className="italic text-[#C1121F]">Somos un capítulo.</span>
+              <span className="italic pb-1 inline-block text-[#FF7F70]">Somos un capítulo.</span>
             </h2>
-            <p className="font-playfair text-[#8A9A52] text-lg leading-loose mb-6">
+            <p className="font-playfair text-[#A6B86B] text-lg leading-loose mb-6">
               Desde 2008 hemos sido testigos de primeros encuentros, tesis terminadas a medianoche,
               lecturas en voz alta y amistades que empezaron sobre una taza de espresso.
             </p>
-            <p className="font-sans-app text-[#6B7A3C] text-sm leading-relaxed">
+            <p className="font-sans-app text-[#A6B86B] text-sm leading-relaxed">
               Cada mesa tiene una historia distinta. Ven a escribir la tuya con nosotros.
             </p>
-          </div>
+          </Reveal>
 
         </div>
       </section>
@@ -191,30 +184,30 @@ export default function HomePage() {
       {/* ── MENÚ ── */}
       <section id="menu" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
         <div className="max-w-6xl mx-auto">
-          <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#6B7A3C] mb-4">
+          <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#A6B86B] mb-4">
             Lo que servimos
           </p>
-          <h2 className="font-playfair font-black text-5xl text-[#F5F5F0] leading-tight mb-16">
+          <h2 className="text-balance font-playfair font-black text-5xl text-[#F5F5F0] leading-tight mb-16">
             Nuestro menú.<br />
             <span className="italic">Hecho cada día.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#4A5728]">
-            {MENU_CATEGORIES.map(({ title, items }) => (
-              <div key={title} className="bg-[#343E1C] p-10">
+            {MENU_CATEGORIES.map(({ title, items }, i) => (
+              <Reveal key={title} delay={i * 90} className="bg-[#343E1C] p-10">
                 <h3 className="font-playfair font-bold text-2xl text-[#F5F5F0] mb-6">{title}</h3>
                 <ul className="flex flex-col gap-5">
                   {items.map(({ name, desc, price }) => (
                     <li key={name} className="flex items-start justify-between gap-4 border-b border-[#4A5728] pb-4">
                       <div>
                         <p className="font-sans-app text-sm font-bold text-[#F5F5F0]">{name}</p>
-                        <p className="font-sans-app text-xs text-[#8A9A52] mt-1">{desc}</p>
+                        <p className="font-sans-app text-xs text-[#A6B86B] mt-1">{desc}</p>
                       </div>
-                      <span className="font-playfair italic text-[#C1121F] whitespace-nowrap">{price}</span>
+                      <span className="font-playfair italic text-[#FF7F70] whitespace-nowrap">{price}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -224,34 +217,31 @@ export default function HomePage() {
       <section id="ubicacion" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
 
-          <div>
-            <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#6B7A3C] mb-6">
-              Visítanos
-            </p>
+          <Reveal>
             <h2 className="font-playfair font-black text-4xl text-[#F5F5F0] leading-tight mb-8">
               Encuéntranos
             </h2>
 
             <div className="flex flex-col gap-2 mb-10">
               <p className="font-sans-app text-sm text-[#F5F5F0]">Calle de las Letras 123, Centro Histórico</p>
-              <p className="font-sans-app text-sm text-[#8A9A52]">contacto@cafeliterario.com · +57 300 000 0000</p>
+              <p className="font-sans-app text-sm text-[#A6B86B]">contacto@cafeliterario.com · +57 300 000 0000</p>
             </div>
 
             <div className="flex flex-col gap-3">
               {HOURS.map(({ day, time }) => (
                 <div key={day} className="flex items-center justify-between border-b border-[#4A5728] pb-3">
-                  <span className="font-sans-app text-[11px] font-bold tracking-[0.15em] uppercase text-[#8A9A52]">{day}</span>
+                  <span className="font-sans-app text-[11px] font-bold tracking-[0.15em] uppercase text-[#A6B86B]">{day}</span>
                   <span className="font-playfair italic text-[#F5F5F0]">{time}</span>
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          <div className="bg-[#4A5728]/20 border border-[#4A5728] flex items-center justify-center min-h-[320px]">
-            <span className="font-sans-app text-[10px] font-bold tracking-[0.3em] uppercase text-[#6B7A3C]">
+          <Reveal delay={120} className="bg-[#4A5728]/20 border border-[#4A5728] flex items-center justify-center min-h-[320px]">
+            <span className="font-sans-app text-[10px] font-bold tracking-[0.3em] uppercase text-[#A6B86B]">
               Mapa próximamente
             </span>
-          </div>
+          </Reveal>
 
         </div>
       </section>
@@ -268,26 +258,23 @@ export default function HomePage() {
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <p className="font-sans-app text-[10px] font-bold tracking-[0.4em] uppercase text-[#6B7A3C] mb-8">
-            Te esperamos
-          </p>
           <h2 className="font-playfair font-black text-[#F5F5F0] leading-none mb-4"
             style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
             Tu próxima
           </h2>
-          <h2 className="font-sans-app font-black text-[#C1121F] uppercase leading-none tracking-tighter mb-12"
+          <h2 className="font-sans-app font-black text-[#FF7F70] uppercase leading-none tracking-tighter mb-12"
             style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
             taza.
           </h2>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
             <a href="#ubicacion"
-              className="btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-10 py-5 flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
+              className="press btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-10 py-5 flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
               <span>Cómo llegar</span>
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
             <Link href="/register"
-              className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
+              className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
               Únete al programa de socios
             </Link>
           </div>
@@ -299,15 +286,15 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <span className="font-playfair italic text-[#F5F5F0] text-lg block mb-1">Café Literario</span>
-            <span className="font-sans-app text-[10px] tracking-widest uppercase text-[#6B7A3C]">
+            <span className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B]">
               16 años · Desde 2008
             </span>
           </div>
           <div className="flex gap-8">
-            <Link href="/login" className="font-sans-app text-[10px] tracking-widest uppercase text-[#6B7A3C] underline-slide hover:text-[#F5F5F0] transition-colors">
+            <Link href="/login" className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B] underline-slide hover:text-[#F5F5F0] transition-colors">
               Ingresar
             </Link>
-            <Link href="/register" className="font-sans-app text-[10px] tracking-widest uppercase text-[#6B7A3C] underline-slide hover:text-[#F5F5F0] transition-colors">
+            <Link href="/register" className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B] underline-slide hover:text-[#F5F5F0] transition-colors">
               Registrarse
             </Link>
           </div>
