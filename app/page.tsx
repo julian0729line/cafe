@@ -6,12 +6,20 @@ import { Counter } from './components/Counter'
 import { ScrollProgress } from './components/ScrollProgress'
 import { Parallax } from './components/Parallax'
 import { MagneticButton } from './components/MagneticButton'
+import { MediaSlot } from './components/MediaSlot'
 
 const TICKER_ITEMS = [
   'Café Literario', '16 Años', 'Desde 2008', 'Libros & Espresso',
   'Comunidad', 'Historia Viva', 'Tu Lugar', 'Palabras & Café',
   'Café Literario', '16 Años', 'Desde 2008', 'Libros & Espresso',
   'Comunidad', 'Historia Viva', 'Tu Lugar', 'Palabras & Café',
+]
+
+const AMBIENTE = [
+  { eyebrow: 'El corazón', label: 'El salón principal', cls: 'md:col-span-2 md:row-span-2' },
+  { eyebrow: 'El oficio', label: 'La barra de café', cls: 'md:col-span-2' },
+  { eyebrow: 'El alma', label: 'Los libros', cls: 'md:col-span-1' },
+  { eyebrow: 'La hora mágica', label: 'Noches de lectura', cls: 'md:col-span-1' },
 ]
 
 const MENU_CATEGORIES = [
@@ -49,10 +57,28 @@ const STATS = [
   { count: 1, label: 'lugar único' },
 ]
 
+const TESTIMONIALS = [
+  {
+    quote: 'Vengo desde que era estudiante. Aquí terminé mi tesis y, quince años después, sigo pidiendo el mismo cortado.',
+    name: 'Mariana Restrepo',
+    role: 'Cliente desde 2009',
+  },
+  {
+    quote: 'No es un café, es mi segunda biblioteca. Cada visita me llevo una conversación nueva.',
+    name: 'Andrés Gaitán',
+    role: 'Escritor',
+  },
+  {
+    quote: 'El único lugar donde el barista te recomienda un libro junto con tu espresso.',
+    name: 'Lucía Ferreira',
+    role: 'Miembro del club de lectura',
+  },
+]
+
 const HOURS = [
-  { day: 'Lunes a viernes', time: '7:30 — 20:00' },
-  { day: 'Sábados', time: '8:00 — 21:00' },
-  { day: 'Domingos', time: '9:00 — 18:00' },
+  { day: 'Lunes a viernes', time: '7:30 a 20:00' },
+  { day: 'Sábados', time: '8:00 a 21:00' },
+  { day: 'Domingos', time: '9:00 a 18:00' },
 ]
 
 export default function HomePage() {
@@ -76,53 +102,93 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── HISTORIA EN NÚMEROS ── */}
+      {/* ── HISTORIA ── */}
       <section id="historia" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div className="max-w-6xl mx-auto">
 
-          <Reveal className="grid grid-cols-2 gap-px bg-[#4A5728]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center mb-20">
+            <Reveal>
+              <MediaSlot
+                eyebrow="Desde 2008"
+                label="Nuestra casa"
+                className="rounded-[1.5rem] h-full min-h-[420px]"
+              />
+            </Reveal>
+
+            <Reveal delay={120}>
+              <h2 className="text-balance font-playfair font-bold text-4xl md:text-5xl text-[#F5F5F0] leading-[1.05] mb-6">
+                No somos solo un café.<br />
+                <span className="italic pb-1 inline-block text-[#FF7F70]">Somos un capítulo.</span>
+              </h2>
+              <p className="font-playfair text-[#D9DCC4] text-lg leading-loose mb-6">
+                Desde 2008 hemos sido testigos de primeros encuentros, tesis terminadas a medianoche,
+                lecturas en voz alta y amistades que empezaron sobre una taza de espresso.
+              </p>
+              <p className="font-sans-app text-[#A6B86B] text-sm leading-relaxed">
+                Cada mesa tiene una historia distinta. Ven a escribir la tuya con nosotros.
+              </p>
+            </Reveal>
+          </div>
+
+          <Reveal className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#4A5728] border border-[#4A5728]">
             {STATS.map(({ count, text, label }) => (
-              <div key={label} className="bg-[#343E1C] px-8 py-10 flex flex-col justify-between">
+              <div key={label} className="bg-[#343E1C] px-8 py-10 flex flex-col justify-between gap-6">
                 <span className="font-playfair font-black text-[#F5F5F0] leading-none"
-                  style={{ fontSize: text === '∞' ? '4rem' : '3.5rem' }}>
+                  style={{ fontSize: text === '∞' ? '3.5rem' : '3rem' }}>
                   {text ? text : <Counter to={count!} />}
                 </span>
-                <span className="font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] mt-3">
+                <span className="font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B]">
                   {label}
                 </span>
               </div>
             ))}
           </Reveal>
 
-          <Reveal delay={120}>
-            <h2 className="text-balance font-playfair font-bold text-4xl text-[#F5F5F0] leading-snug mb-6">
-              No somos solo un café.<br />
-              <span className="italic pb-1 inline-block text-[#FF7F70]">Somos un capítulo.</span>
-            </h2>
-            <p className="font-playfair text-[#A6B86B] text-lg leading-loose mb-6">
-              Desde 2008 hemos sido testigos de primeros encuentros, tesis terminadas a medianoche,
-              lecturas en voz alta y amistades que empezaron sobre una taza de espresso.
-            </p>
-            <p className="font-sans-app text-[#A6B86B] text-sm leading-relaxed">
-              Cada mesa tiene una historia distinta. Ven a escribir la tuya con nosotros.
-            </p>
-          </Reveal>
+        </div>
+      </section>
 
+      {/* ── EL AMBIENTE (galería, lista para tus videos) ── */}
+      <section id="ambiente" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9A227] mb-4">
+            El ambiente
+          </p>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+            <h2 className="text-balance font-playfair font-black text-5xl md:text-6xl text-[#F5F5F0] leading-[1.02]">
+              Un lugar hecho<br />
+              <span className="italic">de rincones.</span>
+            </h2>
+            <p className="font-sans-app text-[#A6B86B] text-sm leading-relaxed max-w-xs">
+              Vive el lugar antes de cruzar la puerta. Cada rincón tiene su propia luz, su propio silencio.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[220px] gap-3">
+            {AMBIENTE.map(({ eyebrow, label, cls }, i) => (
+              <Reveal key={label} delay={i * 80} className={`${cls} h-full`}>
+                <MediaSlot
+                  eyebrow={eyebrow}
+                  label={label}
+                  className="rounded-[1.25rem] h-full min-h-[240px]"
+                />
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── MENÚ ── */}
       <section id="menu" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
         <div className="max-w-6xl mx-auto">
-          <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#A6B86B] mb-4">
+          <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9A227] mb-4">
             Lo que servimos
           </p>
-          <h2 className="text-balance font-playfair font-black text-5xl text-[#F5F5F0] leading-tight mb-16">
+          <h2 className="text-balance font-playfair font-black text-5xl md:text-6xl text-[#F5F5F0] leading-tight mb-16">
             Nuestro menú.<br />
             <span className="italic">Hecho cada día.</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#4A5728]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#4A5728] border border-[#4A5728]">
             {MENU_CATEGORIES.map(({ title, items }, i) => (
               <Reveal key={title} delay={i * 90} className="bg-[#343E1C] p-10">
                 <h3 className="font-playfair font-bold text-2xl text-[#F5F5F0] mb-6">{title}</h3>
@@ -143,12 +209,37 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── TESTIMONIOS ── */}
+      <section className="px-8 py-28 border-b border-[#4A5728]">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-balance font-playfair font-black text-4xl md:text-5xl text-[#F5F5F0] leading-tight mb-16">
+            Lo que dicen<br />
+            <span className="italic">quienes vuelven.</span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#4A5728] border border-[#4A5728]">
+            {TESTIMONIALS.map(({ quote, name, role }, i) => (
+              <Reveal key={name} delay={i * 90} className="bg-[#343E1C] p-10 flex flex-col justify-between gap-8">
+                <p className="font-playfair italic text-[#F5F5F0] text-xl leading-relaxed">
+                  <span className="text-[#FF7F70] text-3xl leading-none mr-1 align-[-0.15em]">“</span>
+                  {quote}
+                </p>
+                <div>
+                  <p className="font-sans-app text-sm font-bold text-[#F5F5F0]">{name}</p>
+                  <p className="font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] mt-1">{role}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── UBICACIÓN Y HORARIOS ── */}
       <section id="ubicacion" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
 
           <Reveal>
-            <h2 className="font-playfair font-black text-4xl text-[#F5F5F0] leading-tight mb-8">
+            <h2 className="font-playfair font-black text-4xl md:text-5xl text-[#F5F5F0] leading-tight mb-8">
               Encuéntranos
             </h2>
 
@@ -226,10 +317,10 @@ export default function HomePage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="border-t-2 border-[#4A5728] px-8 py-8">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <footer className="border-t-2 border-[#4A5728] px-8 py-12">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div>
-            <span className="font-playfair italic text-[#F5F5F0] text-lg block mb-1">Café Literario</span>
+            <span className="font-playfair italic text-[#F5F5F0] text-xl block mb-1">Café Literario</span>
             <span className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B]">
               16 años · Desde 2008
             </span>
