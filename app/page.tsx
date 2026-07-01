@@ -7,6 +7,47 @@ const TICKER_ITEMS = [
   'Comunidad', 'Historia Viva', 'Tu Lugar', 'Palabras & Café',
 ]
 
+const NAV_LINKS = [
+  { href: '#menu', label: 'Menú' },
+  { href: '#historia', label: 'Historia' },
+  { href: '#ubicacion', label: 'Ubicación' },
+  { href: '#contacto', label: 'Contacto' },
+]
+
+const MENU_CATEGORIES = [
+  {
+    title: 'Cafés',
+    items: [
+      { name: 'Espresso', desc: 'Origen único, tueste medio', price: '$3.500' },
+      { name: 'Cortado', desc: 'Espresso con un toque de leche', price: '$4.000' },
+      { name: 'Café de autor', desc: 'Rotación mensual del barista', price: '$5.500' },
+      { name: 'Cold brew', desc: 'Reposo de 18 horas', price: '$4.800' },
+    ],
+  },
+  {
+    title: 'Repostería',
+    items: [
+      { name: 'Croissant de almendra', desc: 'Horneado cada mañana', price: '$4.200' },
+      { name: 'Torta de naranja', desc: 'Receta de la casa desde 2008', price: '$4.800' },
+      { name: 'Galletas de avena', desc: 'Con chips de chocolate 70%', price: '$2.500' },
+    ],
+  },
+  {
+    title: 'Para leer y compartir',
+    items: [
+      { name: 'Mesa de lectura', desc: 'Reserva tu rincón favorito', price: 'Gratis' },
+      { name: 'Club de lectura', desc: 'Encuentros el primer jueves de mes', price: 'Abierto' },
+      { name: 'Estantería comunitaria', desc: 'Trae un libro, llévate otro', price: 'Trueque' },
+    ],
+  },
+]
+
+const HOURS = [
+  { day: 'Lunes a viernes', time: '7:30 — 20:00' },
+  { day: 'Sábados', time: '8:00 — 21:00' },
+  { day: 'Domingos', time: '9:00 — 18:00' },
+]
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#343E1C] flex flex-col overflow-x-hidden">
@@ -16,6 +57,16 @@ export default function HomePage() {
         <span className="font-playfair text-[#F5F5F0] text-base italic tracking-wide">
           Café Literario
         </span>
+
+        <div className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map(({ href, label }) => (
+            <a key={href} href={href}
+              className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#8A9A52] underline-slide">
+              {label}
+            </a>
+          ))}
+        </div>
+
         <div className="flex items-center gap-1">
           <Link href="/login"
             className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#8A9A52] px-5 py-2.5 underline-slide">
@@ -31,20 +82,17 @@ export default function HomePage() {
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex flex-col justify-end pb-20 px-8 pt-32 noise">
 
-        {/* Grid de fondo */}
         <div className="absolute inset-0 z-0"
           style={{ backgroundImage: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 72px),repeating-linear-gradient(90deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 72px)' }} />
 
         <div className="relative z-10 max-w-7xl mx-auto w-full">
 
-          {/* Número 16 — el ancla visual */}
           <div className="fade-up fade-up-1 relative select-none pointer-events-none mb-[-2rem] md:mb-[-4rem]">
             <span className="font-playfair font-black text-[22vw] leading-none text-[#F5F5F0]/[0.07] block">
               16
             </span>
           </div>
 
-          {/* Headline principal */}
           <div className="relative z-10">
             <p className="fade-up fade-up-1 font-sans-app text-[10px] font-bold tracking-[0.4em] uppercase text-[#6B7A3C] mb-5">
               Café Literario · Desde 2008
@@ -52,35 +100,32 @@ export default function HomePage() {
 
             <h1 className="fade-up fade-up-2 font-playfair font-black leading-[0.88] tracking-tight text-[#F5F5F0] mb-2"
               style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)' }}>
-              Dieciséis años
+              Café, libros
             </h1>
             <h1 className="fade-up fade-up-2 font-sans-app font-black leading-[0.88] tracking-tighter text-[#F5F5F0] uppercase mb-8"
               style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)' }}>
-              siendo
-              <span className="text-[#C1121F]"> tu lugar.</span>
+              y un lugar<span className="text-[#C1121F]"> para ti.</span>
             </h1>
 
             <p className="fade-up fade-up-3 font-playfair italic text-[#8A9A52] text-xl max-w-lg leading-relaxed mb-12">
               Un espacio donde cada taza cuenta una historia y cada página abre un mundo.
             </p>
 
-            {/* CTAs */}
             <div className="fade-up fade-up-4 flex flex-wrap items-center gap-5">
-              <Link href="/register"
+              <a href="#ubicacion"
                 className="btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-8 py-4 flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
-                <span>Crear mi perfil</span>
+                <span>Cómo llegar</span>
                 <span className="transition-transform group-hover:translate-x-1">→</span>
-              </Link>
-              <Link href="/login"
+              </a>
+              <a href="#menu"
                 className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
-                Ya tengo cuenta
-              </Link>
+                Ver el menú
+              </a>
             </div>
           </div>
 
         </div>
 
-        {/* Scroll hint */}
         <div className="absolute bottom-8 right-8 z-10 flex flex-col items-center gap-2 opacity-30">
           <div className="w-[1px] h-12 bg-[#F5F5F0] animate-pulse" />
           <span className="font-sans-app text-[9px] tracking-[0.3em] uppercase text-[#F5F5F0] rotate-90 origin-center mt-4">scroll</span>
@@ -101,10 +146,9 @@ export default function HomePage() {
       </div>
 
       {/* ── HISTORIA EN NÚMEROS ── */}
-      <section className="px-8 py-24 border-b border-[#4A5728]">
+      <section id="historia" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
-          {/* Números */}
           <div className="grid grid-cols-2 gap-px bg-[#4A5728]">
             {[
               { num: '2008', label: 'año de apertura' },
@@ -124,7 +168,6 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Texto */}
           <div>
             <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#6B7A3C] mb-6">
               Nuestra historia
@@ -138,85 +181,114 @@ export default function HomePage() {
               lecturas en voz alta y amistades que empezaron sobre una taza de espresso.
             </p>
             <p className="font-sans-app text-[#6B7A3C] text-sm leading-relaxed">
-              Esta plataforma es nuestra manera de recordarte — y de que tú también
-              dejes tu huella en nuestra historia.
+              Cada mesa tiene una historia distinta. Ven a escribir la tuya con nosotros.
             </p>
           </div>
 
         </div>
       </section>
 
-      {/* ── QUÉ OFRECE LA PLATAFORMA ── */}
-      <section className="px-8 py-24 border-b border-[#4A5728]">
+      {/* ── MENÚ ── */}
+      <section id="menu" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#6B7A3C] mb-4">
-            Tu espacio digital
+            Lo que servimos
           </p>
           <h2 className="font-playfair font-black text-5xl text-[#F5F5F0] leading-tight mb-16">
-            Más que un registro.<br />
-            <span className="italic">Una memoria.</span>
+            Nuestro menú.<br />
+            <span className="italic">Hecho cada día.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#4A5728]">
-
-            <div className="bg-[#343E1C] p-10 group hover:bg-[#C1121F] transition-colors duration-500">
-              <span className="font-playfair font-black text-[5rem] leading-none text-[#4A5728] group-hover:text-[#960E17] transition-colors block mb-6 select-none">01</span>
-              <h3 className="font-playfair font-bold text-2xl text-[#F5F5F0] mb-3">Tu perfil</h3>
-              <p className="font-sans-app text-sm text-[#8A9A52] group-hover:text-[#F5F5F0]/70 transition-colors leading-relaxed">
-                Nombre, bebida favorita, el rincón que siempre buscas. Cuéntanos cómo eres.
-              </p>
-            </div>
-
-            <div className="bg-[#343E1C] p-10 group hover:bg-[#C1121F] transition-colors duration-500">
-              <span className="font-playfair font-black text-[5rem] leading-none text-[#4A5728] group-hover:text-[#960E17] transition-colors block mb-6 select-none">02</span>
-              <h3 className="font-playfair font-bold text-2xl text-[#F5F5F0] mb-3">Tus visitas</h3>
-              <p className="font-sans-app text-sm text-[#8A9A52] group-hover:text-[#F5F5F0]/70 transition-colors leading-relaxed">
-                Un historial de todos los momentos que viviste aquí. Tu bitácora personal.
-              </p>
-            </div>
-
-            <div className="bg-[#343E1C] p-10 group hover:bg-[#C1121F] transition-colors duration-500">
-              <span className="font-playfair font-black text-[5rem] leading-none text-[#4A5728] group-hover:text-[#960E17] transition-colors block mb-6 select-none">03</span>
-              <h3 className="font-playfair font-bold text-2xl text-[#F5F5F0] mb-3">Tu voz</h3>
-              <p className="font-sans-app text-sm text-[#8A9A52] group-hover:text-[#F5F5F0]/70 transition-colors leading-relaxed">
-                Feedback, preferencias y sugerencias. Ayúdanos a escribir el próximo capítulo.
-              </p>
-            </div>
-
+            {MENU_CATEGORIES.map(({ title, items }) => (
+              <div key={title} className="bg-[#343E1C] p-10">
+                <h3 className="font-playfair font-bold text-2xl text-[#F5F5F0] mb-6">{title}</h3>
+                <ul className="flex flex-col gap-5">
+                  {items.map(({ name, desc, price }) => (
+                    <li key={name} className="flex items-start justify-between gap-4 border-b border-[#4A5728] pb-4">
+                      <div>
+                        <p className="font-sans-app text-sm font-bold text-[#F5F5F0]">{name}</p>
+                        <p className="font-sans-app text-xs text-[#8A9A52] mt-1">{desc}</p>
+                      </div>
+                      <span className="font-playfair italic text-[#C1121F] whitespace-nowrap">{price}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA FINAL ── */}
-      <section className="px-8 py-32 relative noise overflow-hidden">
+      {/* ── UBICACIÓN Y HORARIOS ── */}
+      <section id="ubicacion" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
+
+          <div>
+            <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#6B7A3C] mb-6">
+              Visítanos
+            </p>
+            <h2 className="font-playfair font-black text-4xl text-[#F5F5F0] leading-tight mb-8">
+              Encuéntranos
+            </h2>
+
+            <div className="flex flex-col gap-2 mb-10">
+              <p className="font-sans-app text-sm text-[#F5F5F0]">Calle de las Letras 123, Centro Histórico</p>
+              <p className="font-sans-app text-sm text-[#8A9A52]">contacto@cafeliterario.com · +57 300 000 0000</p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              {HOURS.map(({ day, time }) => (
+                <div key={day} className="flex items-center justify-between border-b border-[#4A5728] pb-3">
+                  <span className="font-sans-app text-[11px] font-bold tracking-[0.15em] uppercase text-[#8A9A52]">{day}</span>
+                  <span className="font-playfair italic text-[#F5F5F0]">{time}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-[#4A5728]/20 border border-[#4A5728] flex items-center justify-center min-h-[320px]">
+            <span className="font-sans-app text-[10px] font-bold tracking-[0.3em] uppercase text-[#6B7A3C]">
+              Mapa próximamente
+            </span>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── CONTACTO / CTA FINAL ── */}
+      <section id="contacto" className="px-8 py-32 relative noise overflow-hidden scroll-mt-20">
         <div className="absolute inset-0 z-0"
           style={{ backgroundImage: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.02) 1px,transparent 1px,transparent 72px),repeating-linear-gradient(90deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.02) 1px,transparent 1px,transparent 72px)' }} />
 
-        {/* "ÚNETE" ghost background */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
           <span className="font-playfair font-black text-[22vw] text-[#4A5728]/30 leading-none">
-            ÚNETE.
+            VISITA.
           </span>
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10 text-center">
           <p className="font-sans-app text-[10px] font-bold tracking-[0.4em] uppercase text-[#6B7A3C] mb-8">
-            Empieza aquí
+            Te esperamos
           </p>
           <h2 className="font-playfair font-black text-[#F5F5F0] leading-none mb-4"
             style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
-            Tu historia
+            Tu próxima
           </h2>
           <h2 className="font-sans-app font-black text-[#C1121F] uppercase leading-none tracking-tighter mb-12"
             style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
-            empieza.
+            taza.
           </h2>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-            <Link href="/register"
+            <a href="#ubicacion"
               className="btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-10 py-5 flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
-              <span>Crear mi perfil gratis</span>
+              <span>Cómo llegar</span>
               <span className="transition-transform group-hover:translate-x-1">→</span>
+            </a>
+            <Link href="/register"
+              className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
+              Únete al programa de socios
             </Link>
           </div>
         </div>
