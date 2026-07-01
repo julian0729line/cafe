@@ -14,10 +14,35 @@
   --font-sans:          var(--font-dm-sans);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: #343E1C;
   color: #F5F5F0;
   font-family: var(--font-dm-sans), Arial, sans-serif;
+}
+
+/* ── Scrollbar a juego con la paleta ── */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #2A331A; }
+::-webkit-scrollbar-thumb {
+  background: #4A5728;
+  border-radius: 999px;
+  border: 2px solid #2A331A;
+}
+::-webkit-scrollbar-thumb:hover { background: #6B7A3C; }
+
+/* ── Grano fijo sobre toda la página (cohesión de textura) ── */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
 }
 
 /* ── Fuentes ── */
@@ -90,13 +115,58 @@ body {
 /* ── Scroll reveal (stagger, intersection-observer driven) ── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.16,1,0.3,1),
+              filter 0.8s cubic-bezier(0.16,1,0.3,1);
+  will-change: transform, opacity, filter;
 }
 .reveal-visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
+
+/* ── Menú: filas interactivas ── */
+.menu-item {
+  transition: transform 0.3s cubic-bezier(0.23,1,0.32,1),
+              border-color 0.3s ease;
+}
+.menu-item:hover {
+  transform: translateX(6px);
+  border-color: #C1121F;
+}
+.menu-item .menu-price {
+  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.23,1,0.32,1);
+}
+.menu-item:hover .menu-price {
+  color: #FF7F70;
+  transform: scale(1.08);
+}
+
+/* ── Mapa estilizado tipo radar ── */
+@keyframes radar {
+  0%   { transform: scale(0.4); opacity: 0.7; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.radar-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  border: 1.5px solid #FF7F70;
+  animation: radar 3s cubic-bezier(0.16,1,0.3,1) infinite;
+}
+.radar-ring.d2 { animation-delay: 1s; }
+.radar-ring.d3 { animation-delay: 2s; }
+@keyframes pinPulse {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.map-pin { animation: pinPulse 2.4s ease-in-out infinite; }
 
 /* ── Tactile press feedback ── */
 .press {
@@ -108,10 +178,13 @@ body {
 
 /* ── Reduced motion: keep opacity, drop movement ── */
 @media (prefers-reduced-motion: reduce) {
-  .fade-up, .reveal, .marquee-track, .press {
+  html { scroll-behavior: auto; }
+  .fade-up, .reveal, .marquee-track, .press,
+  .radar-ring, .map-pin, .menu-item {
     animation: none !important;
     transition: opacity 0.2s ease !important;
     transform: none !important;
+    filter: none !important;
   }
   .reveal { opacity: 1; }
 }

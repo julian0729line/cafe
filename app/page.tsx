@@ -1,18 +1,17 @@
 import Link from 'next/link'
 import { Reveal } from './components/Reveal'
+import { Nav } from './components/Nav'
+import { Hero } from './components/Hero'
+import { Counter } from './components/Counter'
+import { ScrollProgress } from './components/ScrollProgress'
+import { Parallax } from './components/Parallax'
+import { MagneticButton } from './components/MagneticButton'
 
 const TICKER_ITEMS = [
   'Café Literario', '16 Años', 'Desde 2008', 'Libros & Espresso',
   'Comunidad', 'Historia Viva', 'Tu Lugar', 'Palabras & Café',
   'Café Literario', '16 Años', 'Desde 2008', 'Libros & Espresso',
   'Comunidad', 'Historia Viva', 'Tu Lugar', 'Palabras & Café',
-]
-
-const NAV_LINKS = [
-  { href: '#menu', label: 'Menú' },
-  { href: '#historia', label: 'Historia' },
-  { href: '#ubicacion', label: 'Ubicación' },
-  { href: '#contacto', label: 'Contacto' },
 ]
 
 const MENU_CATEGORIES = [
@@ -43,6 +42,13 @@ const MENU_CATEGORIES = [
   },
 ]
 
+const STATS = [
+  { count: 2008, label: 'año de apertura' },
+  { count: 16, label: 'años en el mercado' },
+  { text: '∞', label: 'conversaciones' },
+  { count: 1, label: 'lugar único' },
+]
+
 const HOURS = [
   { day: 'Lunes a viernes', time: '7:30 — 20:00' },
   { day: 'Sábados', time: '8:00 — 21:00' },
@@ -51,83 +57,12 @@ const HOURS = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#343E1C] flex flex-col overflow-x-hidden">
+    <div id="top" className="min-h-screen bg-[#343E1C] flex flex-col overflow-x-hidden">
+      <div className="grain" aria-hidden="true" />
+      <ScrollProgress />
+      <Nav />
 
-      {/* ── NAVBAR ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-8 py-5 flex items-center justify-between border-b border-[#4A5728]/60 bg-[#343E1C]/90 backdrop-blur-sm">
-        <span className="font-playfair text-[#F5F5F0] text-base italic tracking-wide">
-          Café Literario
-        </span>
-
-        <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({ href, label }) => (
-            <a key={href} href={href}
-              className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#A6B86B] underline-slide">
-              {label}
-            </a>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-1">
-          <Link href="/login"
-            className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#A6B86B] px-5 py-2.5 underline-slide">
-            Ingresar
-          </Link>
-          <Link href="/register"
-            className="press btn-fill btn-fill-red font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0] border-2 border-[#C1121F] px-5 py-2.5">
-            Únete
-          </Link>
-        </div>
-      </nav>
-
-      {/* ── HERO ── */}
-      <section className="relative min-h-screen flex flex-col justify-end pb-20 px-8 pt-32 noise">
-
-        <div className="absolute inset-0 z-0"
-          style={{ backgroundImage: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 72px),repeating-linear-gradient(90deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 72px)' }} />
-
-        <div className="relative z-10 max-w-7xl mx-auto w-full">
-
-          <div className="fade-up fade-up-1 relative select-none pointer-events-none mb-[-2rem] md:mb-[-4rem]">
-            <span className="font-playfair font-black text-[22vw] leading-none text-[#F5F5F0]/[0.07] block">
-              16
-            </span>
-          </div>
-
-          <div className="relative z-10">
-            <p className="fade-up fade-up-1 font-sans-app text-[10px] font-bold tracking-[0.4em] uppercase text-[#A6B86B] mb-5">
-              Café Literario · Desde 2008
-            </p>
-
-            <h1 className="fade-up fade-up-2 font-playfair font-black leading-[0.88] tracking-tight text-[#F5F5F0] mb-2"
-              style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)' }}>
-              Café, libros
-            </h1>
-            <h1 className="fade-up fade-up-2 font-sans-app font-black leading-[0.88] tracking-tighter text-[#F5F5F0] uppercase mb-8"
-              style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)' }}>
-              y un lugar<span className="text-[#FF7F70]"> para ti.</span>
-            </h1>
-
-            <p className="fade-up fade-up-3 font-playfair italic text-[#A6B86B] text-xl max-w-lg leading-relaxed mb-12">
-              Un espacio donde cada taza cuenta una historia y cada página abre un mundo.
-            </p>
-
-            <div className="fade-up fade-up-4 flex flex-wrap items-center gap-5">
-              <a href="#ubicacion"
-                className="press btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-8 py-4 flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
-                <span>Cómo llegar</span>
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </a>
-              <a href="#menu"
-                className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
-                Ver el menú
-              </a>
-            </div>
-          </div>
-
-        </div>
-
-      </section>
+      <Hero />
 
       {/* ── TICKER MARQUEE ── */}
       <div className="bg-[#C1121F] border-y-2 border-[#960E17] py-4 overflow-hidden">
@@ -142,20 +77,15 @@ export default function HomePage() {
       </div>
 
       {/* ── HISTORIA EN NÚMEROS ── */}
-      <section id="historia" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
+      <section id="historia" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
           <Reveal className="grid grid-cols-2 gap-px bg-[#4A5728]">
-            {[
-              { num: '2008', label: 'año de apertura' },
-              { num: '16', label: 'años en el mercado' },
-              { num: '∞', label: 'conversaciones' },
-              { num: '1', label: 'lugar único' },
-            ].map(({ num, label }) => (
+            {STATS.map(({ count, text, label }) => (
               <div key={label} className="bg-[#343E1C] px-8 py-10 flex flex-col justify-between">
                 <span className="font-playfair font-black text-[#F5F5F0] leading-none"
-                  style={{ fontSize: num === '∞' ? '4rem' : '3.5rem' }}>
-                  {num}
+                  style={{ fontSize: text === '∞' ? '4rem' : '3.5rem' }}>
+                  {text ? text : <Counter to={count!} />}
                 </span>
                 <span className="font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] mt-3">
                   {label}
@@ -182,7 +112,7 @@ export default function HomePage() {
       </section>
 
       {/* ── MENÚ ── */}
-      <section id="menu" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
+      <section id="menu" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#A6B86B] mb-4">
             Lo que servimos
@@ -196,14 +126,14 @@ export default function HomePage() {
             {MENU_CATEGORIES.map(({ title, items }, i) => (
               <Reveal key={title} delay={i * 90} className="bg-[#343E1C] p-10">
                 <h3 className="font-playfair font-bold text-2xl text-[#F5F5F0] mb-6">{title}</h3>
-                <ul className="flex flex-col gap-5">
+                <ul className="flex flex-col gap-1">
                   {items.map(({ name, desc, price }) => (
-                    <li key={name} className="flex items-start justify-between gap-4 border-b border-[#4A5728] pb-4">
+                    <li key={name} className="menu-item flex items-start justify-between gap-4 border-l-2 border-transparent pl-4 py-3">
                       <div>
                         <p className="font-sans-app text-sm font-bold text-[#F5F5F0]">{name}</p>
                         <p className="font-sans-app text-xs text-[#A6B86B] mt-1">{desc}</p>
                       </div>
-                      <span className="font-playfair italic text-[#FF7F70] whitespace-nowrap">{price}</span>
+                      <span className="menu-price font-playfair italic text-[#FF7F70] whitespace-nowrap">{price}</span>
                     </li>
                   ))}
                 </ul>
@@ -214,7 +144,7 @@ export default function HomePage() {
       </section>
 
       {/* ── UBICACIÓN Y HORARIOS ── */}
-      <section id="ubicacion" className="px-8 py-24 border-b border-[#4A5728] scroll-mt-20">
+      <section id="ubicacion" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
 
           <Reveal>
@@ -237,44 +167,58 @@ export default function HomePage() {
             </div>
           </Reveal>
 
-          <Reveal delay={120} className="bg-[#4A5728]/20 border border-[#4A5728] flex items-center justify-center min-h-[320px]">
-            <span className="font-sans-app text-[10px] font-bold tracking-[0.3em] uppercase text-[#A6B86B]">
-              Mapa próximamente
-            </span>
+          {/* Mapa estilizado (radar) — placeholder animado hasta tener dirección real */}
+          <Reveal delay={120} className="relative overflow-hidden rounded-[1.5rem] border border-[#4A5728] bg-[#2A331A] min-h-[340px] flex items-center justify-center">
+            <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(166,184,107,0.10), transparent 70%)' }} />
+            <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'repeating-linear-gradient(0deg,#4A5728 0px,#4A5728 1px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,#4A5728 0px,#4A5728 1px,transparent 1px,transparent 40px)' }} />
+            <div className="radar-ring" />
+            <div className="radar-ring d2" />
+            <div className="radar-ring d3" />
+            <div className="relative z-10 flex flex-col items-center gap-3">
+              <svg className="map-pin" width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z" fill="#C1121F" />
+                <circle cx="12" cy="9" r="2.6" fill="#F5F5F0" />
+              </svg>
+              <span className="font-sans-app text-[10px] font-bold tracking-[0.3em] uppercase text-[#A6B86B]">
+                Centro Histórico
+              </span>
+            </div>
           </Reveal>
 
         </div>
       </section>
 
       {/* ── CONTACTO / CTA FINAL ── */}
-      <section id="contacto" className="px-8 py-32 relative noise overflow-hidden scroll-mt-20">
+      <section id="contacto" className="px-8 py-32 relative noise overflow-hidden scroll-mt-24">
         <div className="absolute inset-0 z-0"
           style={{ backgroundImage: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.02) 1px,transparent 1px,transparent 72px),repeating-linear-gradient(90deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.02) 1px,transparent 1px,transparent 72px)' }} />
 
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
+        <Parallax distance={60} className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
           <span className="font-playfair font-black text-[22vw] text-[#4A5728]/30 leading-none">
             VISITA.
           </span>
-        </div>
+        </Parallax>
 
         <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <h2 className="font-playfair font-black text-[#F5F5F0] leading-none mb-4"
-            style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
-            Tu próxima
-          </h2>
-          <h2 className="font-sans-app font-black text-[#FF7F70] uppercase leading-none tracking-tighter mb-12"
-            style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
-            taza.
-          </h2>
+          <Reveal>
+            <h2 className="font-playfair font-black text-[#F5F5F0] leading-none mb-4"
+              style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
+              Tu próxima
+            </h2>
+            <h2 className="font-sans-app font-black text-[#FF7F70] uppercase leading-none tracking-tighter mb-12"
+              style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
+              taza.
+            </h2>
+          </Reveal>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-            <a href="#ubicacion"
-              className="press btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-10 py-5 flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
+            <MagneticButton href="#ubicacion"
+              className="press btn-fill group font-sans-app text-[11px] font-black tracking-[0.3em] uppercase text-[#343E1C] bg-[#F5F5F0] border-2 border-[#F5F5F0] px-10 py-5 inline-flex items-center gap-3 shadow-[5px_5px_0px_0px_#C1121F]">
               <span>Cómo llegar</span>
               <span className="transition-transform group-hover:translate-x-1">→</span>
-            </a>
+            </MagneticButton>
             <Link href="/register"
-              className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/50 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
+              className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/60 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
               Únete al programa de socios
             </Link>
           </div>
