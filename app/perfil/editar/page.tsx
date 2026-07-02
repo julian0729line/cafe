@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/client'
-import { isSupabaseConfigured } from '@/utils/supabase/config'
 import { PageHero } from '../../components/PageHero'
 
 const BEBIDAS = ['Espresso', 'Americano', 'Cappuccino', 'Latte', 'Flat White', 'Cold Brew', 'Té', 'Otra']
@@ -22,7 +21,6 @@ export default function EditarPerfilPage() {
   const [guardado, setGuardado] = useState(false)
 
   useEffect(() => {
-    if (!isSupabaseConfigured) { router.push('/'); return }
     async function cargar() {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()

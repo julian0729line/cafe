@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/client'
 import { isSupabaseConfigured } from '@/utils/supabase/config'
-import { AuthAside } from '../components/AuthAside'
+import { AuthFormShell } from '../components/AuthFormShell'
 import { AuthComingSoon } from '../components/AuthComingSoon'
 
 export default function LoginPage() {
@@ -43,29 +43,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex">
-
-      <AuthAside
-        eyebrow="Bienvenido de vuelta"
-        titleTop="Tu lugar"
-        titleAccent="te espera."
-        quote="“Cada visita es una página nueva en la historia de este lugar.”"
-      />
-
-      {/* Formulario */}
-      <div className="w-full lg:w-[45%] bg-[#F5F5F0] flex flex-col">
-
-        <div className="bg-[#C1121F] px-10 py-4 flex items-center justify-between">
-          <Link href="/" className="press text-[#F5F5F0] text-[10px] font-bold tracking-[0.3em] uppercase lg:hidden">
-            Café Literario
-          </Link>
-          <span className="text-[#F5F5F0] text-[10px] font-bold tracking-[0.3em] uppercase ml-auto">
-            Acceso
-          </span>
-        </div>
-
-        <div className="flex-1 flex items-center justify-center p-10">
-          <div className="w-full max-w-sm fade-up fade-up-2">
+    <AuthFormShell
+      eyebrow="Bienvenido de vuelta"
+      titleTop="Tu lugar"
+      titleAccent="te espera."
+      quote="“Cada visita es una página nueva en la historia de este lugar.”"
+      bandLabel="Acceso"
+    >
+      <div className="w-full max-w-sm fade-up fade-up-2">
 
             <div className="mb-10">
               <h2 className="font-playfair font-black text-5xl text-[#343E1C] leading-[0.95]">
@@ -128,11 +113,7 @@ export default function LoginPage() {
               </p>
             </div>
 
-          </div>
-        </div>
-
       </div>
-
-    </div>
+    </AuthFormShell>
   )
 }

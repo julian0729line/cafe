@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/client'
 import { isSupabaseConfigured } from '@/utils/supabase/config'
-import { AuthAside } from '../components/AuthAside'
+import { AuthFormShell } from '../components/AuthFormShell'
 import { AuthComingSoon } from '../components/AuthComingSoon'
 
 export default function RegisterPage() {
@@ -82,29 +82,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex">
-
-      <AuthAside
-        eyebrow="Tu primera página"
-        titleTop="Cada historia"
-        titleAccent="comienza aquí."
-        quote="“Somos el lugar donde 16 años de conversaciones todavía resuenan entre estas paredes.”"
-      />
-
-      {/* Formulario */}
-      <div className="w-full lg:w-[45%] bg-[#F5F5F0] flex flex-col">
-
-        <div className="bg-[#C1121F] px-10 py-4 flex items-center justify-between">
-          <Link href="/" className="press text-[#F5F5F0] text-[10px] font-bold tracking-[0.3em] uppercase lg:hidden">
-            Café Literario
-          </Link>
-          <span className="text-[#F5F5F0] text-[10px] font-bold tracking-[0.3em] uppercase ml-auto">
-            Paso 1 de 2
-          </span>
-        </div>
-
-        <div className="flex-1 flex items-center justify-center p-10">
-          <div className="w-full max-w-sm fade-up fade-up-2">
+    <AuthFormShell
+      eyebrow="Tu primera página"
+      titleTop="Cada historia"
+      titleAccent="comienza aquí."
+      quote="“Somos el lugar donde 16 años de conversaciones todavía resuenan entre estas paredes.”"
+      bandLabel="Paso 1 de 2"
+    >
+      <div className="w-full max-w-sm fade-up fade-up-2">
 
             <div className="mb-10">
               <h2 className="font-playfair font-black text-5xl text-[#343E1C] leading-[0.95]">
@@ -182,11 +167,7 @@ export default function RegisterPage() {
               </p>
             </div>
 
-          </div>
-        </div>
-
       </div>
-
-    </div>
+    </AuthFormShell>
   )
 }
