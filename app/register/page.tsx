@@ -3,7 +3,9 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/client'
+import { isSupabaseConfigured } from '@/utils/supabase/config'
 import { AuthAside } from '../components/AuthAside'
+import { AuthComingSoon } from '../components/AuthComingSoon'
 
 export default function RegisterPage() {
   const [nombre, setNombre] = useState('')
@@ -64,6 +66,18 @@ export default function RegisterPage() {
           </div>
         </div>
       </div>
+    )
+  }
+
+  if (!isSupabaseConfigured) {
+    return (
+      <AuthComingSoon
+        eyebrow="Tu primera página"
+        titleTop="Cada historia"
+        titleAccent="comienza aquí."
+        quote="“Somos el lugar donde 16 años de conversaciones todavía resuenan entre estas paredes.”"
+        bandLabel="Programa de socios"
+      />
     )
   }
 

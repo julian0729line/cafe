@@ -4,7 +4,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/client'
+import { isSupabaseConfigured } from '@/utils/supabase/config'
 import { AuthAside } from '../components/AuthAside'
+import { AuthComingSoon } from '../components/AuthComingSoon'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -26,6 +28,18 @@ export default function LoginPage() {
     }
     router.push('/dashboard')
     router.refresh()
+  }
+
+  if (!isSupabaseConfigured) {
+    return (
+      <AuthComingSoon
+        eyebrow="Bienvenido de vuelta"
+        titleTop="Tu lugar"
+        titleAccent="te espera."
+        quote="“Cada visita es una página nueva en la historia de este lugar.”"
+        bandLabel="Acceso"
+      />
+    )
   }
 
   return (

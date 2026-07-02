@@ -10,6 +10,7 @@ import { MediaSlot } from './components/MediaSlot'
 import { Preloader } from './components/Preloader'
 import { AmbienteScroll } from './components/AmbienteScroll'
 import { VelocityMarquee } from './components/VelocityMarquee'
+import { isSupabaseConfigured } from '@/utils/supabase/config'
 
 const TICKER_ITEMS = [
   'Café Literario', '16 Años', 'Desde 2008', 'Libros & Espresso',
@@ -276,10 +277,12 @@ export default function HomePage() {
               <span>Cómo llegar</span>
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </MagneticButton>
-            <Link href="/register"
-              className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/60 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
-              Únete al programa de socios
-            </Link>
+            {isSupabaseConfigured && (
+              <Link href="/register"
+                className="press font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0]/60 hover:text-[#F5F5F0] transition-colors border-b border-transparent hover:border-[#F5F5F0]/30 pb-0.5">
+                Únete al programa de socios
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -294,12 +297,17 @@ export default function HomePage() {
             </span>
           </div>
           <div className="flex gap-8">
-            <Link href="/login" className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B] underline-slide hover:text-[#F5F5F0] transition-colors">
-              Ingresar
-            </Link>
-            <Link href="/register" className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B] underline-slide hover:text-[#F5F5F0] transition-colors">
-              Registrarse
-            </Link>
+            <a href="#menu" className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B] underline-slide hover:text-[#F5F5F0] transition-colors">
+              Menú
+            </a>
+            <a href="#ubicacion" className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B] underline-slide hover:text-[#F5F5F0] transition-colors">
+              Ubicación
+            </a>
+            {isSupabaseConfigured && (
+              <Link href="/register" className="font-sans-app text-[10px] tracking-widest uppercase text-[#A6B86B] underline-slide hover:text-[#F5F5F0] transition-colors">
+                Socios
+              </Link>
+            )}
           </div>
         </div>
       </footer>

@@ -9,6 +9,7 @@ import {
   useMotionValueEvent,
   useReducedMotion,
 } from 'motion/react'
+import { isSupabaseConfigured } from '@/utils/supabase/config'
 
 const LINKS = [
   { href: '#menu', label: 'Menú' },
@@ -102,20 +103,22 @@ export function Nav() {
             })}
           </div>
 
-          <div className="hidden md:flex items-center gap-1">
-            <Link
-              href="/login"
-              className="press font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] hover:text-[#F5F5F0] transition-colors px-4 py-2"
-            >
-              Ingresar
-            </Link>
-            <Link
-              href="/register"
-              className="press btn-fill btn-fill-red font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#F5F5F0] border-2 border-[#C1121F] rounded-full px-5 py-2"
-            >
-              Únete
-            </Link>
-          </div>
+          {isSupabaseConfigured && (
+            <div className="hidden md:flex items-center gap-1">
+              <Link
+                href="/login"
+                className="press font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] hover:text-[#F5F5F0] transition-colors px-4 py-2"
+              >
+                Ingresar
+              </Link>
+              <Link
+                href="/register"
+                className="press btn-fill btn-fill-red font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#F5F5F0] border-2 border-[#C1121F] rounded-full px-5 py-2"
+              >
+                Únete
+              </Link>
+            </div>
+          )}
 
           {/* Hamburguesa móvil */}
           <button
@@ -168,22 +171,24 @@ export function Nav() {
               ))}
             </div>
 
-            <div className="flex gap-4 mt-14">
-              <Link
-                href="/login"
-                onClick={() => setOpen(false)}
-                className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#A6B86B] px-6 py-3 border border-[#4A5728] rounded-full"
-              >
-                Ingresar
-              </Link>
-              <Link
-                href="/register"
-                onClick={() => setOpen(false)}
-                className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0] px-6 py-3 border-2 border-[#C1121F] rounded-full"
-              >
-                Únete
-              </Link>
-            </div>
+            {isSupabaseConfigured && (
+              <div className="flex gap-4 mt-14">
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#A6B86B] px-6 py-3 border border-[#4A5728] rounded-full"
+                >
+                  Ingresar
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setOpen(false)}
+                  className="font-sans-app text-[10px] font-bold tracking-[0.25em] uppercase text-[#F5F5F0] px-6 py-3 border-2 border-[#C1121F] rounded-full"
+                >
+                  Únete
+                </Link>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

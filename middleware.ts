@@ -1,7 +1,12 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { isSupabaseConfigured } from '@/utils/supabase/config'
 
 export async function middleware(request: NextRequest) {
+  // Sin credenciales de Supabase, no hay sesión que gestionar: dejamos pasar
+  // todo (la web funciona como escaparate sin romperse).
+  if (!isSupabaseConfigured) return NextResponse.next({ request })
+
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(

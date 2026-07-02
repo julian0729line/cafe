@@ -2,8 +2,10 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
 import { PageHero } from '../components/PageHero'
+import { isSupabaseConfigured } from '@/utils/supabase/config'
 
 export default async function DashboardPage() {
+  if (!isSupabaseConfigured) redirect('/')
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
