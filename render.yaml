@@ -1,0 +1,19 @@
+# Blueprint de Render (https://render.com) — despliegue gratuito para uso comercial.
+# En render.com: New → Blueprint → conecta este repo → rellena las 2 variables.
+services:
+  - type: web
+    name: cafe-literario
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      # Rellena estas dos en el panel de Render (Environment). Valores en
+      # supabase.com → Settings → API. sync:false = las escribes tú, no van al repo.
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false

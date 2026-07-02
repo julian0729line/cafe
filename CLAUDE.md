@@ -105,6 +105,8 @@ run with `python3 .agents/skills/ui-ux-pro-max/scripts/search.py "<query>"
 
 - `AGENTS.md` — the breaking-changes charter (imported above).
 - `README.md` — stock create-next-app notes.
-- `DEPLOY.md` — Vercel setup + how deploys happen from mobile (no terminal).
+- `DEPLOY.md` — free hosting setup (Render/Netlify; Vercel note) + how deploys
+  happen from mobile (no terminal). `render.yaml` / `netlify.toml` / `.node-version`
+  preconfigure the free hosts.
 - `.env.example` — the env vars to set (dev `.env.local` / Vercel).
 - `public/media/README.md` — how to drop in real videos/photos.
