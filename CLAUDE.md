@@ -26,12 +26,15 @@ There is **no test suite**.
 
 ## Environment / gotchas
 
-- Requires `.env.local` with `NEXT_PUBLIC_SUPABASE_URL` and
-  `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Without them, `middleware.ts` and any route
-  that touches Supabase throw at request time, and **`npm run build` fails while
-  prerendering `/perfil/editar`** ("URL and API key are required"). That build
-  failure is expected when the env isn't configured — it is not caused by
-  homepage/UI changes.
+- Supabase env (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`) goes
+  in `.env.local` for dev (see `.env.example`). The **homepage renders without
+  env**; only `middleware.ts`-guarded routes (login/register/dashboard/perfil/
+  admin) touch Supabase and need env **at request time**.
+- **`npm run build` must succeed with no env set** — client pages must not call
+  `createClient()` in render/module scope (it runs during prerender and throws).
+  Create the Supabase client **inside** effects/handlers instead (see
+  `app/perfil/editar/page.tsx`). Regressing this reintroduces the prerender
+  failure that once broke Vercel deploys.
 - Path alias: `@/*` → repo root (e.g. `@/utils/supabase/server`).
 
 ## Architecture
@@ -102,4 +105,6 @@ run with `python3 .agents/skills/ui-ux-pro-max/scripts/search.py "<query>"
 
 - `AGENTS.md` — the breaking-changes charter (imported above).
 - `README.md` — stock create-next-app notes.
+- `DEPLOY.md` — Vercel setup + how deploys happen from mobile (no terminal).
+- `.env.example` — the env vars to set (dev `.env.local` / Vercel).
 - `public/media/README.md` — how to drop in real videos/photos.

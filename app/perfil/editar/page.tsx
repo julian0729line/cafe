@@ -10,7 +10,6 @@ const ESPACIOS = ['Ventana', 'Interior tranquilo', 'Terraza', 'Barra', 'Sofás',
 
 export default function EditarPerfilPage() {
   const router = useRouter()
-  const supabase = createClient()
 
   const [nombre, setNombre] = useState('')
   const [bebida, setBebida] = useState('')
@@ -22,6 +21,7 @@ export default function EditarPerfilPage() {
 
   useEffect(() => {
     async function cargar() {
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push('/login'); return }
 
@@ -41,6 +41,7 @@ export default function EditarPerfilPage() {
     e.preventDefault()
     setSaving(true)
 
+    const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
