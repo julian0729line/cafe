@@ -61,10 +61,39 @@ export default function EditarPerfilPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#343E1C] flex items-center justify-center">
-        <p className="font-sans-app text-[#A6B86B] text-[10px] font-bold tracking-[0.4em] uppercase animate-pulse">
-          Cargando...
-        </p>
+      <div className="min-h-screen bg-[#343E1C] flex flex-col overflow-x-clip">
+        <div className="grain" aria-hidden="true" />
+        <nav className="sticky top-0 z-40 bg-[#343E1C]/90 backdrop-blur-sm border-b border-[#4A5728] px-8 py-4 flex items-center justify-between">
+          <span className="font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B]">← Perfil</span>
+          <span className="font-playfair italic text-[#F5F5F0] text-base">Editar</span>
+        </nav>
+        <div className="px-8 py-14 border-b border-[#4A5728]">
+          <div className="max-w-2xl mx-auto animate-pulse">
+            <div className="h-3 w-28 bg-[#4A5728] rounded mb-5" />
+            <div className="h-12 w-72 bg-[#4A5728]/70 rounded" />
+          </div>
+        </div>
+        <div className="flex-1 px-8 py-12">
+          <div className="max-w-2xl mx-auto space-y-8 animate-pulse">
+            <div>
+              <div className="h-3 w-20 bg-[#4A5728] rounded mb-2" />
+              <div className="h-12 w-full bg-[#4A5728]/40 rounded-lg" />
+            </div>
+            <div>
+              <div className="h-3 w-28 bg-[#4A5728] rounded mb-3" />
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-11 bg-[#4A5728]/40 rounded-full" />)}
+              </div>
+            </div>
+            <div>
+              <div className="h-3 w-28 bg-[#4A5728] rounded mb-3" />
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {Array.from({ length: 6 }).map((_, i) => <div key={i} className="h-11 bg-[#4A5728]/40 rounded-full" />)}
+              </div>
+            </div>
+            <div className="h-14 w-full bg-[#4A5728]/60 rounded" />
+          </div>
+        </div>
       </div>
     )
   }

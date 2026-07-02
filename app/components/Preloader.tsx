@@ -52,14 +52,26 @@ export function Preloader() {
             <div className="aurora-blob b2" style={{ bottom: '-15%', right: '0%', width: '42vw', height: '42vw', background: 'radial-gradient(circle, rgba(193,18,31,0.4), transparent 65%)' }} />
           </div>
 
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-playfair italic text-[#F5F5F0] text-lg"
-          >
-            Café Literario
-          </motion.span>
+          <div className="relative z-10 flex items-center justify-between">
+            <motion.span
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="font-playfair italic text-[#F5F5F0] text-lg"
+            >
+              Café Literario
+            </motion.span>
+            <motion.button
+              type="button"
+              onClick={() => setDone(true)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="press font-sans-app text-[9px] font-bold tracking-[0.3em] uppercase text-[#A6B86B] hover:text-[#F5F5F0] transition-colors"
+            >
+              Saltar →
+            </motion.button>
+          </div>
 
           <div className="relative z-10 flex items-end justify-between gap-6">
             <motion.p
