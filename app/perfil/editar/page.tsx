@@ -62,124 +62,101 @@ export default function EditarPerfilPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#343E1C] flex items-center justify-center">
-        <p className="text-[#6B7A3C] text-[10px] font-bold tracking-[0.4em] uppercase animate-pulse">
+        <p className="font-sans-app text-[#A6B86B] text-[10px] font-bold tracking-[0.4em] uppercase animate-pulse">
           Cargando...
         </p>
       </div>
     )
   }
 
+  const chip = (active: boolean) =>
+    `press py-3 px-2 text-[10px] font-bold tracking-widest uppercase border rounded-full transition-colors ${
+      active
+        ? 'bg-[#C1121F] border-[#C1121F] text-[#F5F5F0]'
+        : 'bg-transparent border-[#4A5728] text-[#A6B86B] hover:border-[#F5F5F0] hover:text-[#F5F5F0]'
+    }`
+
+  const field =
+    'w-full border border-[#4A5728] bg-[#4A5728]/30 px-4 py-3 text-[#F5F5F0] text-sm rounded-lg focus:outline-none focus:border-[#C1121F] focus:ring-2 focus:ring-[#C1121F]/20 transition-shadow placeholder:text-[#F5F5F0]/35'
+
   return (
-    <div className="min-h-screen bg-[#343E1C] flex flex-col">
+    <div className="min-h-screen bg-[#343E1C] flex flex-col overflow-x-clip">
+      <div className="grain" aria-hidden="true" />
 
       {/* Navbar */}
-      <nav className="bg-[#4A5728] border-b-2 border-[#C1121F] px-8 py-4 flex items-center justify-between">
-        <Link href="/perfil" className="text-[#F5F5F0] text-[10px] font-black tracking-[0.4em] uppercase hover:text-[#C1121F] transition-colors">
+      <nav className="sticky top-0 z-40 bg-[#343E1C]/90 backdrop-blur-sm border-b border-[#4A5728] px-8 py-4 flex items-center justify-between">
+        <Link href="/perfil" className="press font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] hover:text-[#F5F5F0] transition-colors">
           ← Perfil
         </Link>
-        <span className="text-[#8A9A52] text-[10px] tracking-widest uppercase">Editar</span>
+        <span className="font-playfair italic text-[#F5F5F0] text-base">Editar</span>
       </nav>
 
       {/* Hero */}
-      <div className="bg-[#343E1C] px-8 py-14 border-b border-[#4A5728]">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-[#6B7A3C] text-[10px] font-bold tracking-[0.3em] uppercase mb-4">Editar perfil</p>
-          <h1 className="text-5xl font-black tracking-tighter text-[#F5F5F0] leading-none">
-            CUÉNTANOS<br />
-            <span className="text-[#C1121F]">MÁS.</span>
+      <div className="relative px-8 py-14 border-b border-[#4A5728] overflow-hidden vignette noise">
+        <div className="aurora">
+          <div className="aurora-blob" style={{ top: '-25%', left: '8%', width: '34vw', height: '34vw', background: 'radial-gradient(circle, rgba(180,132,58,0.4), transparent 65%)' }} />
+          <div className="aurora-blob b2" style={{ bottom: '-30%', right: '8%', width: '30vw', height: '30vw', background: 'radial-gradient(circle, rgba(193,18,31,0.3), transparent 65%)' }} />
+        </div>
+        <div className="max-w-2xl mx-auto relative z-10">
+          <p className="fade-up fade-up-1 font-sans-app text-[#C9A227] text-[10px] font-bold tracking-[0.3em] uppercase mb-4">Editar perfil</p>
+          <h1 className="fade-up fade-up-2 font-playfair font-black text-[#F5F5F0] leading-[0.95]" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)' }}>
+            Cuéntanos <span className="italic text-[#FF7F70]">más.</span>
           </h1>
-          <div className="flex gap-3 mt-5">
-            <div className="w-16 h-[3px] bg-[#C1121F]" />
-            <div className="w-8 h-[3px] bg-[#6B7A3C]" />
-          </div>
         </div>
       </div>
 
       {/* Formulario */}
-      <div className="flex-1 px-8 py-10">
-        <div className="max-w-2xl mx-auto">
-          <form onSubmit={handleGuardar} className="space-y-6">
+      <div className="flex-1 px-8 py-12">
+        <div className="max-w-2xl mx-auto fade-up fade-up-3">
+          <form onSubmit={handleGuardar} className="space-y-8">
 
-            {/* Nombre */}
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#8A9A52] mb-2">
+              <label className="block font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] mb-2">
                 Nombre
               </label>
-              <input
-                type="text"
-                value={nombre}
-                onChange={e => setNombre(e.target.value)}
-                placeholder="Tu nombre"
-                className="w-full border-2 border-[#6B7A3C] bg-[#4A5728] px-4 py-3 text-[#F5F5F0] text-sm focus:outline-none focus:border-[#C1121F] rounded-none placeholder:text-[#6B7A3C]"
-              />
+              <input type="text" value={nombre} onChange={e => setNombre(e.target.value)} placeholder="Tu nombre" className={field} />
             </div>
 
-            {/* Bebida favorita */}
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#8A9A52] mb-3">
+              <label className="block font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] mb-3">
                 Bebida favorita
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {BEBIDAS.map(b => (
-                  <button
-                    key={b}
-                    type="button"
-                    onClick={() => setBebida(b)}
-                    className={`py-3 px-2 text-[10px] font-bold tracking-widest uppercase border-2 transition-colors ${
-                      bebida === b
-                        ? 'bg-[#C1121F] border-[#C1121F] text-[#F5F5F0]'
-                        : 'bg-transparent border-[#6B7A3C] text-[#8A9A52] hover:border-[#F5F5F0] hover:text-[#F5F5F0]'
-                    }`}
-                  >
+                  <button key={b} type="button" onClick={() => setBebida(b)} className={chip(bebida === b)}>
                     {b}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Espacio favorito */}
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#8A9A52] mb-3">
+              <label className="block font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] mb-3">
                 Espacio favorito
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {ESPACIOS.map(e => (
-                  <button
-                    key={e}
-                    type="button"
-                    onClick={() => setEspacio(e)}
-                    className={`py-3 px-2 text-[10px] font-bold tracking-widest uppercase border-2 transition-colors ${
-                      espacio === e
-                        ? 'bg-[#C1121F] border-[#C1121F] text-[#F5F5F0]'
-                        : 'bg-transparent border-[#6B7A3C] text-[#8A9A52] hover:border-[#F5F5F0] hover:text-[#F5F5F0]'
-                    }`}
-                  >
+                  <button key={e} type="button" onClick={() => setEspacio(e)} className={chip(espacio === e)}>
                     {e}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Notas */}
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#8A9A52] mb-2">
+              <label className="block font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] mb-2">
                 Algo más que quieras que sepamos
               </label>
-              <textarea
-                value={notas}
-                onChange={e => setNotas(e.target.value)}
-                placeholder="Alergias, preferencias especiales, etc."
-                rows={3}
-                className="w-full border-2 border-[#6B7A3C] bg-[#4A5728] px-4 py-3 text-[#F5F5F0] text-sm focus:outline-none focus:border-[#C1121F] rounded-none placeholder:text-[#6B7A3C] resize-none"
-              />
+              <textarea value={notas} onChange={e => setNotas(e.target.value)} placeholder="Alergias, preferencias especiales, etc." rows={3} className={`${field} resize-none`} />
             </div>
 
             <button
               type="submit"
               disabled={saving || guardado}
-              className="w-full bg-[#C1121F] hover:bg-[#960E17] text-[#F5F5F0] font-black py-4 text-[11px] tracking-[0.3em] uppercase transition-colors disabled:opacity-60 shadow-[4px_4px_0px_0px_#4A5728]"
+              className="press btn-fill btn-fill-red w-full bg-[#C1121F] text-[#F5F5F0] font-black py-4 text-[11px] tracking-[0.3em] uppercase transition-colors disabled:opacity-60 shadow-[4px_4px_0px_0px_#4A5728] flex items-center justify-center gap-3"
             >
-              {guardado ? '✓ Guardado' : saving ? 'Guardando...' : 'Guardar cambios →'}
+              <span>{guardado ? 'Guardado ✓' : saving ? 'Guardando...' : 'Guardar cambios'}</span>
+              {!saving && !guardado && <span className="transition-transform group-hover:translate-x-1">→</span>}
             </button>
 
           </form>

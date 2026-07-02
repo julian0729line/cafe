@@ -15,67 +15,64 @@ export default async function PerfilPage() {
 
   const nombre = perfil?.nombre ?? user.user_metadata?.nombre ?? '—'
 
+  const datos = [
+    { label: 'Nombre', value: perfil?.nombre ?? '—', big: true },
+    { label: 'Correo', value: user.email, big: false },
+    { label: 'Bebida favorita', value: perfil?.bebida_favorita ?? '—', big: true },
+    { label: 'Espacio favorito', value: perfil?.espacio_favorito ?? '—', big: true },
+  ]
+
   return (
-    <div className="min-h-screen bg-[#343E1C] flex flex-col">
+    <div className="min-h-screen bg-[#343E1C] flex flex-col overflow-x-clip">
+      <div className="grain" aria-hidden="true" />
 
       {/* Navbar */}
-      <nav className="bg-[#4A5728] border-b-2 border-[#C1121F] px-8 py-4 flex items-center justify-between">
-        <Link href="/dashboard" className="text-[#F5F5F0] text-[10px] font-black tracking-[0.4em] uppercase hover:text-[#C1121F] transition-colors">
-          ← ☕ Proyecto Café
+      <nav className="sticky top-0 z-40 bg-[#343E1C]/90 backdrop-blur-sm border-b border-[#4A5728] px-8 py-4 flex items-center justify-between">
+        <Link href="/dashboard" className="press font-sans-app text-[10px] font-bold tracking-[0.2em] uppercase text-[#A6B86B] hover:text-[#F5F5F0] transition-colors">
+          ← Dashboard
         </Link>
-        <span className="text-[#8A9A52] text-[10px] tracking-widest uppercase">Mi perfil</span>
+        <span className="font-playfair italic text-[#F5F5F0] text-base">Mi perfil</span>
       </nav>
 
       {/* Hero */}
-      <div className="bg-[#343E1C] px-8 py-14 border-b border-[#4A5728]">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-[#6B7A3C] text-[10px] font-bold tracking-[0.3em] uppercase mb-4">Perfil</p>
-          <h1 className="text-6xl font-black tracking-tighter text-[#F5F5F0] leading-none">
-            {nombre.toUpperCase()}.
+      <div className="relative px-8 py-16 border-b border-[#4A5728] overflow-hidden vignette noise">
+        <div className="aurora">
+          <div className="aurora-blob" style={{ top: '-25%', left: '5%', width: '38vw', height: '38vw', background: 'radial-gradient(circle, rgba(180,132,58,0.4), transparent 65%)' }} />
+          <div className="aurora-blob b2" style={{ bottom: '-30%', right: '10%', width: '32vw', height: '32vw', background: 'radial-gradient(circle, rgba(193,18,31,0.32), transparent 65%)' }} />
+        </div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <p className="fade-up fade-up-1 font-sans-app text-[#C9A227] text-[10px] font-bold tracking-[0.3em] uppercase mb-4">Perfil</p>
+          <h1 className="fade-up fade-up-2 font-playfair font-black text-[#F5F5F0] leading-[0.95]" style={{ fontSize: 'clamp(2.5rem, 7vw, 5rem)' }}>
+            {nombre}<span className="text-[#FF7F70]">.</span>
           </h1>
-          <div className="flex gap-3 mt-5">
+          <div className="fade-up fade-up-3 flex gap-3 mt-6">
             <div className="w-16 h-[3px] bg-[#C1121F]" />
-            <div className="w-8 h-[3px] bg-[#6B7A3C]" />
+            <div className="w-8 h-[3px] bg-[#A6B86B]" />
           </div>
         </div>
       </div>
 
       {/* Contenido */}
-      <div className="flex-1 px-8 py-10">
+      <div className="flex-1 px-8 py-12">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* Datos */}
-          <div className="bg-[#4A5728] border-2 border-[#6B7A3C] p-8">
-            <p className="text-[#8A9A52] text-[10px] font-bold tracking-[0.3em] uppercase mb-6">Tus datos</p>
-
+          <div className="tile rounded-[1.25rem] border border-[#4A5728] p-8">
+            <p className="font-sans-app text-[#A6B86B] text-[10px] font-bold tracking-[0.3em] uppercase mb-6">Tus datos</p>
             <div className="space-y-5">
-              <div>
-                <p className="text-[#6B7A3C] text-[10px] tracking-widest uppercase mb-1">Nombre</p>
-                <p className="text-[#F5F5F0] font-black text-lg">{perfil?.nombre ?? '—'}</p>
-              </div>
-              <div className="w-full h-px bg-[#6B7A3C]/30" />
-              <div>
-                <p className="text-[#6B7A3C] text-[10px] tracking-widest uppercase mb-1">Correo</p>
-                <p className="text-[#F5F5F0] text-sm">{user.email}</p>
-              </div>
-              <div className="w-full h-px bg-[#6B7A3C]/30" />
-              <div>
-                <p className="text-[#6B7A3C] text-[10px] tracking-widest uppercase mb-1">Bebida favorita</p>
-                <p className="text-[#F5F5F0] font-black text-lg">{perfil?.bebida_favorita ?? '—'}</p>
-              </div>
-              <div className="w-full h-px bg-[#6B7A3C]/30" />
-              <div>
-                <p className="text-[#6B7A3C] text-[10px] tracking-widest uppercase mb-1">Espacio favorito</p>
-                <p className="text-[#F5F5F0] font-black text-lg">{perfil?.espacio_favorito ?? '—'}</p>
-              </div>
+              {datos.map(({ label, value, big }, i) => (
+                <div key={label}>
+                  {i > 0 && <div className="w-full h-px bg-[#4A5728] mb-5" />}
+                  <p className="font-sans-app text-[#A6B86B] text-[10px] tracking-widest uppercase mb-1">{label}</p>
+                  <p className={`text-[#F5F5F0] ${big ? 'font-playfair text-xl' : 'font-sans-app text-sm'}`}>{value}</p>
+                </div>
+              ))}
               {perfil?.notas && (
-                <>
-                  <div className="w-full h-px bg-[#6B7A3C]/30" />
-                  <div>
-                    <p className="text-[#6B7A3C] text-[10px] tracking-widest uppercase mb-1">Notas</p>
-                    <p className="text-[#8A9A52] text-sm leading-relaxed">{perfil.notas}</p>
-                  </div>
-                </>
+                <div>
+                  <div className="w-full h-px bg-[#4A5728] mb-5" />
+                  <p className="font-sans-app text-[#A6B86B] text-[10px] tracking-widest uppercase mb-1">Notas</p>
+                  <p className="font-sans-app text-[#D9DCC4] text-sm leading-relaxed">{perfil.notas}</p>
+                </div>
               )}
             </div>
           </div>
@@ -84,28 +81,30 @@ export default async function PerfilPage() {
           <div className="flex flex-col gap-4">
             <Link
               href="/perfil/editar"
-              className="bg-[#C1121F] hover:bg-[#960E17] text-[#F5F5F0] p-8 border-2 border-[#960E17] transition-colors group"
+              className="press group bg-[#C1121F] rounded-[1.25rem] p-8 border border-[#960E17] hover:-translate-y-1 transition-transform duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
             >
-              <p className="text-[#F5F5F0]/40 text-[10px] font-bold tracking-widest uppercase mb-4">01</p>
-              <h3 className="font-black text-2xl tracking-tight mb-2">EDITAR PERFIL</h3>
-              <p className="text-[#F5F5F0]/60 text-xs leading-relaxed mb-6">
+              <p className="font-sans-app text-[#F5F5F0]/50 text-[10px] font-bold tracking-widest uppercase mb-6">01</p>
+              <h3 className="font-playfair font-bold text-2xl text-[#F5F5F0] mb-3">Editar perfil</h3>
+              <p className="font-sans-app text-[#F5F5F0]/70 text-xs leading-relaxed mb-8">
                 Actualiza tu nombre, bebida favorita y espacio preferido.
               </p>
-              <span className="text-[10px] font-bold tracking-widest uppercase">Ir a editar →</span>
+              <span className="flex items-center gap-2 font-sans-app text-[#F5F5F0] text-[10px] font-bold tracking-widest uppercase">
+                Ir a editar <span className="transition-transform group-hover:translate-x-1">→</span>
+              </span>
             </Link>
 
-            <div className="bg-[#4A5728] border-2 border-[#6B7A3C] p-8">
-              <p className="text-[#8A9A52] text-[10px] font-bold tracking-widest uppercase mb-4">02</p>
-              <h3 className="text-[#F5F5F0] font-black text-xl tracking-tight mb-2">MIS VISITAS</h3>
-              <p className="text-[#8A9A52] text-xs leading-relaxed mb-4">
+            <div className="tile rounded-[1.25rem] border border-[#4A5728] p-8">
+              <p className="font-sans-app text-[#A6B86B] text-[10px] font-bold tracking-widest uppercase mb-6">02</p>
+              <h3 className="font-playfair font-bold text-xl text-[#F5F5F0] mb-3">Mis visitas</h3>
+              <p className="font-sans-app text-[#A6B86B] text-xs leading-relaxed mb-6">
                 Tu historial completo en el café.
               </p>
-              <span className="text-[#6B7A3C] text-[10px] font-bold tracking-widest uppercase">Próximamente</span>
+              <span className="font-sans-app text-[#C9A227] text-[10px] font-bold tracking-widest uppercase">Próximamente</span>
             </div>
 
-            <div className="border-2 border-[#4A5728] px-6 py-4 flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-[#8A9A52]" />
-              <p className="text-[#6B7A3C] text-[10px] tracking-widest uppercase">
+            <div className="border border-[#4A5728] bg-[#4A5728]/20 rounded-full px-6 py-4 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-[#A6B86B]" />
+              <p className="font-sans-app text-[#A6B86B] text-[10px] tracking-widest uppercase">
                 Miembro desde {new Date(user.created_at).toLocaleDateString('es-CO', { year: 'numeric', month: 'long' })}
               </p>
             </div>
