@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
+import { PageHero } from '../components/PageHero'
 
 export default async function AdminPage() {
   const supabase = await createClient()
@@ -56,18 +57,11 @@ export default async function AdminPage() {
       </nav>
 
       {/* Hero */}
-      <div className="relative px-8 py-16 border-b border-[#4A5728] overflow-hidden vignette noise">
-        <div className="aurora">
-          <div className="aurora-blob" style={{ top: '-25%', left: '5%', width: '38vw', height: '38vw', background: 'radial-gradient(circle, rgba(180,132,58,0.4), transparent 65%)' }} />
-          <div className="aurora-blob b2" style={{ bottom: '-30%', right: '8%', width: '32vw', height: '32vw', background: 'radial-gradient(circle, rgba(193,18,31,0.32), transparent 65%)' }} />
-        </div>
-        <div className="max-w-5xl mx-auto relative z-10">
-          <p className="fade-up fade-up-1 font-sans-app text-[#C9A227] text-[10px] font-bold tracking-[0.3em] uppercase mb-4">Panel de administración</p>
-          <h1 className="fade-up fade-up-2 font-playfair font-black text-[#F5F5F0] leading-[0.95]" style={{ fontSize: 'clamp(2.75rem, 7vw, 5.5rem)' }}>
-            Tu café<br /><span className="italic text-[#FF7F70]">en números.</span>
-          </h1>
-        </div>
-      </div>
+      <PageHero
+        eyebrow="Panel de administración"
+        ghost="DATOS"
+        lines={[{ text: 'Tu café' }, { text: 'en números.', accent: true, italic: true }]}
+      />
 
       <div className="flex-1 px-8 py-12">
         <div className="max-w-5xl mx-auto space-y-12">

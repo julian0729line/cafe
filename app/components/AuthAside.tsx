@@ -51,7 +51,7 @@ export function AuthAside({
         </p>
         <h1
           className="fade-up fade-up-2 font-playfair font-black leading-[0.9] text-[#F5F5F0] mb-3"
-          style={{ fontSize: 'clamp(3rem, 5vw, 5.5rem)' }}
+          style={{ fontSize: 'clamp(3rem, 6.2vw, 6.5rem)' }}
         >
           {titleTop}
           <br />

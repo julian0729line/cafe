@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/client'
+import { PageHero } from '../../components/PageHero'
 
 const BEBIDAS = ['Espresso', 'Americano', 'Cappuccino', 'Latte', 'Flat White', 'Cold Brew', 'Té', 'Otra']
 const ESPACIOS = ['Ventana', 'Interior tranquilo', 'Terraza', 'Barra', 'Sofás', 'Sin preferencia']
@@ -121,18 +122,12 @@ export default function EditarPerfilPage() {
       </nav>
 
       {/* Hero */}
-      <div className="relative px-8 py-14 border-b border-[#4A5728] overflow-hidden vignette noise">
-        <div className="aurora">
-          <div className="aurora-blob" style={{ top: '-25%', left: '8%', width: '34vw', height: '34vw', background: 'radial-gradient(circle, rgba(180,132,58,0.4), transparent 65%)' }} />
-          <div className="aurora-blob b2" style={{ bottom: '-30%', right: '8%', width: '30vw', height: '30vw', background: 'radial-gradient(circle, rgba(193,18,31,0.3), transparent 65%)' }} />
-        </div>
-        <div className="max-w-2xl mx-auto relative z-10">
-          <p className="fade-up fade-up-1 font-sans-app text-[#C9A227] text-[10px] font-bold tracking-[0.3em] uppercase mb-4">Editar perfil</p>
-          <h1 className="fade-up fade-up-2 font-playfair font-black text-[#F5F5F0] leading-[0.95]" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)' }}>
-            Cuéntanos <span className="italic text-[#FF7F70]">más.</span>
-          </h1>
-        </div>
-      </div>
+      <PageHero
+        eyebrow="Editar perfil"
+        ghost="EDITAR"
+        lines={[{ text: 'Cuéntanos' }, { text: 'más.', accent: true, italic: true }]}
+        maxWidth="max-w-2xl"
+      />
 
       {/* Formulario */}
       <div className="flex-1 px-8 py-12">
