@@ -7,6 +7,9 @@ import { ScrollProgress } from './components/ScrollProgress'
 import { Parallax } from './components/Parallax'
 import { MagneticButton } from './components/MagneticButton'
 import { MediaSlot } from './components/MediaSlot'
+import { Preloader } from './components/Preloader'
+import { AmbienteScroll } from './components/AmbienteScroll'
+import { VelocityMarquee } from './components/VelocityMarquee'
 
 const TICKER_ITEMS = [
   'Café Literario', '16 Años', 'Desde 2008', 'Libros & Espresso',
@@ -16,10 +19,10 @@ const TICKER_ITEMS = [
 ]
 
 const AMBIENTE = [
-  { eyebrow: 'El corazón', label: 'El salón principal', cls: 'md:col-span-2 md:row-span-2' },
-  { eyebrow: 'El oficio', label: 'La barra de café', cls: 'md:col-span-2' },
-  { eyebrow: 'El alma', label: 'Los libros', cls: 'md:col-span-1' },
-  { eyebrow: 'La hora mágica', label: 'Noches de lectura', cls: 'md:col-span-1' },
+  { eyebrow: 'El corazón', label: 'El salón principal' },
+  { eyebrow: 'El oficio', label: 'La barra de café' },
+  { eyebrow: 'El alma', label: 'Los libros' },
+  { eyebrow: 'La hora mágica', label: 'Noches de lectura' },
 ]
 
 const MENU_CATEGORIES = [
@@ -83,24 +86,16 @@ const HOURS = [
 
 export default function HomePage() {
   return (
-    <div id="top" className="min-h-screen bg-[#343E1C] flex flex-col overflow-x-hidden">
+    <div id="top" className="min-h-screen bg-[#343E1C] flex flex-col overflow-x-clip">
+      <Preloader />
       <div className="grain" aria-hidden="true" />
       <ScrollProgress />
       <Nav />
 
       <Hero />
 
-      {/* ── TICKER MARQUEE ── */}
-      <div className="bg-[#C1121F] border-y-2 border-[#960E17] py-4 overflow-hidden">
-        <div className="marquee-track flex gap-0 whitespace-nowrap">
-          {TICKER_ITEMS.map((item, i) => (
-            <span key={i} className="font-sans-app font-black text-[11px] tracking-[0.3em] uppercase text-[#F5F5F0] px-8 flex items-center gap-8">
-              {item}
-              <span className="text-[#960E17] text-lg">✦</span>
-            </span>
-          ))}
-        </div>
-      </div>
+      {/* ── TICKER MARQUEE (reactivo a la velocidad de scroll) ── */}
+      <VelocityMarquee items={TICKER_ITEMS} />
 
       {/* ── HISTORIA ── */}
       <section id="historia" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
@@ -147,35 +142,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── EL AMBIENTE (galería, lista para tus videos) ── */}
-      <section id="ambiente" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
-        <div className="max-w-6xl mx-auto">
-          <p className="font-sans-app text-[10px] font-bold tracking-[0.35em] uppercase text-[#C9A227] mb-4">
-            El ambiente
-          </p>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-            <h2 className="text-balance font-playfair font-black text-5xl md:text-6xl text-[#F5F5F0] leading-[1.02]">
-              Un lugar hecho<br />
-              <span className="italic">de rincones.</span>
-            </h2>
-            <p className="font-sans-app text-[#A6B86B] text-sm leading-relaxed max-w-xs">
-              Vive el lugar antes de cruzar la puerta. Cada rincón tiene su propia luz, su propio silencio.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[220px] gap-3">
-            {AMBIENTE.map(({ eyebrow, label, cls }, i) => (
-              <Reveal key={label} delay={i * 80} className={`${cls} h-full`}>
-                <MediaSlot
-                  eyebrow={eyebrow}
-                  label={label}
-                  className="rounded-[1.25rem] h-full min-h-[240px]"
-                />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── EL AMBIENTE (scroll horizontal anclado, listo para tus videos) ── */}
+      <AmbienteScroll items={AMBIENTE} />
 
       {/* ── MENÚ ── */}
       <section id="menu" className="px-8 py-28 border-b border-[#4A5728] scroll-mt-24">
