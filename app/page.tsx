@@ -68,6 +68,7 @@ export default function HomePage() {
         eyebrow: homeContent.hero.eyebrow,
         navItems,
         cta: publicNavigation.cta,
+        activeHref: '/',
       }}
       footer={{
         brand: siteConfig.name,

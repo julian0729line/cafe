@@ -37,6 +37,7 @@ export default function MenuPage() {
         eyebrow: `Café literario · ${siteConfig.city}`,
         navItems: publicNavigation.items.map((item) => ({ ...item })),
         cta: publicNavigation.cta,
+        activeHref: '/menu',
       }}
       footer={{
         brand: siteConfig.name,

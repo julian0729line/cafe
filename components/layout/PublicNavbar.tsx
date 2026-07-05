@@ -22,6 +22,7 @@ export interface PublicNavbarProps {
   eyebrow?: string
   navItems?: PublicNavItem[]
   cta?: PublicNavbarCta
+  activeHref?: string
 }
 
 function cn(...classes: Array<string | false | undefined>) {
@@ -35,6 +36,7 @@ export default function PublicNavbar({
   eyebrow,
   navItems = [],
   cta,
+  activeHref,
 }: PublicNavbarProps) {
   return (
     <header
@@ -86,7 +88,8 @@ export default function PublicNavbar({
                   <Link
                     href={item.href}
                     title={item.description}
-                    className="press block whitespace-nowrap rounded-full px-4 py-2 font-sans-app text-[10px] font-bold uppercase tracking-[0.2em] text-[#A6B86B] transition-colors hover:text-[#F5F5F0]"
+                    aria-current={item.href === activeHref ? 'page' : undefined}
+                    className="press inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 py-2 font-sans-app text-[10px] font-bold uppercase tracking-[0.2em] text-[#A6B86B] transition-colors hover:text-[#F5F5F0]"
                   >
                     {item.label}
                   </Link>

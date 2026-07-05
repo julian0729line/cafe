@@ -27,6 +27,7 @@ export default function LibreriaPage() {
         eyebrow: `Café literario · ${siteConfig.city}`,
         navItems: publicNavigation.items.map((item) => ({ ...item })),
         cta: publicNavigation.cta,
+        activeHref: '/libreria',
       }}
       footer={{
         brand: siteConfig.name,
