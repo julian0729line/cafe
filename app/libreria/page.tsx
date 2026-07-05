@@ -1,0 +1,88 @@
+import type { Metadata } from 'next'
+import PublicShell from '@/components/layout/PublicShell'
+import Container from '@/components/ui/Container'
+import SectionHeader from '@/components/ui/SectionHeader'
+import Card from '@/components/ui/Card'
+import LinkButton from '@/components/ui/LinkButton'
+import { siteConfig } from '@/data/site'
+import { publicNavigation } from '@/data/navigation'
+import { contactConfig } from '@/data/contact'
+import { libraryCategories } from '@/data/library'
+
+export const metadata: Metadata = {
+  title: `Librería La Maga — ${siteConfig.name}`,
+  description: 'Curaduría literaria, clubes de lectura y conversación en Café Valparaíso.',
+}
+
+export default function LibreriaPage() {
+  return (
+    <PublicShell
+      navbar={{
+        brandLabel: siteConfig.name,
+        brandHref: publicNavigation.brandHref,
+        eyebrow: `Café literario · ${siteConfig.city}`,
+        navItems: publicNavigation.items.map((item) => ({ ...item })),
+        cta: publicNavigation.cta,
+      }}
+      footer={{
+        brand: siteConfig.name,
+        description: siteConfig.description,
+        columns: [
+          {
+            title: 'Explora',
+            links: publicNavigation.items.map((item) => ({ label: item.label, href: item.href })),
+          },
+        ],
+        contactItems: contactConfig.reservationChannels.map((channel) => ({
+          label: 'Contacto',
+          value: channel.label,
+          href: channel.href,
+        })),
+        copyright: `© ${new Date().getFullYear()} ${siteConfig.name}. Todos los derechos reservados.`,
+      }}
+    >
+      <section className="border-b border-[#4A5728] px-4 py-16 md:px-8 md:py-24">
+        <Container variant="wide">
+          <SectionHeader
+            titleAs="h1"
+            eyebrow="Librería La Maga"
+            title="Libros y conversación"
+            description="Una curaduría literaria propia, clubes de lectura y un rincón pensado para leer, conversar y descubrir."
+          />
+        </Container>
+      </section>
+
+      <section className="px-4 py-16 md:px-8 md:py-24">
+        <Container variant="wide">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {libraryCategories.map((category) => (
+              <Card key={category.title} variant="outline" padding="md">
+                <h2 className="font-playfair text-xl font-bold text-[#F5F5F0]">
+                  {category.title}
+                </h2>
+                <p className="mt-3 font-sans-app text-sm leading-relaxed text-[#A6B86B]">
+                  {category.description}
+                </p>
+              </Card>
+            ))}
+          </div>
+
+          <Card variant="dark" padding="lg" className="mt-10">
+            <p className="font-playfair italic text-lg leading-relaxed text-[#D9DCC4]">
+              Todavía no publicamos nuestro inventario en línea. Si buscas un título en
+              particular o quieres sumarte al club de lectura, escríbenos y te contamos más.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <LinkButton href="/agenda" variant="ghost" size="md">
+                Ver agenda cultural
+              </LinkButton>
+              <LinkButton href="/contacto" variant="ghost" size="md">
+                Escríbenos
+              </LinkButton>
+            </div>
+          </Card>
+        </Container>
+      </section>
+    </PublicShell>
+  )
+}
