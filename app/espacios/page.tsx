@@ -9,11 +9,14 @@ import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
 import { spacesPreview } from '@/data/spaces'
+import { createPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: `Espacios — ${siteConfig.name}`,
-  description: 'Espacios de Café Valparaíso para encuentros, celebraciones y cultura en Cali.',
-}
+export const metadata: Metadata = createPageMetadata({
+  title: 'Espacios',
+  description:
+    'Conoce los espacios de Café Valparaíso para encuentros privados, actividades culturales y celebraciones en Cali.',
+  path: '/espacios',
+})
 
 function nullableToUndefined<T>(value: T | null): T | undefined {
   return value ?? undefined

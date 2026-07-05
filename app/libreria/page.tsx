@@ -9,11 +9,14 @@ import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
 import { libraryCategories } from '@/data/library'
+import { createPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: `Librería La Maga — ${siteConfig.name}`,
-  description: 'Curaduría literaria, clubes de lectura y conversación en Café Valparaíso.',
-}
+export const metadata: Metadata = createPageMetadata({
+  title: 'Librería La Maga',
+  description:
+    'Librería La Maga reúne curaduría literaria, clubes de lectura y conversación alrededor de los libros en Café Valparaíso.',
+  path: '/libreria',
+})
 
 export default function LibreriaPage() {
   return (

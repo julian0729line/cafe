@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { siteConfig } from "@/data/site";
+import { getBaseUrl } from "@/lib/seo";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -16,19 +18,30 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Café Literario — 16 años siendo tu lugar",
-  description: "Un espacio donde el café y las palabras construyen comunidad. Desde 2008.",
+  metadataBase: getBaseUrl(),
+  title: {
+    template: siteConfig.seo.titleTemplate,
+    default: siteConfig.seo.defaultTitle,
+  },
+  description: siteConfig.seo.description,
+  applicationName: siteConfig.name,
+  creator: siteConfig.name,
+  keywords: [...siteConfig.brandKeywords],
   openGraph: {
-    title: "Café Literario — 16 años siendo tu lugar",
-    description: "Un espacio donde el café y las palabras construyen comunidad. Desde 2008.",
+    title: siteConfig.seo.defaultTitle,
+    description: siteConfig.seo.description,
     type: "website",
-    locale: "es_CO",
-    siteName: "Café Literario",
+    locale: siteConfig.locale,
+    siteName: siteConfig.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Café Literario — 16 años siendo tu lugar",
-    description: "Un espacio donde el café y las palabras construyen comunidad. Desde 2008.",
+    title: siteConfig.seo.defaultTitle,
+    description: siteConfig.seo.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

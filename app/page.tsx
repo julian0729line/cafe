@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
 import HeroSection from '@/components/sections/home/HeroSection'
 import AboutSection from '@/components/sections/home/AboutSection'
@@ -10,6 +11,16 @@ import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
 import { siteConfig } from '@/data/site'
 import { homeContent } from '@/content/home'
+import { createPageMetadata } from '@/lib/seo'
+
+export const metadata: Metadata = {
+  ...createPageMetadata({
+    title: siteConfig.seo.defaultTitle,
+    description: siteConfig.seo.description,
+    path: '/',
+  }),
+  title: { absolute: siteConfig.seo.defaultTitle },
+}
 
 function nullableToUndefined<T>(value: T | null): T | undefined {
   return value ?? undefined

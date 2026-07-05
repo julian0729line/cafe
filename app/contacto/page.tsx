@@ -7,11 +7,14 @@ import LinkButton from '@/components/ui/LinkButton'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
+import { createPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: `Contacto — ${siteConfig.name}`,
-  description: 'Canales de contacto de Café Valparaíso en Cali.',
-}
+export const metadata: Metadata = createPageMetadata({
+  title: 'Contacto',
+  description:
+    'Canales oficiales de contacto de Café Valparaíso. La información comercial confirmada se actualizará en esta página.',
+  path: '/contacto',
+})
 
 const phone: string | null = contactConfig.phone
 const whatsapp: string | null = contactConfig.whatsapp

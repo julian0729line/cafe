@@ -25,11 +25,16 @@ export const siteConfig = {
     'agenda cultural',
   ],
   foundedLabel: null,
+  siteUrl: null,
+  locale: 'es_CO',
+  defaultLocale: 'es_CO',
   seo: {
     title: 'Café Valparaíso — Café literario y cultural en Cali',
     description:
       'Café Valparaíso reúne cultura, gastronomía y literatura en un mismo espacio en Cali, Colombia.',
+    titleTemplate: '%s | Café Valparaíso',
+    defaultTitle: 'Café Valparaíso',
   },
   statusNotes:
-    'Nombre, ciudad y concepto son datos genéricos de trabajo. legalName y foundedLabel quedan en null hasta que el negocio los confirme.',
+    'Nombre, ciudad y concepto son datos genéricos de trabajo. legalName, foundedLabel y siteUrl quedan en null hasta que el negocio confirme razón social, fecha de fundación y dominio real de producción.',
 } as const

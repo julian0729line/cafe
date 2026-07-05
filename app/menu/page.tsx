@@ -9,11 +9,14 @@ import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
 import { menuPreviewItems } from '@/data/menu'
+import { createPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: `Menú — ${siteConfig.name}`,
-  description: 'Café, cocina, coctelería y postres de Café Valparaíso en Cali.',
-}
+export const metadata: Metadata = createPageMetadata({
+  title: 'Menú',
+  description:
+    'Conoce las líneas gastronómicas de Café Valparaíso: café, cocina, coctelería y postres en un espacio cultural en Cali.',
+  path: '/menu',
+})
 
 function nullableToUndefined<T>(value: T | null): T | undefined {
   return value ?? undefined

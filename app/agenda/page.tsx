@@ -10,12 +10,14 @@ import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
 import { eventCategories, featuredEvents } from '@/data/events'
+import { createPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: `Agenda cultural — ${siteConfig.name}`,
+export const metadata: Metadata = createPageMetadata({
+  title: 'Agenda cultural',
   description:
-    'Encuentros, lecturas y actividades culturales de Café Valparaíso en Cali.',
-}
+    'Consulta la agenda cultural de Café Valparaíso: clubes de lectura, música, conversaciones y encuentros culturales en Cali.',
+  path: '/agenda',
+})
 
 function nullableToUndefined<T>(value: T | null): T | undefined {
   return value ?? undefined
