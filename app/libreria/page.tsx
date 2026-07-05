@@ -4,6 +4,7 @@ import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
 import LinkButton from '@/components/ui/LinkButton'
+import BookCategoryCard from '@/components/cards/BookCategoryCard'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
@@ -56,14 +57,11 @@ export default function LibreriaPage() {
         <Container variant="wide">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {libraryCategories.map((category) => (
-              <Card key={category.title} variant="outline" padding="md">
-                <h2 className="font-playfair text-xl font-bold text-[#F5F5F0]">
-                  {category.title}
-                </h2>
-                <p className="mt-3 font-sans-app text-sm leading-relaxed text-[#A6B86B]">
-                  {category.description}
-                </p>
-              </Card>
+              <BookCategoryCard
+                key={category.title}
+                title={category.title}
+                description={category.description}
+              />
             ))}
           </div>
 

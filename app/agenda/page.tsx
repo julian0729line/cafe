@@ -5,6 +5,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import LinkButton from '@/components/ui/LinkButton'
+import EventCard from '@/components/cards/EventCard'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
@@ -79,22 +80,14 @@ export default function AgendaPage() {
           {events.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {events.map((event) => (
-                <Card key={event.title} variant="dark" padding="md">
-                  <Badge variant="olive">{event.category}</Badge>
-                  <h2 className="mt-4 font-playfair text-xl font-bold text-[#F5F5F0]">
-                    {event.title}
-                  </h2>
-                  {event.dateLabel ? (
-                    <p className="mt-2 font-sans-app text-[10px] font-bold uppercase tracking-[0.2em] text-[#A6B86B]">
-                      {event.dateLabel}
-                    </p>
-                  ) : null}
-                  {event.description ? (
-                    <p className="mt-3 font-sans-app text-sm leading-relaxed text-[#A6B86B]">
-                      {event.description}
-                    </p>
-                  ) : null}
-                </Card>
+                <EventCard
+                  key={event.title}
+                  title={event.title}
+                  category={event.category}
+                  dateLabel={event.dateLabel}
+                  description={event.description}
+                  href={event.href}
+                />
               ))}
             </div>
           ) : (

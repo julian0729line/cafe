@@ -3,8 +3,8 @@ import PublicShell from '@/components/layout/PublicShell'
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
-import Badge from '@/components/ui/Badge'
 import LinkButton from '@/components/ui/LinkButton'
+import MenuItemCard from '@/components/cards/MenuItemCard'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
@@ -67,17 +67,12 @@ export default function MenuPage() {
         <Container variant="wide">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {items.map((item) => (
-              <Card key={item.title} variant="paper" padding="md">
-                <Badge variant="wine">{item.category}</Badge>
-                <h2 className="mt-4 font-playfair text-xl font-bold text-[#1C1912]">
-                  {item.title}
-                </h2>
-                {item.description ? (
-                  <p className="mt-3 font-sans-app text-sm leading-relaxed text-[#6B6355]">
-                    {item.description}
-                  </p>
-                ) : null}
-              </Card>
+              <MenuItemCard
+                key={item.title}
+                title={item.title}
+                category={item.category}
+                description={item.description}
+              />
             ))}
           </div>
 

@@ -3,8 +3,8 @@ import PublicShell from '@/components/layout/PublicShell'
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
-import Badge from '@/components/ui/Badge'
 import LinkButton from '@/components/ui/LinkButton'
+import SpaceCard from '@/components/cards/SpaceCard'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
@@ -67,17 +67,12 @@ export default function EspaciosPage() {
         <Container variant="wide">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {spaces.map((space) => (
-              <Card key={space.title} variant="dark" padding="md">
-                {space.tag ? <Badge variant="brass">{space.tag}</Badge> : null}
-                <h2 className="mt-4 font-playfair text-xl font-bold text-[#F5F5F0]">
-                  {space.title}
-                </h2>
-                {space.description ? (
-                  <p className="mt-3 font-sans-app text-sm leading-relaxed text-[#A6B86B]">
-                    {space.description}
-                  </p>
-                ) : null}
-              </Card>
+              <SpaceCard
+                key={space.title}
+                title={space.title}
+                tag={space.tag}
+                description={space.description}
+              />
             ))}
           </div>
 
