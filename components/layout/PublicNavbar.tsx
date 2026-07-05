@@ -46,7 +46,7 @@ export default function PublicNavbar({
       <Container variant="wide">
         <nav
           aria-label="Navegación principal"
-          className="flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between md:gap-6 md:py-4"
+          className="flex flex-col gap-3 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:py-4"
         >
           <div className="flex items-center justify-between gap-4">
             <Link
@@ -65,7 +65,7 @@ export default function PublicNavbar({
             </Link>
 
             {cta ? (
-              <div className="md:hidden">
+              <div className="lg:hidden">
                 <LinkButton
                   href={cta.href}
                   variant="secondary"
@@ -80,7 +80,7 @@ export default function PublicNavbar({
           </div>
 
           {navItems.length > 0 ? (
-            <ul className="flex items-center gap-1 overflow-x-auto md:overflow-visible">
+            <ul className="flex items-center gap-1 overflow-x-auto lg:overflow-visible">
               {navItems.map((item) => (
                 <li key={item.href} className="shrink-0">
                   <Link
@@ -96,7 +96,7 @@ export default function PublicNavbar({
           ) : null}
 
           {cta ? (
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <LinkButton
                 href={cta.href}
                 variant="secondary"
