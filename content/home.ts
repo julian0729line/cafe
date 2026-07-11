@@ -22,8 +22,8 @@ export const homeContent = {
     secondaryCta: { label: 'Ver agenda', href: '/agenda' },
     highlights: [
       { label: 'Ciudad', value: siteConfig.city },
-      { label: 'Concepto', value: 'Café literario' },
-      { label: 'Comunidad', value: 'Activa' },
+      { label: 'Sedes', value: 'Pance y Juanambú' },
+      { label: 'Librería', value: 'La Maga' },
     ],
   },
   about: {
@@ -74,7 +74,8 @@ export const homeContent = {
   spaces: {
     eyebrow: 'Espacios',
     title: 'Un lugar para cada encuentro',
-    description: 'Espacios pensados para reuniones, celebraciones y actividades culturales.',
+    description:
+      'Espacios en nuestras sedes de Pance y Juanambú, pensados para reuniones, celebraciones y actividades culturales.',
     spaces: spacesPreview,
     cta: { label: 'Ver espacios', href: spacesConfig.ctaHref },
   },

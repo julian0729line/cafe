@@ -105,11 +105,15 @@ export default function ContactoPage() {
             <Card variant="outline" padding="lg">
               <h2 className="font-playfair text-xl font-bold text-[#F5F5F0]">Sedes</h2>
               {locations.length > 0 ? (
-                <ul className="mt-4 flex flex-col gap-3">
+                <ul className="mt-4 flex flex-col gap-4">
                   {locations.map((location) => (
                     <li key={location.name} className="font-sans-app text-sm text-[#A6B86B]">
-                      <span className="block font-bold text-[#F5F5F0]">{location.name}</span>
-                      {location.addressLabel ? <span>{location.addressLabel}</span> : null}
+                      <span className="block font-bold text-[#F5F5F0]">
+                        {location.name} · {location.city}
+                      </span>
+                      <span className="mt-1 block">
+                        {location.address ?? location.notes ?? 'Dirección pendiente de confirmar.'}
+                      </span>
                     </li>
                   ))}
                 </ul>

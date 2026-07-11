@@ -60,9 +60,9 @@ export default function EspaciosPage() {
         <Container variant="wide">
           <SectionHeader
             titleAs="h1"
-            eyebrow="Espacios"
+            eyebrow="Espacios · Pance y Juanambú"
             title="Un lugar para cada encuentro"
-            description="Espacios pensados para reuniones, celebraciones y actividades culturales, con la misma identidad editorial de Café Valparaíso."
+            description="Espacios en nuestras sedes de Pance y Juanambú, pensados para reuniones, celebraciones y actividades culturales, con la misma identidad editorial de Café Valparaíso."
           />
         </Container>
       </section>
@@ -82,8 +82,9 @@ export default function EspaciosPage() {
 
           <Card variant="outline" padding="lg" className="mt-10">
             <p className="font-playfair italic text-lg leading-relaxed text-[#D9DCC4]">
-              Los detalles de cada espacio (capacidad, disponibilidad y condiciones) se confirman
-              directamente por contacto, mientras terminamos de publicar la información completa.
+              Los detalles de cada espacio en Pance y Juanambú (capacidad, disponibilidad y
+              condiciones) se confirman directamente por contacto, mientras terminamos de publicar
+              la información completa.
             </p>
             <div className="mt-6 flex flex-wrap gap-4">
               <LinkButton href="/reservas" variant="ghost" size="md">

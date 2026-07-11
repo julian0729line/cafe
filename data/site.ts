@@ -12,17 +12,22 @@ export const siteConfig = {
   legalName: null,
   city: 'Cali',
   country: 'Colombia',
-  concept: 'Café literario, cultural y gastronómico',
-  tagline: 'Cultura, gastronomía y literatura en Cali',
+  concept: 'Café literario, cultural, artístico y gastronómico',
+  tagline: 'Café literario, cultura y gastronomía en Cali',
   description:
-    'Un espacio que reúne café, cocina, agenda cultural y literatura en un mismo lugar.',
+    'Café Valparaíso reúne cultura, gastronomía, literatura y conversación en Cali, con sus sedes de Pance y Juanambú y la Librería La Maga.',
   brandKeywords: [
     'café literario',
     'café cultural',
-    'Cali',
+    'cultura',
     'gastronomía',
-    'librería',
+    'literatura',
     'agenda cultural',
+    'librería',
+    'reservas',
+    'Cali',
+    'Pance',
+    'Juanambú',
   ],
   foundedLabel: null,
   siteUrl: null,
@@ -31,10 +36,10 @@ export const siteConfig = {
   seo: {
     title: 'Café Valparaíso — Café literario y cultural en Cali',
     description:
-      'Café Valparaíso reúne cultura, gastronomía y literatura en un mismo espacio en Cali, Colombia.',
+      'Café Valparaíso reúne cultura, gastronomía, literatura y conversación en Cali, Colombia, con sus sedes de Pance y Juanambú.',
     titleTemplate: '%s | Café Valparaíso',
     defaultTitle: 'Café Valparaíso',
   },
   statusNotes:
-    'Nombre, ciudad y concepto son datos genéricos de trabajo. legalName, foundedLabel y siteUrl quedan en null hasta que el negocio confirme razón social, fecha de fundación y dominio real de producción.',
+    'Confirmados en Fase 1: marca, ciudad, concepto, sedes (Pance y Juanambú) y Librería La Maga. legalName, foundedLabel y siteUrl quedan en null hasta que el negocio confirme razón social, fecha de fundación y dominio real de producción.',
 } as const

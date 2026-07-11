@@ -21,7 +21,8 @@ export const libraryCategories = [
 ] as const
 
 export const libraryConfig = {
+  name: 'Librería La Maga',
   ctaHref: '/libreria',
   statusNotes:
-    'Sin inventario de libros, autores ni horarios confirmados. Lista para conectar a la sección de librería.',
+    'Librería La Maga confirmada como línea del proyecto (curaduría literaria, clubes de lectura y conversación). Sin inventario de libros, autores, precios ni horarios confirmados todavía.',
 } as const

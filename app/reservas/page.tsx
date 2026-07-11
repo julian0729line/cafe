@@ -60,9 +60,9 @@ export default function ReservasPage() {
         <Container variant="wide">
           <SectionHeader
             titleAs="h1"
-            eyebrow="Reservas"
+            eyebrow="Reservas · Pance y Juanambú"
             title="Reserva tu lugar en Valparaíso"
-            description="Ya sea para una mesa, un encuentro privado o una actividad cultural, cuéntanos qué necesitas y te ayudamos a organizarlo."
+            description="Ya sea para una mesa, un encuentro privado o una actividad cultural en Pance o Juanambú, cuéntanos qué necesitas y te ayudamos a organizarlo."
           />
         </Container>
       </section>

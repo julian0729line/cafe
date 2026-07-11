@@ -7,7 +7,7 @@
  */
 
 export const eventCategories = [
-  'Club de lectura',
+  'Clubes de lectura',
   'Música en vivo',
   'Conversaciones',
   'Arte y cultura',
@@ -24,10 +24,14 @@ export type FeaturedEvent = {
   status: 'confirmed' | 'pending'
 }
 
+// Vacío a propósito: no hay eventos ni fechas confirmadas en Fase 1.
 export const featuredEvents: FeaturedEvent[] = []
 
 export const eventsConfig = {
   ctaHref: '/agenda',
+  emptyStateTitle: 'Agenda próxima a publicarse',
+  emptyStateMessage:
+    'Estamos preparando la próxima agenda cultural. Vuelve pronto o escríbenos para conocer las próximas actividades.',
   statusNotes:
-    'Sin eventos, fechas ni precios confirmados. La agenda cultural real se publica cuando el negocio la entregue.',
+    'Categorías generales confirmadas (clubes de lectura, música en vivo, conversaciones, arte y cultura). Sin eventos, fechas ni precios confirmados: la agenda real se publica cuando el negocio la entregue.',
 } as const

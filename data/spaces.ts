@@ -13,13 +13,36 @@ export type SpacePreviewLine = {
 }
 
 export const spacesPreview: SpacePreviewLine[] = [
-  { title: 'Encuentros privados', tag: 'Reuniones', description: null, status: 'pending' },
-  { title: 'Celebraciones', tag: 'Eventos', description: null, status: 'pending' },
-  { title: 'Actividades culturales', tag: 'Cultura', description: null, status: 'pending' },
+  {
+    title: 'Encuentros privados',
+    tag: 'Privado',
+    description: 'Un espacio reservado para reuniones cercanas.',
+    status: 'pending',
+  },
+  {
+    title: 'Celebraciones',
+    tag: 'Eventos',
+    description: 'Un lugar con identidad para momentos especiales.',
+    status: 'pending',
+  },
+  {
+    title: 'Reuniones',
+    tag: 'Trabajo',
+    description: 'Para encuentros de trabajo o conversación tranquila.',
+    status: 'pending',
+  },
+  {
+    title: 'Actividades culturales',
+    tag: 'Cultura',
+    description: 'Espacios para lecturas, música y agenda cultural.',
+    status: 'pending',
+  },
 ]
 
+// Sedes confirmadas (Fase 1); aforos, tarifas y disponibilidad quedan pendientes.
 export const spacesConfig = {
   ctaHref: '/espacios',
+  sedes: ['Pance', 'Juanambú'] as const,
   statusNotes:
-    'Sin aforos, precios ni sedes confirmadas todavía. Estructura lista para recibir sedes reales.',
+    'Sedes de Pance y Juanambú confirmadas. Sin aforos, tarifas ni disponibilidad confirmados todavía: esos detalles operativos se confirman por contacto.',
 } as const
