@@ -31,7 +31,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textare
         rows={rows}
         aria-invalid={Boolean(error) || undefined}
         aria-describedby={errorId ?? hintId}
-        className={`w-full resize-none rounded-none border-2 border-[#343E1C] bg-white px-4 py-3 text-sm text-[#343E1C] placeholder:text-[#aaa] focus:outline-none focus-visible:border-[#C1121F] ${className}`.trim()}
+        className={`w-full resize-none rounded-sm border-2 border-[#343E1C] bg-white px-4 py-3 text-sm text-[#343E1C] placeholder:text-[#6B6355] focus:outline-none focus-visible:border-[#C1121F] ${className}`.trim()}
         {...rest}
       />
       {error ? (

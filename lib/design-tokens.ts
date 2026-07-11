@@ -12,13 +12,27 @@
 
 export const designTokens = {
   colors: {
+    // Jerarquía cromática pública (dirección Claude Design, GOAL 17).
+    // Base editorial casi negra con matiz verde + capas oliva para profundidad.
+    // Es la vista canónica de la paleta; los grupos siguientes conservan los
+    // alias históricos ya usados en el código (no se rompe ningún consumidor).
+    hierarchy: {
+      backgroundPrimary: '#181f0d', // NUEVO — fondo editorial principal del sitio público
+      backgroundSecondary: '#343E1C', // = base.olive / surface.night — superficie secundaria
+      surface: '#4A5728', // = border.night — superficie elevada / borde fuerte
+      border: '#6B7A3C', // oliva claro — borde editorial (antes usado como texto, ahora borde)
+      muted: '#8A9A52', // oliva atenuado — metadata/acento tenue
+      accent: '#C1121F', // = brand.red — acento rojo editorial
+      paper: '#F5F5F0', // = text.onNight.primary — marfil principal
+    },
     // Neutros fundamentales de las dos superficies del sistema (Noche/Papel).
     base: {
+      blackGreen: '#181f0d', // NUEVO — verde casi negro, base editorial del público (GOAL 17)
       ivory: '#F7F1E6', // marfil — fondo de Modo Papel (menú, agenda, librería, contacto)
       paper: '#EFE4D0', // beige/papel — superficie elevada sobre marfil
       ink: '#1C1912', // negro tinta — texto principal sobre superficies claras
       forest: '#2A331A', // verde bosque — superficie más profunda de Modo Noche
-      olive: '#343E1C', // oliva editorial — fondo principal de Modo Noche
+      olive: '#343E1C', // oliva editorial — superficie secundaria de Modo Noche
     },
     // Colores de identidad de marca.
     brand: {
@@ -114,12 +128,15 @@ export const designTokens = {
     },
   },
 
+  // Radios editoriales (GOAL 17): se abandona el aspecto redondeado tipo SaaS.
+  // Criterio editorial, no brutalista — radios pequeños, `full` sólo para
+  // badges y casos específicos, `none` para media expandida y sellos "stamp".
   radius: {
-    none: '0',
-    sm: '0.5rem', // nuevo — reservado para elementos pequeños futuros (badges)
-    md: '1.25rem', // = rounded-[1.25rem], tarjetas
-    lg: '1.5rem', // = rounded-[1.5rem], paneles grandes
-    full: '999px', // pills y botones
+    none: '0', // media expandida a pantalla, sellos "stamp"
+    sm: '0.25rem', // inputs, botones y detalles pequeños (antes 0.5rem)
+    md: '0.375rem', // tarjetas editoriales (antes 1.25rem — se descarta el look SaaS)
+    lg: '0.5rem', // media/video contenido (antes 1.5rem)
+    full: '999px', // sólo badges y pills específicas
   },
 
   shadows: {

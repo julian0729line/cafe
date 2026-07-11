@@ -58,7 +58,7 @@ export default function PublicFooter({
 }: PublicFooterProps) {
   return (
     <footer className={cn('border-t border-[#4A5728] bg-[#2A331A]', className)}>
-      <Container variant="wide" className="py-12 md:py-16">
+      <Container variant="wide" className="py-14 md:py-20">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.2fr_repeat(auto-fit,minmax(140px,1fr))]">
           <div className="flex flex-col gap-3">
             <span className="font-playfair text-xl italic text-[#F5F5F0]">{brand}</span>

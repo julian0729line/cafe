@@ -89,7 +89,7 @@ export default function PublicNavbar({
                     href={item.href}
                     title={item.description}
                     aria-current={item.href === activeHref ? 'page' : undefined}
-                    className="press inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 py-2 font-sans-app text-[10px] font-bold uppercase tracking-[0.2em] text-[#A6B86B] transition-colors hover:text-[#F5F5F0]"
+                    className="press inline-flex min-h-11 items-center whitespace-nowrap rounded-sm px-4 py-2 font-sans-app text-[10px] font-bold uppercase tracking-[0.2em] text-[#A6B86B] transition-colors hover:bg-[rgba(245,245,240,0.06)] hover:text-[#F5F5F0]"
                   >
                     {item.label}
                   </Link>

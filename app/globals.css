@@ -257,6 +257,60 @@ body {
   transform: scale(0.97);
 }
 
+/* ── Capitular editorial (dropcap) — GOAL 17, reutilizable ──
+   Estática (no anima). Preparada para manifiestos ("Qué es", Librería). */
+.dropcap::first-letter {
+  font-family: var(--font-playfair), Georgia, serif;
+  float: left;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 4.6em;
+  line-height: 0.72;
+  padding: 0.05em 0.12em 0 0;
+  color: #C1121F;
+}
+
+/* ── Fila de menú/índice con relleno rojo al hover (CSS puro) — GOAL 17 ──
+   Preparada para GOAL 19+ (listas de menú, índices). Aún NO aplicada a
+   páginas. Coloca `.menu-fill` como primer hijo absoluto dentro de `.menu-row`
+   y el contenido por encima con posición relativa. */
+.menu-row {
+  position: relative;
+  isolation: isolate;
+}
+.menu-row .menu-fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #C1121F;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.menu-row:hover .menu-fill { transform: scaleY(1); }
+
+/* ── Relleno editorial deslizante reutilizable (CSS puro) — GOAL 17 ──
+   Hermano sobrio de `.btn-fill`: un lavado tenue de `currentColor` que entra
+   desde la izquierda. Para botones/filas futuras; aún NO aplicado. */
+.editorial-fill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s ease;
+}
+.editorial-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: currentColor;
+  opacity: 0.14;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.editorial-fill:hover::before { transform: scaleX(1); }
+
 /* ── Reduced motion: keep opacity, drop movement ── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -268,6 +322,10 @@ body {
     filter: none !important;
   }
   .reveal { opacity: 1; }
+  /* Los rellenos conservan su estado funcional pero sin transición de
+     movimiento (el cambio de estado en hover es instantáneo, no animado). */
+  .menu-row .menu-fill,
+  .editorial-fill::before { transition: none !important; }
 }
 
 /* ── Input con label flotante ── */

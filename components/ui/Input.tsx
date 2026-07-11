@@ -30,7 +30,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         name={name}
         aria-invalid={Boolean(error) || undefined}
         aria-describedby={errorId ?? hintId}
-        className={`w-full rounded-none border-2 border-[#343E1C] bg-white px-4 py-3 text-sm text-[#343E1C] placeholder:text-[#aaa] focus:outline-none focus-visible:border-[#C1121F] ${className}`.trim()}
+        className={`min-h-11 w-full rounded-sm border-2 border-[#343E1C] bg-white px-4 py-3 text-sm text-[#343E1C] placeholder:text-[#6B6355] focus:outline-none focus-visible:border-[#C1121F] ${className}`.trim()}
         {...rest}
       />
       {error ? (

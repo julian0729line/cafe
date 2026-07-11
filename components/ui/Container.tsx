@@ -23,7 +23,7 @@ export default function Container({
   children,
 }: ContainerProps) {
   return (
-    <Tag className={`w-full mx-auto px-4 md:px-8 ${WIDTH_BY_VARIANT[variant]} ${className}`.trim()}>
+    <Tag className={`w-full mx-auto px-6 md:px-8 lg:px-12 ${WIDTH_BY_VARIANT[variant]} ${className}`.trim()}>
       {children}
     </Tag>
   )

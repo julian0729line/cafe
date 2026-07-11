@@ -3,6 +3,12 @@ import type { ElementType } from 'react'
 export interface SectionHeaderProps {
   eyebrow?: string
   title: string
+  /**
+   * Énfasis editorial opcional: palabra/frase que se añade al final del título
+   * en serif itálica y color rojo de marca (patrón "Agenda cultural." del
+   * lenguaje Claude Design). Retrocompatible: si no se pasa, el título no cambia.
+   */
+  emphasis?: string
   description?: string
   align?: 'left' | 'center'
   titleAs?: 'h1' | 'h2' | 'h3'
@@ -17,6 +23,7 @@ const ALIGN_CLASSES = {
 export default function SectionHeader({
   eyebrow,
   title,
+  emphasis,
   description,
   align = 'left',
   titleAs = 'h2',
@@ -37,7 +44,7 @@ export default function SectionHeader({
         </span>
       ) : null}
       <TitleTag
-        className={`font-playfair font-black leading-[1.05] text-[#F5F5F0] ${TITLE_SIZE_CLASSES[titleAs]}`.trim()}
+        className={`font-playfair font-black leading-[1.05] tracking-tight text-[#F5F5F0] ${TITLE_SIZE_CLASSES[titleAs]}`.trim()}
         style={
           titleAs === 'h1'
             ? { fontSize: 'clamp(2.75rem, 7.5vw, 6.5rem)' }
@@ -45,6 +52,12 @@ export default function SectionHeader({
         }
       >
         {title}
+        {emphasis ? (
+          <>
+            {' '}
+            <em className="italic text-[#C1121F]">{emphasis}</em>
+          </>
+        ) : null}
       </TitleTag>
       {description ? (
         <p className="font-sans-app max-w-2xl text-base leading-relaxed text-[#A6B86B]">

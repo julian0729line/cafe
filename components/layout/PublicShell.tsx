@@ -43,7 +43,7 @@ export default function PublicShell({
   footer,
 }: PublicShellProps) {
   return (
-    <div className={cn('flex min-h-full flex-col', className)}>
+    <div className={cn('flex min-h-full flex-col bg-[#181f0d] text-[#F5F5F0]', className)}>
       <a
         href="#contenido-principal"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-[#F5F5F0] focus:px-5 focus:py-3 focus:font-sans-app focus:text-[11px] focus:font-bold focus:uppercase focus:tracking-[0.2em] focus:text-[#343E1C]"
