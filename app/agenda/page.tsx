@@ -1,15 +1,13 @@
 import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
-import Container from '@/components/ui/Container'
-import SectionHeader from '@/components/ui/SectionHeader'
-import Card from '@/components/ui/Card'
-import Badge from '@/components/ui/Badge'
-import LinkButton from '@/components/ui/LinkButton'
-import EventCard from '@/components/cards/EventCard'
+import AgendaHero from '@/components/sections/agenda/AgendaHero'
+import AgendaStatusSection from '@/components/sections/agenda/AgendaStatusSection'
+import AgendaProgramsSection from '@/components/sections/agenda/AgendaProgramsSection'
+import AgendaClosingSection from '@/components/sections/agenda/AgendaClosingSection'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
-import { eventCategories, featuredEvents } from '@/data/events'
+import { eventCategories, featuredEvents, eventsConfig, type EventCategory } from '@/data/events'
 import { createPageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = createPageMetadata({
@@ -19,16 +17,20 @@ export const metadata: Metadata = createPageMetadata({
   path: '/agenda',
 })
 
-function nullableToUndefined<T>(value: T | null): T | undefined {
-  return value ?? undefined
+// Glosas editoriales breves para cada categoría real de `data/events.ts`.
+// Describen el tipo de encuentro, sin fechas, artistas ni precios.
+const PROGRAM_DESCRIPTIONS: Record<EventCategory, string> = {
+  'Clubes de lectura': 'Encuentros alrededor de un libro, con la Librería La Maga.',
+  'Música en vivo': 'Sesiones en vivo entre conversaciones y café.',
+  Conversaciones: 'Charlas con autores, artistas y voces de la ciudad.',
+  'Arte y cultura': 'Talleres, lecturas y actividades culturales.',
 }
 
-const events = featuredEvents.map((event) => ({
-  title: event.title,
-  category: event.category,
-  dateLabel: nullableToUndefined(event.dateLabel),
-  description: nullableToUndefined(event.description),
-  href: nullableToUndefined(event.href),
+const programLines = eventCategories.map((category, index) => ({
+  number: String(index + 1).padStart(2, '0'),
+  title: category,
+  description: PROGRAM_DESCRIPTIONS[category],
+  status: 'Programación próxima',
 }))
 
 export default function AgendaPage() {
@@ -59,77 +61,15 @@ export default function AgendaPage() {
         copyright: `© ${new Date().getFullYear()} ${siteConfig.name}. Todos los derechos reservados.`,
       }}
     >
-      <section className="border-b border-[#4A5728] px-4 py-16 md:px-8 md:py-24">
-        <Container variant="wide">
-          <SectionHeader
-            titleAs="h1"
-            eyebrow="Agenda cultural"
-            title="Cosas que pasan en Valparaíso"
-            description="Club de lectura, música en vivo, conversaciones y arte: la agenda que hace de Café Valparaíso un espacio cultural, no solo gastronómico."
-          />
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            {eventCategories.map((category) => (
-              <Badge key={category} variant="olive">
-                {category}
-              </Badge>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="px-4 py-16 md:px-8 md:py-24">
-        <Container variant="wide">
-          {events.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {events.map((event) => (
-                <EventCard
-                  key={event.title}
-                  title={event.title}
-                  category={event.category}
-                  dateLabel={event.dateLabel}
-                  description={event.description}
-                  href={event.href}
-                />
-              ))}
-            </div>
-          ) : (
-            <Card variant="outline" padding="lg">
-              <p className="font-playfair italic text-lg leading-relaxed text-[#D9DCC4]">
-                Estamos preparando la próxima agenda cultural. Vuelve pronto o escríbenos para
-                conocer las próximas actividades.
-              </p>
-              <div className="mt-6">
-                <LinkButton href="/contacto" variant="ghost" size="md">
-                  Escríbenos
-                </LinkButton>
-              </div>
-            </Card>
-          )}
-        </Container>
-      </section>
-
-      <section className="px-4 py-16 md:px-8 md:py-24">
-        <Container variant="wide">
-          <Card
-            variant="editorial"
-            padding="lg"
-            className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between"
-          >
-            <div>
-              <h2 className="font-playfair text-2xl font-black text-[#F5F5F0] md:text-3xl">
-                ¿Quieres proponer una actividad?
-              </h2>
-              <p className="mt-3 max-w-md font-sans-app text-sm leading-relaxed text-[#F5F5F0]/85">
-                Escríbenos y te contamos cómo sumarte a la agenda cultural de Café Valparaíso.
-              </p>
-            </div>
-            <LinkButton href="/contacto" variant="dark" size="lg">
-              Contáctanos
-            </LinkButton>
-          </Card>
-        </Container>
-      </section>
+      <AgendaHero />
+      {featuredEvents.length === 0 ? (
+        <AgendaStatusSection
+          title={eventsConfig.emptyStateTitle}
+          message="Estamos preparando la próxima programación cultural. Las fechas y los detalles se publicarán próximamente."
+        />
+      ) : null}
+      <AgendaProgramsSection lines={programLines} />
+      <AgendaClosingSection />
     </PublicShell>
   )
 }
