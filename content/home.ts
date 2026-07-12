@@ -1,23 +1,45 @@
 /**
  * Textos estructurados del home — Café Valparaíso.
  *
- * Compone datos de `data/` en la forma que consumirán (en un GOAL
- * posterior) las secciones de `components/sections/home/`. No importa
- * ningún componente: solo datos.
+ * Compone datos de `data/` en la forma que consumen las secciones de
+ * `components/sections/home/`. No importa ningún componente: solo datos.
+ * Todo el contenido es confirmado o descriptivo/seguro: no hay fechas,
+ * precios, direcciones, aforos ni artistas inventados.
  */
 
 import { siteConfig } from '@/data/site'
-import { featuredEvents, eventsConfig } from '@/data/events'
+import { eventCategories, eventsConfig } from '@/data/events'
 import { menuPreviewItems, menuConfig } from '@/data/menu'
 import { libraryCategories, libraryConfig } from '@/data/library'
 import { spacesPreview, spacesConfig } from '@/data/spaces'
-import { contactConfig } from '@/data/contact'
+
+// Descripciones editoriales seguras para cada línea de la agenda. Las
+// categorías vienen de `data/events.ts`; aquí solo se les da una glosa breve
+// (sin fechas, artistas ni precios).
+const AGENDA_GLOSSES: Record<(typeof eventCategories)[number], string> = {
+  'Clubes de lectura': 'Encuentros alrededor de un libro, con la Librería La Maga.',
+  'Música en vivo': 'Sesiones acústicas entre conversaciones y café.',
+  Conversaciones: 'Charlas con autores, artistas y voces de la ciudad.',
+  'Arte y cultura': 'Talleres, lecturas y actividades culturales.',
+}
+
+const agendaLines = eventCategories.map((category, index) => ({
+  number: String(index + 1).padStart(2, '0'),
+  title: category,
+  description: AGENDA_GLOSSES[category],
+  status: 'Programación próxima',
+}))
 
 export const homeContent = {
   hero: {
-    eyebrow: 'Café literario · ' + siteConfig.city,
+    eyebrow: siteConfig.concept, // «Café literario, cultural, artístico y gastronómico»
+    // El h1 es un único string; la sección lo compone visualmente en dos líneas.
     title: siteConfig.name,
-    description: siteConfig.tagline,
+    titleLead: 'Café',
+    titleAccent: 'Valparaíso',
+    description: 'Un lugar para leer, conversar y comer. Sedes en Pance y Juanambú, en Cali.',
+    topLeftLabel: 'Café · Cultura · Cocina',
+    topRightLabel: `${siteConfig.city}, ${siteConfig.country}`,
     primaryCta: { label: 'Reservar', href: '/reservas' },
     secondaryCta: { label: 'Ver agenda', href: '/agenda' },
     highlights: [
@@ -27,66 +49,74 @@ export const homeContent = {
     ],
   },
   about: {
-    eyebrow: 'Quiénes somos',
-    title: 'Más que un café',
-    description: siteConfig.description,
-    features: [
-      {
-        title: 'Café literario',
-        description: 'Un espacio pensado para leer, escribir y conversar sobre una taza de café.',
-      },
-      {
-        title: 'Espacio cultural',
-        description: 'Agenda viva de encuentros y actividades para la comunidad.',
-      },
-      {
-        title: 'Gastronomía de autor',
-        description: 'Cocina y barra propias, con identidad propia.',
-      },
-      {
-        title: 'Comunidad',
-        description: 'Un lugar que se construye con quienes vuelven.',
-      },
+    index: '01',
+    eyebrow: 'Qué es Café Valparaíso',
+    title: 'Más que un café,',
+    emphasis: 'un lugar de encuentro.',
+    lead: siteConfig.description,
+    body: 'Aquí el café, los libros y la conversación comparten la misma mesa: gastronomía sin prisa, encuentros que cambian con las semanas y una comunidad que vuelve.',
+    aside: 'La cultura no es un evento aparte: es parte de la mesa.',
+    keywords: [
+      'Literatura',
+      'Café',
+      'Cocina',
+      'Arte',
+      'Música',
+      'Conversaciones',
+      'Comunidad',
+      'Cali',
+      'Pance y Juanambú',
     ],
   },
   culture: {
+    index: '02',
     eyebrow: 'Agenda cultural',
-    title: 'Cosas que pasan aquí',
+    title: 'Cosas que pasan',
+    emphasis: 'cuando la voz se comparte.',
     description:
-      'Encuentros y actividades culturales; la agenda con fechas reales se publica cuando esté confirmada.',
-    events: featuredEvents,
+      'Programación cultural en construcción; publicamos las fechas cuando estén confirmadas.',
+    lines: agendaLines,
     cta: { label: 'Ver agenda', href: eventsConfig.ctaHref },
   },
   menu: {
-    eyebrow: 'Lo que servimos',
-    title: 'Nuestro menú',
-    description: 'Café, cocina y coctelería con identidad propia.',
+    index: '03',
+    eyebrow: 'Gastronomía',
+    title: 'Toda buena lectura',
+    emphasis: 'pide su bebida.',
     items: menuPreviewItems,
+    note: 'La carta con precios se comparte en la mesa.',
     cta: { label: 'Ver menú', href: menuConfig.ctaHref },
   },
   library: {
-    eyebrow: 'Librería La Maga',
-    title: 'Libros y conversación',
-    description: 'Curaduría literaria, clubes de lectura y un rincón para perderse entre libros.',
+    index: '04',
+    eyebrow: libraryConfig.name, // «Librería La Maga»
+    title: 'Un estante que',
+    emphasis: 'conversa con la carta.',
+    description:
+      'Curaduría literaria hecha a mano y clubes de lectura que empiezan con un café servido. Aquí los libros no solo se leen: se conversan.',
     categories: libraryCategories,
-    cta: { label: 'Ver librería', href: libraryConfig.ctaHref },
+    mediaLabel: libraryConfig.name,
+    cta: { label: 'Conocer Librería La Maga', href: libraryConfig.ctaHref },
   },
   spaces: {
-    eyebrow: 'Espacios',
-    title: 'Un lugar para cada encuentro',
+    index: '05',
+    eyebrow: 'Espacios y reservas',
+    title: 'Salas y rincones',
+    emphasis: 'para reunir gente.',
     description:
-      'Espacios en nuestras sedes de Pance y Juanambú, pensados para reuniones, celebraciones y actividades culturales.',
-    spaces: spacesPreview,
-    cta: { label: 'Ver espacios', href: spacesConfig.ctaHref },
+      'Encuentros, celebraciones, reuniones y actividades culturales en nuestras sedes de Pance y Juanambú.',
+    sedes: spacesConfig.sedes,
+    kinds: spacesPreview.map((space) => space.title),
+    note: 'Aforos y tarifas, pendientes de confirmar.',
+    primaryCta: { label: 'Ver espacios', href: spacesConfig.ctaHref },
+    secondaryCta: { label: 'Reservar', href: '/reservas' },
   },
   reservationCta: {
-    eyebrow: 'Te esperamos',
-    title: 'Ven a vivir Valparaíso',
-    description: 'Reserva tu mesa o escríbenos para resolver cualquier duda antes de tu visita.',
+    eyebrow: 'Planea tu visita',
+    title: 'Conversemos sobre tu próxima reserva.',
+    description:
+      'Escríbenos para tu reserva, tu evento o tu próxima lectura. Te esperamos en Pance y Juanambú.',
     primaryCta: { label: 'Reservar', href: '/reservas' },
-    secondaryCta: {
-      label: 'Escríbenos',
-      href: contactConfig.reservationChannels[0]?.href ?? '/contacto',
-    },
+    secondaryCta: { label: 'Contacto', href: '/contacto' },
   },
 } as const

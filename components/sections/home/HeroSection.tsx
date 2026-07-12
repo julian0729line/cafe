@@ -15,7 +15,13 @@ export type HeroCta = {
 export interface HeroSectionProps {
   eyebrow?: string
   title?: string
+  /** Composición visual del título en dos líneas (un único `<h1>`). */
+  titleLead?: string
+  titleAccent?: string
   description?: string
+  /** Micro-labels editoriales en las esquinas superiores del hero. */
+  topLeftLabel?: string
+  topRightLabel?: string
   primaryCta?: HeroCta
   secondaryCta?: HeroCta
   highlights?: HeroHighlight[]
@@ -38,9 +44,13 @@ const DEFAULT_HIGHLIGHTS: HeroHighlight[] = [
  * pasa las props necesarias.
  */
 export default function HeroSection({
-  eyebrow = 'Café literario · Cali',
+  eyebrow = 'Café literario, cultural, artístico y gastronómico',
   title = 'Café Valparaíso',
-  description = 'Café literario, cultura y gastronomía en Cali.',
+  titleLead = 'Café',
+  titleAccent = 'Valparaíso',
+  description = 'Un lugar para leer, conversar y comer. Sedes en Pance y Juanambú, en Cali.',
+  topLeftLabel = 'Café · Cultura · Cocina',
+  topRightLabel = 'Cali, Colombia',
   primaryCta = { label: 'Reservar', href: '/reservas' },
   secondaryCta = { label: 'Ver agenda', href: '/agenda' },
   highlights = DEFAULT_HIGHLIGHTS,
@@ -52,7 +62,11 @@ export default function HeroSection({
     <ScrollExpansionHero
       eyebrow={eyebrow}
       title={title}
+      titleLead={titleLead}
+      titleAccent={titleAccent}
       description={description}
+      topLeftLabel={topLeftLabel}
+      topRightLabel={topRightLabel}
       primaryCta={primaryCta}
       secondaryCta={secondaryCta}
       highlights={highlights}

@@ -39,12 +39,11 @@ const footerContactItems = contactConfig.reservationChannels.map((channel) => ({
   href: channel.href,
 }))
 
-const cultureEvents = homeContent.culture.events.map((event) => ({
-  title: event.title,
-  category: event.category,
-  dateLabel: nullableToUndefined(event.dateLabel),
-  description: nullableToUndefined(event.description),
-  href: nullableToUndefined(event.href),
+const cultureLines = homeContent.culture.lines.map((line) => ({
+  number: line.number,
+  title: line.title,
+  description: line.description,
+  status: line.status,
 }))
 
 const menuItems = homeContent.menu.items.map((item) => ({
@@ -53,11 +52,15 @@ const menuItems = homeContent.menu.items.map((item) => ({
   description: nullableToUndefined(item.description),
 }))
 
-const spaces = homeContent.spaces.spaces.map((space) => ({
-  title: space.title,
-  tag: nullableToUndefined(space.tag),
-  description: nullableToUndefined(space.description),
+const libraryCategories = homeContent.library.categories.map((category) => ({
+  title: category.title,
+  description: category.description,
 }))
+
+const aboutKeywords = [...homeContent.about.keywords]
+const spacesSedes = [...homeContent.spaces.sedes]
+const spacesKinds = [...homeContent.spaces.kinds]
+const heroHighlights = [...homeContent.hero.highlights]
 
 export default function HomePage() {
   return (
@@ -81,44 +84,64 @@ export default function HomePage() {
       <HeroSection
         eyebrow={homeContent.hero.eyebrow}
         title={homeContent.hero.title}
+        titleLead={homeContent.hero.titleLead}
+        titleAccent={homeContent.hero.titleAccent}
         description={homeContent.hero.description}
+        topLeftLabel={homeContent.hero.topLeftLabel}
+        topRightLabel={homeContent.hero.topRightLabel}
         primaryCta={homeContent.hero.primaryCta}
         secondaryCta={homeContent.hero.secondaryCta}
-        highlights={[...homeContent.hero.highlights]}
+        highlights={heroHighlights}
       />
       <AboutSection
+        index={homeContent.about.index}
         eyebrow={homeContent.about.eyebrow}
         title={homeContent.about.title}
-        description={homeContent.about.description}
-        features={[...homeContent.about.features]}
+        emphasis={homeContent.about.emphasis}
+        lead={homeContent.about.lead}
+        body={homeContent.about.body}
+        aside={homeContent.about.aside}
+        keywords={aboutKeywords}
       />
       <CulturePreviewSection
+        index={homeContent.culture.index}
         eyebrow={homeContent.culture.eyebrow}
         title={homeContent.culture.title}
+        emphasis={homeContent.culture.emphasis}
         description={homeContent.culture.description}
-        events={cultureEvents}
+        lines={cultureLines}
         cta={homeContent.culture.cta}
       />
       <MenuPreviewSection
+        index={homeContent.menu.index}
         eyebrow={homeContent.menu.eyebrow}
         title={homeContent.menu.title}
-        description={homeContent.menu.description}
+        emphasis={homeContent.menu.emphasis}
         items={menuItems}
+        note={homeContent.menu.note}
         cta={homeContent.menu.cta}
       />
       <LibraryPreviewSection
+        index={homeContent.library.index}
         eyebrow={homeContent.library.eyebrow}
         title={homeContent.library.title}
+        emphasis={homeContent.library.emphasis}
         description={homeContent.library.description}
-        categories={[...homeContent.library.categories]}
+        categories={libraryCategories}
+        mediaLabel={homeContent.library.mediaLabel}
         cta={homeContent.library.cta}
       />
       <SpacesPreviewSection
+        index={homeContent.spaces.index}
         eyebrow={homeContent.spaces.eyebrow}
         title={homeContent.spaces.title}
+        emphasis={homeContent.spaces.emphasis}
         description={homeContent.spaces.description}
-        spaces={spaces}
-        cta={homeContent.spaces.cta}
+        sedes={spacesSedes}
+        kinds={spacesKinds}
+        note={homeContent.spaces.note}
+        primaryCta={homeContent.spaces.primaryCta}
+        secondaryCta={homeContent.spaces.secondaryCta}
       />
       <ReservationCTASection
         eyebrow={homeContent.reservationCta.eyebrow}

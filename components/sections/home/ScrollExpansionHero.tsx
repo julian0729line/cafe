@@ -8,7 +8,11 @@ import type { HeroCta, HeroHighlight } from './HeroSection'
 export interface ScrollExpansionHeroProps {
   eyebrow: string
   title: string
+  titleLead?: string
+  titleAccent?: string
   description: string
+  topLeftLabel?: string
+  topRightLabel?: string
   primaryCta?: HeroCta
   secondaryCta?: HeroCta
   highlights: HeroHighlight[]
@@ -28,7 +32,11 @@ const FALLBACK_MEDIA_BACKGROUND =
 export default function ScrollExpansionHero({
   eyebrow,
   title,
+  titleLead,
+  titleAccent,
   description,
+  topLeftLabel,
+  topRightLabel,
   primaryCta,
   secondaryCta,
   highlights,
@@ -59,15 +67,19 @@ export default function ScrollExpansionHero({
   // Con reduced motion, todos los rangos quedan en su estado final (estáticos).
   const scale = useTransform(scrollYProgress, [0, 0.45], reduce ? [1, 1] : [0.72, 1])
   const radius = useTransform(scrollYProgress, [0, 0.45], reduce ? [0, 0] : [28, 0])
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.45], reduce ? [0.36, 0.36] : [0.52, 0.34])
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.45], reduce ? [0.4, 0.4] : [0.56, 0.4])
   const backgroundOpacity = useTransform(scrollYProgress, [0, 0.4], reduce ? [0, 0] : [1, 0])
   const contentY = useTransform(scrollYProgress, [0, 0.45], reduce ? [0, 0] : [0, -32])
+
+  // El título es un único `<h1>`; se compone visualmente en dos líneas.
+  const lead = titleLead ?? title
+  const accent = titleAccent
 
   return (
     <section
       ref={ref}
       aria-label="Presentación de Café Valparaíso"
-      className="relative h-[160vh] border-b border-[#4A5728] bg-[#343E1C] md:h-[185vh]"
+      className="relative h-[160vh] border-b border-[#4A5728] bg-[#181f0d] md:h-[185vh]"
     >
       {/* Fondo que se desvanece a medida que el medio llena la pantalla */}
       <motion.div
@@ -131,13 +143,30 @@ export default function ScrollExpansionHero({
             />
           )}
 
-          {/* Scrim para legibilidad del copy sobre el medio */}
-          <motion.div
-            style={{ opacity: overlayOpacity }}
-            className="absolute inset-0 bg-[#1f2713]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1f2713]/80 via-transparent to-[#1f2713]/30" />
+          {/* Scrim + gradiente inferior para legibilidad del copy sobre el medio */}
+          <motion.div style={{ opacity: overlayOpacity }} className="absolute inset-0 bg-[#181f0d]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#181f0d]/90 via-[#181f0d]/25 to-[#181f0d]/45" />
+          {/* Grano cinematográfico sutil */}
+          <span className="grain-soft" />
         </motion.div>
+
+        {/* Micro-labels editoriales de las esquinas superiores */}
+        {topLeftLabel || topRightLabel ? (
+          <div className="fade-up fade-up-1 pointer-events-none absolute inset-x-4 top-6 z-10 flex items-start justify-between md:inset-x-10 md:top-10">
+            {topLeftLabel ? (
+              <span className="font-sans-app text-[10px] uppercase tracking-[0.4em] text-[#F5F5F0]/60">
+                {topLeftLabel}
+              </span>
+            ) : (
+              <span />
+            )}
+            {topRightLabel ? (
+              <span className="text-right font-sans-app text-[10px] uppercase tracking-[0.4em] text-[#F5F5F0]/60">
+                {topRightLabel}
+              </span>
+            ) : null}
+          </div>
+        ) : null}
 
         {/* Copy editorial: visible e interactivo desde el inicio (fade-up al cargar) */}
         <motion.div
@@ -149,13 +178,14 @@ export default function ScrollExpansionHero({
           </p>
 
           <h1
-            className="fade-up fade-up-2 mt-5 font-playfair font-black leading-[0.92] tracking-tight text-[#F5F5F0]"
+            className="fade-up fade-up-2 mt-5 font-playfair font-black leading-[0.88] tracking-tight text-[#F5F5F0]"
             style={{ fontSize: 'clamp(3rem, 10vw, 8rem)' }}
           >
-            {title}
+            <span className="block">{lead}</span>
+            {accent ? <span className="block italic text-[#FF7F70]">{accent}</span> : null}
           </h1>
 
-          <p className="fade-up fade-up-3 mx-auto mt-6 max-w-xl font-playfair text-lg italic leading-relaxed text-[#F5F5F0] md:text-xl">
+          <p className="fade-up fade-up-3 mx-auto mt-6 max-w-xl font-playfair text-lg italic leading-relaxed text-[#F5F5F0]/85 md:text-xl">
             {description}
           </p>
 
