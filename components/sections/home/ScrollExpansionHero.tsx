@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import LinkButton from '@/components/ui/LinkButton'
 import type { HeroCta, HeroHighlight } from './HeroSection'
@@ -57,6 +58,27 @@ export default function ScrollExpansionHero({
     return () => cancelAnimationFrame(id)
   }, [])
   const reduce = mounted && Boolean(prefersReduced)
+
+  // El video anuncia que puede reproducirse (evento del propio elemento, no
+  // setState síncrono en el cuerpo de un efecto: no aplica react-hooks/set-state-in-effect).
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoReady, setVideoReady] = useState(false)
+  const handleVideoReady = () => setVideoReady(true)
+  // Con reduced motion se muestra siempre el poster, sin importar si el video
+  // ya está listo: `showVideo` es la única fuente de verdad del crossfade.
+  const showVideo = videoReady && !reduce
+
+  // Control imperativo de reproducción: el atributo HTML `autoPlay` no conoce
+  // la preferencia de movimiento reducido del usuario, así que se gatea aquí.
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    if (reduce) {
+      video.pause()
+      return
+    }
+    video.play().catch(() => {})
+  }, [reduce])
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -119,29 +141,68 @@ export default function ScrollExpansionHero({
           style={{ scale, borderRadius: radius, willChange: 'transform' }}
           className="absolute inset-0 z-0 overflow-hidden"
         >
-          {videoSrc ? (
-            <video
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={posterSrc}
+          {/* Capa base: degradado editorial de reserva, siempre presente, nunca pantalla negra */}
+          <div
+            className="absolute inset-0 h-full w-full"
+            style={{
+              backgroundImage: backgroundSrc ? `url(${backgroundSrc})` : FALLBACK_MEDIA_BACKGROUND,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+
+          {/* Fondo ambiental (solo tablet/desktop): poster oscurecido y desenfocado
+              que rellena los laterales cuando el video vertical se ve completo */}
+          {posterSrc ? (
+            <Image
               aria-hidden="true"
-            >
-              <source src={videoSrc} type="video/mp4" />
-            </video>
-          ) : (
-            <div
-              className="h-full w-full"
-              style={{
-                backgroundImage: backgroundSrc ? `url(${backgroundSrc})` : FALLBACK_MEDIA_BACKGROUND,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
+              src={posterSrc}
+              alt=""
+              fill
+              sizes="100vw"
+              className="hidden scale-110 object-cover brightness-[0.55] blur-2xl md:block"
             />
-          )}
+          ) : null}
+
+          {videoSrc ? (
+            <>
+              {/* Poster en primer plano: mismo recorte que el video, se desvanece al reproducir */}
+              {posterSrc ? (
+                <Image
+                  aria-hidden="true"
+                  src={posterSrc}
+                  alt=""
+                  fill
+                  priority
+                  sizes="100vw"
+                  className={`object-cover transition-opacity duration-700 ease-out md:object-contain ${
+                    showVideo ? 'opacity-0' : 'opacity-100'
+                  }`}
+                />
+              ) : null}
+
+              <video
+                ref={videoRef}
+                onCanPlay={handleVideoReady}
+                onLoadedData={handleVideoReady}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out md:object-contain ${
+                  showVideo ? 'opacity-100' : 'opacity-0'
+                }`}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={posterSrc}
+                controls={false}
+                disablePictureInPicture
+                disableRemotePlayback
+                aria-hidden="true"
+              >
+                <source src={videoSrc} type="video/mp4" />
+              </video>
+            </>
+          ) : null}
 
           {/* Scrim + gradiente inferior para legibilidad del copy sobre el medio */}
           <motion.div style={{ opacity: overlayOpacity }} className="absolute inset-0 bg-[#181f0d]" />

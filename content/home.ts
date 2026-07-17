@@ -47,6 +47,13 @@ export const homeContent = {
       { label: 'Sedes', value: 'Pance y Juanambú' },
       { label: 'Librería', value: 'La Maga' },
     ],
+    videoSrc: '/media/valparaiso-home.mp4',
+    // El poster queda aplazado (sin archivo real disponible todavía): el hero
+    // degrada de forma segura sin él (fallback editorial CSS, sin capa
+    // ambiental, sin crossfade, sin 404 ni ícono roto). Cuando exista
+    // public/media/valparaiso-home-poster.webp, activarlo es solo asignar su
+    // ruta aquí — ver docs/HERO_VIDEO_REAL.md.
+    posterSrc: undefined as string | undefined,
   },
   about: {
     index: '01',

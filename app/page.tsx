@@ -92,6 +92,8 @@ export default function HomePage() {
         primaryCta={homeContent.hero.primaryCta}
         secondaryCta={homeContent.hero.secondaryCta}
         highlights={heroHighlights}
+        videoSrc={homeContent.hero.videoSrc}
+        posterSrc={homeContent.hero.posterSrc}
       />
       <AboutSection
         index={homeContent.about.index}

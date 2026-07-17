@@ -3,12 +3,35 @@
 Sube aquí tus archivos y la web los usará automáticamente, con el tratamiento
 duotono, el scrim y el zoom en hover ya aplicados.
 
-## Video de fondo del hero
-1. Sube tu video como `public/media/hero.mp4` (recomendado: 1920x1080, mudo,
-   10-20s en loop, < 8 MB).
-2. En `app/components/Hero.tsx` cambia:
-   `const HERO_VIDEO = null`  ->  `const HERO_VIDEO = '/media/hero.mp4'`
-   (opcional) `const HERO_POSTER = '/media/hero.jpg'` para el primer frame.
+## Video de fondo del hero (home actual)
+
+El hero real del home (`components/sections/home/ScrollExpansionHero.tsx`) usa
+`public/media/valparaiso-home.mp4`: vertical, 480×848, ~11s, con pista de
+audio AAC (silenciada vía `muted`; no se pudo remover porque el entorno no
+tiene `ffmpeg` — ver `docs/HERO_VIDEO_REAL.md`).
+
+Las rutas fluyen tipadas por una sola fuente de verdad — no se duplican rutas
+literales en ningún componente:
+
+```
+content/home.ts (hero.videoSrc / hero.posterSrc)
+  -> app/page.tsx
+  -> components/sections/home/HeroSection.tsx
+  -> components/sections/home/ScrollExpansionHero.tsx
+```
+
+Para activar el poster (fondo ambiental desenfocado + crossfade al reproducir):
+1. Coloca la imagen en `public/media/valparaiso-home-poster.webp`.
+2. En `content/home.ts`, cambia `hero.posterSrc: undefined` por la ruta
+   `'/media/valparaiso-home-poster.webp'`.
+
+Mientras `posterSrc` sea `undefined`, el hero degrada de forma segura: sin
+capa ambiental, sin crossfade, sin 404 ni ícono roto — el video aparece
+directamente sobre el degradado editorial de reserva en cuanto está listo.
+
+> Nota: `app/components/Hero.tsx` (con la constante `HERO_VIDEO`) es un
+> componente legado que **no** se usa en el home actual; no forma parte de
+> este flujo.
 
 ## Galería "El ambiente"
 Cada mosaico acepta video o imagen. En `app/page.tsx`, en el arreglo `AMBIENTE`,
