@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
-import Container from '@/components/ui/Container'
-import SectionHeader from '@/components/ui/SectionHeader'
-import Card from '@/components/ui/Card'
-import LinkButton from '@/components/ui/LinkButton'
-import SpaceCard from '@/components/cards/SpaceCard'
+import SpacesHero from '@/components/sections/espacios/SpacesHero'
+import SpacesIntroductionSection from '@/components/sections/espacios/SpacesIntroductionSection'
+import SpacesLocationsSection from '@/components/sections/espacios/SpacesLocationsSection'
+import SpacesOccasionsSection from '@/components/sections/espacios/SpacesOccasionsSection'
+import SpacesClosingSection from '@/components/sections/espacios/SpacesClosingSection'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
-import { spacesPreview } from '@/data/spaces'
+import { spacesPreview, spacesConfig } from '@/data/spaces'
 import { createPageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = createPageMetadata({
@@ -22,7 +22,16 @@ function nullableToUndefined<T>(value: T | null): T | undefined {
   return value ?? undefined
 }
 
-const spaces = spacesPreview.map((space) => ({
+// Sedes confirmadas: solo nombre y ciudad (`spacesConfig.sedes`,
+// `contactConfig.locations`). Sin dirección, capacidad ni fotografía, porque
+// no están confirmadas todavía.
+const locations = spacesConfig.sedes.map((name) => {
+  const match = contactConfig.locations.find((location) => location.name === name)
+  return { name, city: match?.city ?? siteConfig.city }
+})
+
+// Tipos de encuentro confirmados (`spacesPreview`), sin inventar categorías.
+const occasions = spacesPreview.map((space) => ({
   title: space.title,
   tag: nullableToUndefined(space.tag),
   description: nullableToUndefined(space.description),
@@ -56,47 +65,11 @@ export default function EspaciosPage() {
         copyright: `© ${new Date().getFullYear()} ${siteConfig.name}. Todos los derechos reservados.`,
       }}
     >
-      <section className="border-b border-[#4A5728] px-4 py-16 md:px-8 md:py-24">
-        <Container variant="wide">
-          <SectionHeader
-            titleAs="h1"
-            eyebrow="Espacios · Pance y Juanambú"
-            title="Un lugar para cada encuentro"
-            description="Espacios en nuestras sedes de Pance y Juanambú, pensados para reuniones, celebraciones y actividades culturales, con la misma identidad editorial de Café Valparaíso."
-          />
-        </Container>
-      </section>
-
-      <section className="px-4 py-16 md:px-8 md:py-24">
-        <Container variant="wide">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {spaces.map((space) => (
-              <SpaceCard
-                key={space.title}
-                title={space.title}
-                tag={space.tag}
-                description={space.description}
-              />
-            ))}
-          </div>
-
-          <Card variant="outline" padding="lg" className="mt-10">
-            <p className="font-playfair italic text-lg leading-relaxed text-[#D9DCC4]">
-              Los detalles de cada espacio en Pance y Juanambú (capacidad, disponibilidad y
-              condiciones) se confirman directamente por contacto, mientras terminamos de publicar
-              la información completa.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-4">
-              <LinkButton href="/reservas" variant="ghost" size="md">
-                Ir a reservas
-              </LinkButton>
-              <LinkButton href="/contacto" variant="ghost" size="md">
-                Escríbenos
-              </LinkButton>
-            </div>
-          </Card>
-        </Container>
-      </section>
+      <SpacesHero />
+      <SpacesIntroductionSection />
+      <SpacesLocationsSection locations={locations} />
+      <SpacesOccasionsSection occasions={occasions} />
+      <SpacesClosingSection />
     </PublicShell>
   )
 }
