@@ -14,15 +14,48 @@
   --font-sans:          var(--font-dm-sans);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: #343E1C;
   color: #F5F5F0;
   font-family: var(--font-dm-sans), Arial, sans-serif;
 }
 
+/* ── Scrollbar a juego con la paleta ── */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #2A331A; }
+::-webkit-scrollbar-thumb {
+  background: #4A5728;
+  border-radius: 999px;
+  border: 2px solid #2A331A;
+}
+::-webkit-scrollbar-thumb:hover { background: #6B7A3C; }
+
+/* ── Grano fijo sobre toda la página (cohesión de textura) ── */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
 /* ── Fuentes ── */
 .font-playfair { font-family: var(--font-playfair), Georgia, serif; }
 .font-sans-app  { font-family: var(--font-dm-sans), Arial, sans-serif; }
+
+/* ── Foco visible accesible en todo elemento interactivo (WCAG) ──
+   Los inputs con focus:outline-none + focus:ring propio no se ven afectados. */
+:focus-visible {
+  outline: 2px solid #FF7F70;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
 
 /* ── Marquee ── */
 @keyframes marquee {
@@ -85,6 +118,226 @@ body {
   pointer-events: none;
   z-index: 0;
   opacity: 0.06;
+}
+
+/* ── Scroll reveal (stagger, intersection-observer driven) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.16,1,0.3,1),
+              filter 0.8s cubic-bezier(0.16,1,0.3,1);
+  will-change: transform, opacity, filter;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* ── Fondo cinematográfico: auroras/spotlights cálidos ── */
+.aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(70px);
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  will-change: transform;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+.aurora-blob.b2 { animation-duration: 32s; animation-delay: -6s; }
+.aurora-blob.b3 { animation-duration: 38s; animation-delay: -12s; }
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(5%, -6%, 0) scale(1.18); }
+}
+
+/* ── Viñeta para dar foco cinematográfico ── */
+.vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(125% 85% at 50% 32%, transparent 42%, rgba(18,24,8,0.6) 100%);
+}
+
+/* ── Media duotono (fotos/video tratados a la paleta) ── */
+.media-frame {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.media-frame img,
+.media-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.35) contrast(1.05) brightness(0.78);
+}
+.media-frame .media-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(52,62,28,0.15) 0%, rgba(42,51,26,0.72) 100%);
+  mix-blend-mode: multiply;
+}
+.media-zoom { transition: transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.group:hover .media-zoom { transform: scale(1.07); }
+
+/* ── Mosaico art-directed (placeholder elegante, listo para media) ── */
+.tile {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(90% 70% at 28% 18%, rgba(166,184,107,0.16), transparent 60%),
+    radial-gradient(70% 60% at 82% 92%, rgba(193,18,31,0.14), transparent 60%),
+    linear-gradient(155deg, #3d4720 0%, #2a331a 100%);
+}
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background-image: repeating-linear-gradient(115deg, rgba(245,245,240,0.05) 0px, rgba(245,245,240,0.05) 1px, transparent 1px, transparent 22px);
+  pointer-events: none;
+}
+
+/* ── Menú: filas interactivas ── */
+.menu-item {
+  transition: transform 0.3s cubic-bezier(0.23,1,0.32,1),
+              border-color 0.3s ease;
+}
+.menu-item:hover {
+  transform: translateX(6px);
+  border-color: #C1121F;
+}
+.menu-item .menu-price {
+  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.23,1,0.32,1);
+}
+.menu-item:hover .menu-price {
+  color: #FF7F70;
+  transform: scale(1.08);
+}
+
+/* ── Mapa estilizado tipo radar ── */
+@keyframes radar {
+  0%   { transform: scale(0.4); opacity: 0.7; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.radar-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  border: 1.5px solid #FF7F70;
+  animation: radar 3s cubic-bezier(0.16,1,0.3,1) infinite;
+}
+.radar-ring.d2 { animation-delay: 1s; }
+.radar-ring.d3 { animation-delay: 2s; }
+@keyframes pinPulse {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.map-pin { animation: pinPulse 2.4s ease-in-out infinite; }
+
+/* ── Tactile press feedback ── */
+.press {
+  transition: transform 160ms cubic-bezier(0.23,1,0.32,1);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* ── Capitular editorial (dropcap) — GOAL 17, reutilizable ──
+   Estática (no anima). Preparada para manifiestos ("Qué es", Librería). */
+.dropcap::first-letter {
+  font-family: var(--font-playfair), Georgia, serif;
+  float: left;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 4.6em;
+  line-height: 0.72;
+  padding: 0.05em 0.12em 0 0;
+  color: #C1121F;
+}
+
+/* ── Fila de menú/índice con relleno rojo al hover (CSS puro) — GOAL 17 ──
+   Preparada para GOAL 19+ (listas de menú, índices). Aún NO aplicada a
+   páginas. Coloca `.menu-fill` como primer hijo absoluto dentro de `.menu-row`
+   y el contenido por encima con posición relativa. */
+.menu-row {
+  position: relative;
+  isolation: isolate;
+}
+.menu-row .menu-fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #C1121F;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.menu-row:hover .menu-fill { transform: scaleY(1); }
+
+/* ── Relleno editorial deslizante reutilizable (CSS puro) — GOAL 17 ──
+   Hermano sobrio de `.btn-fill`: un lavado tenue de `currentColor` que entra
+   desde la izquierda. Para botones/filas futuras; aún NO aplicado. */
+.editorial-fill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s ease;
+}
+.editorial-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: currentColor;
+  opacity: 0.14;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.editorial-fill:hover::before { transform: scaleX(1); }
+
+/* ── Grano local reutilizable (GOAL 18) — para hero y CTA final ──
+   A diferencia de `.grain` (fija, global), esta es absoluta y decorativa
+   dentro de una sección `relative`. Estática (no anima). */
+.grain-soft {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+/* ── Reduced motion: keep opacity, drop movement ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fade-up, .reveal, .marquee-track, .press,
+  .radar-ring, .map-pin, .menu-item, .aurora-blob, .media-zoom {
+    animation: none !important;
+    transition: opacity 0.2s ease !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .reveal { opacity: 1; }
+  /* Los rellenos conservan su estado funcional pero sin transición de
+     movimiento (el cambio de estado en hover es instantáneo, no animado). */
+  .menu-row .menu-fill,
+  .editorial-fill::before { transition: none !important; }
 }
 
 /* ── Input con label flotante ── */
