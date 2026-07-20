@@ -60,17 +60,23 @@ export function PageHero({
             {eyebrow}
           </motion.p>
         )}
-        {lines.map((l, i) => (
-          <motion.h1
-            key={i}
-            variants={item}
-            className={`font-playfair font-black leading-[0.92] tracking-tight ${l.accent ? 'text-[#FF7F70]' : 'text-[#F5F5F0]'} ${l.italic ? 'italic' : ''}`}
+        {lines.length > 0 && (
+          <h1
+            className="font-playfair font-black leading-[0.92] tracking-tight"
             style={{ fontSize: size }}
           >
-            {l.text}
-            {l.tail && <span className="text-[#FF7F70]">{l.tail}</span>}
-          </motion.h1>
-        ))}
+            {lines.map((l, i) => (
+              <motion.span
+                key={i}
+                variants={item}
+                className={`block ${l.accent ? 'text-[#FF7F70]' : 'text-[#F5F5F0]'} ${l.italic ? 'italic' : ''}`}
+              >
+                {l.text}
+                {l.tail && <span className="text-[#FF7F70]">{l.tail}</span>}
+              </motion.span>
+            ))}
+          </h1>
+        )}
         <motion.div variants={item} className="flex gap-3 mt-8">
           <div className="w-16 h-[3px] bg-[#C1121F]" />
           <div className="w-8 h-[3px] bg-[#A6B86B]" />

@@ -19,6 +19,13 @@ celular.
 
    > La página de inicio funciona sin estas variables; login / registro /
    > dashboard / perfil sí las necesitan.
+3. Define también `NEXT_PUBLIC_SITE_URL` con la URL real donde quedará
+   publicado el sitio (por ejemplo `https://cafe-literario.onrender.com`, o
+   tu dominio propio si ya lo conectaste — ver "Dominio propio" más abajo).
+
+   > Sin esta variable, el canonical, Open Graph y `sitemap.xml` apuntan a
+   > `localhost` de forma silenciosa (sin error de build). Si más adelante
+   > conectas un dominio propio, actualiza esta variable para que apunte ahí.
 
 ---
 
@@ -30,7 +37,10 @@ Next.js 16 sin adaptadores. El repo ya trae `render.yaml` preconfigurado.
 1. Entra a **render.com** e inicia sesión con **GitHub**.
 2. **New → Blueprint**.
 3. Conecta y elige el repositorio **`cafe`**. Render lee `render.yaml` solo.
-4. Te pedirá las 2 variables de Supabase → pégalas.
+4. Te pedirá las 3 variables (las 2 de Supabase + `NEXT_PUBLIC_SITE_URL`) →
+   pégalas. Si todavía no sabes la URL final, usa provisionalmente
+   `https://cafe-literario.onrender.com` y actualízala si luego conectas un
+   dominio propio.
 5. **Apply / Create**. En unos minutos tendrás una URL tipo
    **`cafe-literario.onrender.com`**.
 
@@ -48,7 +58,9 @@ El soporte de Next 16 en Netlify es reciente; si el build fallara, usa Render.
 1. Entra a **netlify.com** → **Log in with GitHub**.
 2. **Add new site → Import an existing project** → elige el repo `cafe`.
 3. No cambies el comando de build (lo toma de `netlify.toml`).
-4. En **Environment variables**, agrega las 2 de Supabase.
+4. En **Environment variables**, agrega las 3 (las 2 de Supabase +
+   `NEXT_PUBLIC_SITE_URL`; usa provisionalmente la URL `.netlify.app` si
+   todavía no tienes dominio propio).
 5. **Deploy site** → obtienes una URL `xxx.netlify.app`.
 
 ---
@@ -83,6 +95,10 @@ En el panel del hosting → **Domains / Custom domain** puedes conectar un domin
 (por ejemplo el que compres en Hostinger): agregas el dominio y te indican qué
 registros DNS poner. Mientras tanto, la URL gratuita ya es pública y sirve para
 mostrar y probar.
+
+> Si conectas un dominio propio después de desplegar, actualiza la variable
+> `NEXT_PUBLIC_SITE_URL` al nuevo dominio y vuelve a desplegar — si no, el
+> canonical y Open Graph seguirán apuntando a la URL gratuita anterior.
 
 ## Si algo falla
 
