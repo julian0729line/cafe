@@ -1,4 +1,7 @@
 import Container from '@/components/ui/Container'
+import Folio from '@/components/ui/Folio'
+import GhostType from '@/components/ui/GhostType'
+import EditorialRule from '@/components/ui/EditorialRule'
 
 export interface AboutSectionProps {
   index?: string
@@ -27,9 +30,10 @@ const DEFAULT_KEYWORDS = [
 ]
 
 /**
- * «Qué es Café Valparaíso» — manifiesto editorial sobre superficie marfil.
- * Dropcap (`.dropcap`), cita lateral, numeración de sección y mucho espacio
- * negativo. Server Component.
+ * «Qué es Café Valparaíso» — manifiesto editorial sobre marfil. Composición
+ * asimétrica deliberada (folio apaisado en el margen + columna de lectura
+ * angosta con dropcap + cita volada), tipografía-imagen de fondo y separador de
+ * entrega. Server Component.
  */
 export default function AboutSection({
   index = '01',
@@ -44,48 +48,53 @@ export default function AboutSection({
 }: AboutSectionProps) {
   return (
     <section
-      className={cn('relative overflow-hidden border-b border-[rgba(28,25,18,0.12)] bg-[#F5F5F0] py-20 md:py-32', className)}
+      className={cn(
+        'relative overflow-hidden bg-[#F5F5F0] py-24 md:py-36',
+        className
+      )}
     >
-      {/* Comilla editorial gigante, decorativa */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-6 top-1/2 hidden -translate-y-1/2 select-none font-playfair italic leading-none text-[#181f0d]/[0.06] md:block"
-        style={{ fontSize: '28vw' }}
-      >
-        ”
-      </span>
+      <GhostType tone="paper" position="right-middle" sizeVw={30} opacity={0.05}>
+        “
+      </GhostType>
 
       <Container variant="default" className="relative">
-        <p className="font-sans-app text-[11px] font-medium uppercase tracking-[0.4em] text-[#4A5728]">
-          <span className="mr-3 tabular-nums text-[#C1121F]">{index}</span>
-          {eyebrow}
-        </p>
+        {/* Encabezado asimétrico: folio apaisado a la izquierda, título ocupando
+            las 9 columnas de la derecha (rompe el stack centrado). */}
+        <div className="grid grid-cols-1 gap-y-8 md:grid-cols-12 md:gap-x-12">
+          <div className="md:col-span-3">
+            <Folio number={index} label={eyebrow} tone="paper" variant="stacked" />
+            <EditorialRule weight="thick" tone="red" width="short" className="mt-6" />
+          </div>
 
-        <h2
-          className="mt-6 max-w-3xl font-playfair font-black leading-[0.95] tracking-tight text-[#181f0d]"
-          style={{ fontSize: 'clamp(2rem, 5vw, 3.6rem)' }}
-        >
-          {title} <span className="italic text-[#C1121F]">{emphasis}</span>
-        </h2>
+          <div className="md:col-span-9">
+            <h2
+              className="max-w-3xl font-playfair font-black leading-[0.92] tracking-[-0.03em] text-[#181f0d]"
+              style={{ fontSize: 'clamp(2.4rem, 6vw, 4.6rem)' }}
+            >
+              {title} <span className="italic text-[#C1121F]">{emphasis}</span>
+            </h2>
+          </div>
+        </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-12">
-          <div className="md:col-span-8">
+        {/* Cuerpo: columna de lectura angosta desplazada + cita volada al margen. */}
+        <div className="mt-14 grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-12">
+          <div className="md:col-span-7 md:col-start-4">
             <p
-              className="dropcap max-w-2xl font-playfair leading-relaxed text-[#181f0d]"
-              style={{ fontSize: 'clamp(1.15rem, 2.2vw, 1.6rem)' }}
+              className="dropcap font-playfair leading-relaxed text-[#181f0d]"
+              style={{ fontSize: 'clamp(1.2rem, 2.3vw, 1.7rem)' }}
             >
               {lead}
             </p>
             {body ? (
-              <p className="mt-6 max-w-2xl font-sans-app text-base leading-relaxed text-[#4A5728]">
+              <p className="mt-7 max-w-2xl font-sans-app text-base leading-relaxed text-[#4A5728]">
                 {body}
               </p>
             ) : null}
           </div>
 
           {aside ? (
-            <aside className="md:col-span-4 md:pt-2">
-              <p className="border-l-2 border-[#C1121F] pl-5 font-playfair text-lg italic leading-snug text-[#7A2230]">
+            <aside className="md:col-span-3 md:col-start-1 md:row-start-1 md:pt-3">
+              <p className="border-l-2 border-[#C1121F] pl-5 font-playfair text-xl italic leading-snug text-[#7A2230]">
                 {aside}
               </p>
             </aside>
@@ -93,7 +102,7 @@ export default function AboutSection({
         </div>
 
         {keywords.length > 0 ? (
-          <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-3">
+          <ul className="mt-16 flex flex-wrap gap-x-8 gap-y-3 border-t border-[rgba(28,25,18,0.12)] pt-8">
             {keywords.map((word) => (
               <li
                 key={word}

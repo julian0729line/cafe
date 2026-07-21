@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
 import HeroSection from '@/components/sections/home/HeroSection'
+import RedInterludeSection from '@/components/sections/home/RedInterludeSection'
 import AboutSection from '@/components/sections/home/AboutSection'
+import AtmosphereScrollSection from '@/components/sections/home/AtmosphereScrollSection'
 import CulturePreviewSection from '@/components/sections/home/CulturePreviewSection'
 import MenuPreviewSection from '@/components/sections/home/MenuPreviewSection'
 import LibraryPreviewSection from '@/components/sections/home/LibraryPreviewSection'
@@ -61,6 +63,7 @@ const aboutKeywords = [...homeContent.about.keywords]
 const spacesSedes = [...homeContent.spaces.sedes]
 const spacesKinds = [...homeContent.spaces.kinds]
 const heroHighlights = [...homeContent.hero.highlights]
+const atmosphereTiles = homeContent.atmosphere.tiles.map((tile) => ({ ...tile }))
 
 export default function HomePage() {
   return (
@@ -95,6 +98,13 @@ export default function HomePage() {
         videoSrc={homeContent.hero.videoSrc}
         posterSrc={homeContent.hero.posterSrc}
       />
+      <RedInterludeSection
+        eyebrow={homeContent.redInterlude.eyebrow}
+        statement={homeContent.redInterlude.statement}
+        emphasis={homeContent.redInterlude.emphasis}
+        ghost={homeContent.redInterlude.ghost}
+        footnote={homeContent.redInterlude.footnote}
+      />
       <AboutSection
         index={homeContent.about.index}
         eyebrow={homeContent.about.eyebrow}
@@ -104,6 +114,15 @@ export default function HomePage() {
         body={homeContent.about.body}
         aside={homeContent.about.aside}
         keywords={aboutKeywords}
+      />
+      <AtmosphereScrollSection
+        eyebrow={homeContent.atmosphere.eyebrow}
+        title={homeContent.atmosphere.title}
+        emphasis={homeContent.atmosphere.emphasis}
+        lead={homeContent.atmosphere.lead}
+        tiles={atmosphereTiles}
+        closingLead={homeContent.atmosphere.closingLead}
+        closingCta={homeContent.atmosphere.closingCta}
       />
       <CulturePreviewSection
         index={homeContent.culture.index}

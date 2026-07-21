@@ -1,5 +1,7 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import Folio from '@/components/ui/Folio'
+import GhostType from '@/components/ui/GhostType'
 import HomeMediaFrame from './HomeMediaFrame'
 
 export interface SpacesPreviewSectionProps {
@@ -21,9 +23,10 @@ function cn(...classes: Array<string | false | undefined>) {
 }
 
 /**
- * «Espacios y reservas» — dos bloques editoriales para las sedes de Pance y
- * Juanambú, con media frames listos para fotografía real. Sin aforos, tarifas
- * ni direcciones inventadas y sin filmstrip con drag. Server Component.
+ * «Espacios y reservas» — las dos sedes tratadas como dos escenas distintas
+ * (escala y desfase vertical asimétricos), no como tarjetas gemelas. Sobre
+ * marfil, con media frames oscuros que contrastan como piezas de archivo. Sin
+ * aforos, tarifas ni direcciones inventadas. Server Component.
  */
 export default function SpacesPreviewSection({
   index = '05',
@@ -38,53 +41,88 @@ export default function SpacesPreviewSection({
   secondaryCta = { label: 'Reservar', href: '/reservas' },
   className = '',
 }: SpacesPreviewSectionProps) {
+  const [firstSede, secondSede] = sedes
+
   return (
-    <section className={cn('border-b border-[#4A5728] bg-[#181f0d] py-20 md:py-32', className)}>
-      <Container variant="default">
+    <section
+      className={cn('relative overflow-hidden bg-[#F5F5F0] py-24 md:py-36', className)}
+    >
+      <GhostType tone="paper" position="left-top" sizeVw={30} opacity={0.05}>
+        Sedes
+      </GhostType>
+
+      <Container variant="default" className="relative">
         <div className="max-w-2xl">
-          <p className="font-sans-app text-[11px] font-medium uppercase tracking-[0.4em] text-[#A6B86B]">
-            <span className="mr-3 tabular-nums text-[#FF7F70]">{index}</span>
-            {eyebrow}
-          </p>
+          <Folio number={index} label={eyebrow} tone="paper" variant="stacked" />
           <h2
-            className="mt-5 font-playfair font-black leading-[0.95] tracking-tight text-[#F5F5F0]"
-            style={{ fontSize: 'clamp(1.9rem, 4.5vw, 3.4rem)' }}
+            className="mt-8 font-playfair font-black leading-[0.9] tracking-[-0.03em] text-[#181f0d]"
+            style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.2rem)' }}
           >
-            {title} <span className="italic text-[#FF7F70]">{emphasis}</span>
+            {title} <span className="italic text-[#C1121F]">{emphasis}</span>
           </h2>
           {description ? (
-            <p className="mt-4 font-sans-app text-base leading-relaxed text-[#A6B86B]">
+            <p className="mt-6 font-sans-app text-base leading-relaxed text-[#4A5728]">
               {description}
             </p>
           ) : null}
         </div>
 
+        {/* Dos escenas asimétricas: la primera sede domina (más ancha, alta);
+            la segunda entra desfasada hacia abajo. */}
         {sedes.length > 0 ? (
-          <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
-            {sedes.map((sede, i) => (
-              <article key={sede} className="flex flex-col gap-5">
+          <div className="mt-16 grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-12">
+            {firstSede ? (
+              <article className="flex flex-col gap-5 md:col-span-7">
                 <HomeMediaFrame
-                  index={`${index}.${i + 1}`}
-                  label={`Sede ${sede}`}
-                  aspectRatio="3 / 2"
+                  index={`${index}.1`}
+                  label={`Sede ${firstSede}`}
+                  caption={`${firstSede} · Cali`}
+                  aspectRatio="16 / 11"
                 />
-                <div className="flex items-baseline justify-between gap-4 border-t border-[#4A5728] pt-4">
-                  <h3 className="font-playfair text-2xl text-[#F5F5F0] md:text-3xl">{sede}</h3>
-                  <span className="font-sans-app text-[10px] uppercase tracking-[0.25em] text-[#A6B86B]">
+                <div className="flex items-baseline justify-between gap-4 border-t border-[rgba(28,25,18,0.18)] pt-4">
+                  <h3
+                    className="font-playfair leading-none text-[#181f0d]"
+                    style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}
+                  >
+                    {firstSede}
+                  </h3>
+                  <span className="font-sans-app text-[10px] uppercase tracking-[0.25em] text-[#4A5728]">
                     Cali
                   </span>
                 </div>
               </article>
-            ))}
+            ) : null}
+
+            {secondSede ? (
+              <article className="flex flex-col gap-5 md:col-span-5 md:pt-24">
+                <HomeMediaFrame
+                  index={`${index}.2`}
+                  label={`Sede ${secondSede}`}
+                  caption={`${secondSede} · Cali`}
+                  aspectRatio="4 / 5"
+                />
+                <div className="flex items-baseline justify-between gap-4 border-t border-[rgba(28,25,18,0.18)] pt-4">
+                  <h3
+                    className="font-playfair leading-none text-[#181f0d]"
+                    style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)' }}
+                  >
+                    {secondSede}
+                  </h3>
+                  <span className="font-sans-app text-[10px] uppercase tracking-[0.25em] text-[#4A5728]">
+                    Cali
+                  </span>
+                </div>
+              </article>
+            ) : null}
           </div>
         ) : null}
 
         {kinds.length > 0 ? (
-          <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
+          <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-[rgba(28,25,18,0.12)] pt-8">
             {kinds.map((kind) => (
               <li
                 key={kind}
-                className="font-sans-app text-[10px] font-bold uppercase tracking-[0.25em] text-[#8A9A52]"
+                className="font-sans-app text-[10px] font-bold uppercase tracking-[0.25em] text-[#4A5728]"
               >
                 {kind}
               </li>
@@ -92,10 +130,10 @@ export default function SpacesPreviewSection({
           </ul>
         ) : null}
 
-        <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-4">
             {primaryCta ? (
-              <LinkButton href={primaryCta.href} variant="ghost" size="md">
+              <LinkButton href={primaryCta.href} variant="wine" size="md">
                 {primaryCta.label}
               </LinkButton>
             ) : null}
@@ -106,7 +144,7 @@ export default function SpacesPreviewSection({
             ) : null}
           </div>
           {note ? (
-            <p className="font-sans-app text-[11px] uppercase tracking-[0.2em] text-[#A6B86B]/70">
+            <p className="font-sans-app text-[11px] uppercase tracking-[0.2em] text-[#4A5728]/70">
               {note}
             </p>
           ) : null}

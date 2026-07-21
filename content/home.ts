@@ -31,6 +31,33 @@ const agendaLines = eventCategories.map((category, index) => ({
 }))
 
 export const homeContent = {
+  // Interludio rojo — ruptura de ritmo entre el hero y el manifiesto. El texto
+  // se deriva del concepto confirmado (café + libros + conversación + mesa); no
+  // añade datos de negocio nuevos.
+  redInterlude: {
+    eyebrow: siteConfig.name,
+    statement: 'La cultura no se visita.',
+    emphasis: 'Se vive en la mesa.',
+    ghost: 'Cultura',
+    footnote: 'Café, libros y conversación comparten el mismo mantel.',
+  },
+  // Atmósfera — pilares confirmados de la experiencia tratados como «rincones».
+  // Cada uno mapea a datos ya confirmados (barra de café, cocina, Librería La
+  // Maga, música en vivo); sin describir features físicas no confirmadas.
+  atmosphere: {
+    eyebrow: 'El ambiente',
+    title: 'Un lugar hecho',
+    emphasis: 'de rincones.',
+    lead: 'Cada rincón tiene su propia luz, su propio silencio.',
+    tiles: [
+      { label: 'Café', caption: 'El centro de la experiencia' },
+      { label: 'Cocina', caption: 'Gastronomía sin prisa' },
+      { label: 'Literatura', caption: 'La Maga, a un brazo de distancia' },
+      { label: 'Música', caption: 'Sesiones entre conversaciones' },
+    ],
+    closingLead: 'está por vivirse en persona.',
+    closingCta: { label: 'Reservar', href: '/reservas' },
+  },
   hero: {
     eyebrow: siteConfig.concept, // «Café literario, cultural, artístico y gastronómico»
     // El h1 es un único string; la sección lo compone visualmente en dos líneas.
