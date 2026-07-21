@@ -1,7 +1,6 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
 import Folio from '@/components/ui/Folio'
-import GhostType from '@/components/ui/GhostType'
 
 export type CultureLine = {
   number: string
@@ -52,10 +51,6 @@ export default function CulturePreviewSection({
     <section
       className={cn('relative overflow-hidden bg-[#181f0d] py-24 md:py-36', className)}
     >
-      <GhostType tone="night" position="left-top" sizeVw={26} opacity={0.05}>
-        Agenda
-      </GhostType>
-
       <Container variant="default" className="relative">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-8">

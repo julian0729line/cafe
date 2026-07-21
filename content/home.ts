@@ -31,35 +31,24 @@ const agendaLines = eventCategories.map((category, index) => ({
 }))
 
 export const homeContent = {
-  // Interludio rojo — ruptura de ritmo entre el hero y el manifiesto. El texto
-  // se deriva del concepto confirmado (café + libros + conversación + mesa); no
-  // añade datos de negocio nuevos.
-  redInterlude: {
-    eyebrow: siteConfig.name,
-    statement: 'La cultura no se visita.',
-    emphasis: 'Se vive en la mesa.',
-    ghost: 'Cultura',
-    footnote: 'Café, libros y conversación comparten el mismo mantel.',
-  },
-  // Atmósfera — pilares confirmados de la experiencia tratados como «rincones».
-  // Cada uno mapea a datos ya confirmados (barra de café, cocina, Librería La
-  // Maga, música en vivo); sin describir features físicas no confirmadas.
-  atmosphere: {
-    eyebrow: 'El ambiente',
-    title: 'Un lugar hecho',
-    emphasis: 'de rincones.',
-    lead: 'Cada rincón tiene su propia luz, su propio silencio.',
-    tiles: [
-      { label: 'Café', caption: 'El centro de la experiencia' },
-      { label: 'Cocina', caption: 'Gastronomía sin prisa' },
-      { label: 'Literatura', caption: 'La Maga, a un brazo de distancia' },
-      { label: 'Música', caption: 'Sesiones entre conversaciones' },
-    ],
-    closingLead: 'está por vivirse en persona.',
-    closingCta: { label: 'Reservar', href: '/reservas' },
+  // Escena gastronómica (iteración 2, Icónico B) — usa el metraje real del café
+  // como textura cinematográfica a sangre completa, con las líneas confirmadas
+  // del menú superpuestas. Reemplaza al interludio rojo y a la lista plana del
+  // menú: la gastronomía deja de ser lista y pasa a ser escena. Sin platos,
+  // precios ni datos inventados. `videoSrc` reutiliza el asset real ya existente.
+  gastroScene: {
+    eyebrow: 'Gastronomía',
+    statement: 'Se come sin prisa,',
+    emphasis: 'se lee sin reloj.',
+    lead: 'Café de especialidad, cocina de autor y una mesa que no tiene apuro. La carta con precios se comparte en la mesa.',
+    lines: ['Café de especialidad', 'Cocina de autor', 'Coctelería de temporada', 'Postres de la casa'],
+    videoSrc: '/media/valparaiso-home.mp4',
+    cta: { label: 'Ver menú', href: '/menu' },
   },
   hero: {
-    eyebrow: siteConfig.concept, // «Café literario, cultural, artístico y gastronómico»
+    // Kicker breve y confirmado (sedes + ciudad). Antes repetía el concepto que
+    // ya vive en el navbar y en los micro-labels; se elimina esa redundancia.
+    eyebrow: 'Pance & Juanambú · Cali',
     // El h1 es un único string; la sección lo compone visualmente en dos líneas.
     title: siteConfig.name,
     titleLead: 'Café',
@@ -122,7 +111,7 @@ export const homeContent = {
     cta: { label: 'Ver menú', href: menuConfig.ctaHref },
   },
   library: {
-    index: '04',
+    index: '03',
     eyebrow: libraryConfig.name, // «Librería La Maga»
     title: 'Un estante que',
     emphasis: 'conversa con la carta.',
@@ -133,7 +122,7 @@ export const homeContent = {
     cta: { label: 'Conocer Librería La Maga', href: libraryConfig.ctaHref },
   },
   spaces: {
-    index: '05',
+    index: '04',
     eyebrow: 'Espacios y reservas',
     title: 'Salas y rincones',
     emphasis: 'para reunir gente.',

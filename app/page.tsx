@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
 import HeroSection from '@/components/sections/home/HeroSection'
-import RedInterludeSection from '@/components/sections/home/RedInterludeSection'
 import AboutSection from '@/components/sections/home/AboutSection'
-import AtmosphereScrollSection from '@/components/sections/home/AtmosphereScrollSection'
 import CulturePreviewSection from '@/components/sections/home/CulturePreviewSection'
-import MenuPreviewSection from '@/components/sections/home/MenuPreviewSection'
+import GastroSceneSection from '@/components/sections/home/GastroSceneSection'
 import LibraryPreviewSection from '@/components/sections/home/LibraryPreviewSection'
 import SpacesPreviewSection from '@/components/sections/home/SpacesPreviewSection'
 import ReservationCTASection from '@/components/sections/home/ReservationCTASection'
@@ -22,10 +20,6 @@ export const metadata: Metadata = {
     path: '/',
   }),
   title: { absolute: siteConfig.seo.defaultTitle },
-}
-
-function nullableToUndefined<T>(value: T | null): T | undefined {
-  return value ?? undefined
 }
 
 const navItems = publicNavigation.items.map((item) => ({ ...item }))
@@ -48,12 +42,6 @@ const cultureLines = homeContent.culture.lines.map((line) => ({
   status: line.status,
 }))
 
-const menuItems = homeContent.menu.items.map((item) => ({
-  title: item.title,
-  category: item.category,
-  description: nullableToUndefined(item.description),
-}))
-
 const libraryCategories = homeContent.library.categories.map((category) => ({
   title: category.title,
   description: category.description,
@@ -63,7 +51,7 @@ const aboutKeywords = [...homeContent.about.keywords]
 const spacesSedes = [...homeContent.spaces.sedes]
 const spacesKinds = [...homeContent.spaces.kinds]
 const heroHighlights = [...homeContent.hero.highlights]
-const atmosphereTiles = homeContent.atmosphere.tiles.map((tile) => ({ ...tile }))
+const gastroLines = [...homeContent.gastroScene.lines]
 
 export default function HomePage() {
   return (
@@ -98,13 +86,6 @@ export default function HomePage() {
         videoSrc={homeContent.hero.videoSrc}
         posterSrc={homeContent.hero.posterSrc}
       />
-      <RedInterludeSection
-        eyebrow={homeContent.redInterlude.eyebrow}
-        statement={homeContent.redInterlude.statement}
-        emphasis={homeContent.redInterlude.emphasis}
-        ghost={homeContent.redInterlude.ghost}
-        footnote={homeContent.redInterlude.footnote}
-      />
       <AboutSection
         index={homeContent.about.index}
         eyebrow={homeContent.about.eyebrow}
@@ -115,15 +96,6 @@ export default function HomePage() {
         aside={homeContent.about.aside}
         keywords={aboutKeywords}
       />
-      <AtmosphereScrollSection
-        eyebrow={homeContent.atmosphere.eyebrow}
-        title={homeContent.atmosphere.title}
-        emphasis={homeContent.atmosphere.emphasis}
-        lead={homeContent.atmosphere.lead}
-        tiles={atmosphereTiles}
-        closingLead={homeContent.atmosphere.closingLead}
-        closingCta={homeContent.atmosphere.closingCta}
-      />
       <CulturePreviewSection
         index={homeContent.culture.index}
         eyebrow={homeContent.culture.eyebrow}
@@ -133,14 +105,14 @@ export default function HomePage() {
         lines={cultureLines}
         cta={homeContent.culture.cta}
       />
-      <MenuPreviewSection
-        index={homeContent.menu.index}
-        eyebrow={homeContent.menu.eyebrow}
-        title={homeContent.menu.title}
-        emphasis={homeContent.menu.emphasis}
-        items={menuItems}
-        note={homeContent.menu.note}
-        cta={homeContent.menu.cta}
+      <GastroSceneSection
+        eyebrow={homeContent.gastroScene.eyebrow}
+        statement={homeContent.gastroScene.statement}
+        emphasis={homeContent.gastroScene.emphasis}
+        lead={homeContent.gastroScene.lead}
+        lines={gastroLines}
+        videoSrc={homeContent.gastroScene.videoSrc}
+        cta={homeContent.gastroScene.cta}
       />
       <LibraryPreviewSection
         index={homeContent.library.index}
