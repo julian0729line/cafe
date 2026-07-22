@@ -1,5 +1,6 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import Folio from '@/components/ui/Folio'
 
 export type CultureLine = {
   number: string
@@ -31,8 +32,10 @@ const DEFAULT_LINES: CultureLine[] = [
 ]
 
 /**
- * «Agenda cultural» — filas editoriales numeradas (categorías reales, sin
- * fechas ni artistas inventados) sobre fondo profundo. Server Component.
+ * «Agenda cultural» — sumario editorial: cada categoría es una fila-índice de
+ * gran escala (número volado + título Playfair enorme + estado), con relleno
+ * rojo al hover (`.menu-row`). Reemplaza la grilla de tarjetas por un ritmo de
+ * lectura vertical, como el índice de una revista. Server Component.
  */
 export default function CulturePreviewSection({
   index = '02',
@@ -45,58 +48,60 @@ export default function CulturePreviewSection({
   className = '',
 }: CulturePreviewSectionProps) {
   return (
-    <section className={cn('border-b border-[#4A5728] bg-[#181f0d] py-20 md:py-32', className)}>
-      <Container variant="default">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-            <p className="font-sans-app text-[11px] font-medium uppercase tracking-[0.4em] text-[#A6B86B]">
-              <span className="mr-3 tabular-nums text-[#FF7F70]">{index}</span>
-              {eyebrow}
-            </p>
+    <section
+      className={cn('relative overflow-hidden bg-[#181f0d] py-24 md:py-36', className)}
+    >
+      <Container variant="default" className="relative">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-8">
+            <Folio number={index} label={eyebrow} tone="night" variant="stacked" />
             <h2
-              className="mt-5 font-playfair font-black leading-[0.95] tracking-tight text-[#F5F5F0]"
-              style={{ fontSize: 'clamp(1.9rem, 4.5vw, 3.4rem)' }}
+              className="mt-8 font-playfair font-black leading-[0.9] tracking-[-0.03em] text-[#F5F5F0]"
+              style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.2rem)' }}
             >
               {title} <span className="italic text-[#FF7F70]">{emphasis}</span>
             </h2>
             {description ? (
-              <p className="mt-4 font-sans-app text-base leading-relaxed text-[#A6B86B]">
+              <p className="mt-6 max-w-xl font-sans-app text-base leading-relaxed text-[#A6B86B]">
                 {description}
               </p>
             ) : null}
           </div>
           {cta ? (
-            <LinkButton href={cta.href} variant="ghost" size="md" className="shrink-0">
-              {cta.label}
-            </LinkButton>
+            <div className="md:col-span-4 md:text-right">
+              <LinkButton href={cta.href} variant="ghost" size="md">
+                {cta.label}
+              </LinkButton>
+            </div>
           ) : null}
         </div>
 
         {lines.length > 0 ? (
-          <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <ul className="mt-14 border-t border-[#4A5728]">
             {lines.map((line) => (
               <li
                 key={line.number}
-                className="group border border-[#4A5728] p-7 transition-colors duration-300 hover:border-[#C1121F]"
+                className="menu-row group border-b border-[#4A5728]"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-sans-app text-[11px] font-bold tabular-nums tracking-[0.2em] text-[#FF7F70]">
-                    {line.number}
-                  </span>
+                <span className="menu-fill" aria-hidden="true" />
+                <div className="relative z-10 flex items-baseline justify-between gap-6 py-6 md:py-8">
+                  <div className="flex items-baseline gap-5 md:gap-8">
+                    <span className="font-sans-app text-xs font-bold tabular-nums tracking-[0.2em] text-[#FF7F70] transition-colors group-hover:text-[#F5F5F0]/70">
+                      {line.number}
+                    </span>
+                    <h3
+                      className="font-playfair leading-[0.95] text-[#F5F5F0] transition-transform duration-300 group-hover:translate-x-1"
+                      style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)' }}
+                    >
+                      {line.title}
+                    </h3>
+                  </div>
                   {line.status ? (
-                    <span className="font-sans-app text-[10px] uppercase tracking-[0.2em] text-[#A6B86B]">
+                    <span className="hidden shrink-0 font-sans-app text-[10px] uppercase tracking-[0.25em] text-[#A6B86B] transition-colors group-hover:text-[#F5F5F0] sm:block">
                       {line.status}
                     </span>
                   ) : null}
                 </div>
-                <h3 className="mt-4 font-playfair text-2xl text-[#F5F5F0] md:text-3xl">
-                  {line.title}
-                </h3>
-                {line.description ? (
-                  <p className="mt-2 font-sans-app text-sm leading-relaxed text-[#A6B86B]">
-                    {line.description}
-                  </p>
-                ) : null}
               </li>
             ))}
           </ul>

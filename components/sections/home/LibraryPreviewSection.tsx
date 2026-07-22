@@ -1,5 +1,7 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import Folio from '@/components/ui/Folio'
+import GhostType from '@/components/ui/GhostType'
 import HomeMediaFrame from './HomeMediaFrame'
 
 export type LibraryCategoryPreview = {
@@ -30,9 +32,9 @@ const DEFAULT_CATEGORIES: LibraryCategoryPreview[] = [
 ]
 
 /**
- * «Librería La Maga» — bloque editorial memorable sobre fondo profundo.
- * Composición asimétrica: media frame rotado (foto futura) + detalle
- * tipográfico «M» decorativo + curaduría. Server Component.
+ * «Librería La Maga» — el momento compositivo más audaz del home. Doble capa de
+ * asimetría: media rotada que se superpone con el titular Playfair, sello rojo
+ * «La Maga» y tipografía-imagen «M». Server Component.
  */
 export default function LibraryPreviewSection({
   index = '04',
@@ -46,23 +48,26 @@ export default function LibraryPreviewSection({
   className = '',
 }: LibraryPreviewSectionProps) {
   return (
-    <section className={cn('relative overflow-hidden border-b border-[#4A5728] bg-[#181f0d] py-20 md:py-32', className)}>
-      {/* Gran «M» tipográfica decorativa (no es un logo) */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-8 bottom-0 select-none font-playfair font-black italic leading-none text-[#4A5728]/20"
-        style={{ fontSize: '34vw' }}
-      >
+    <section
+      className={cn('relative overflow-hidden bg-[#181f0d] py-24 md:py-36', className)}
+    >
+      <GhostType tone="night" position="left-bottom" sizeVw={38} opacity={0.08}>
         M
-      </span>
+      </GhostType>
 
       <Container variant="default" className="relative">
-        <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-12 md:gap-14">
-          {/* Media frame rotado, listo para una fotografía real */}
-          <div className="md:col-span-5">
-            <div className="relative" style={{ transform: 'rotate(-1.2deg)' }}>
-              <HomeMediaFrame index={index} label={mediaLabel} aspectRatio="4 / 5" />
-              <div className="absolute -bottom-3 -right-3 bg-[#C1121F] px-4 py-2">
+        <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-12 md:gap-x-14">
+          {/* Media rotada + sello, tirada hacia arriba para superponerse con el
+              titular en desktop (capa, no fila). */}
+          <div className="md:col-span-5 md:pt-12">
+            <div className="relative z-0" style={{ transform: 'rotate(-1.4deg)' }}>
+              <HomeMediaFrame
+                index={index}
+                label={mediaLabel}
+                caption="Cali · Librería La Maga"
+                aspectRatio="4 / 5"
+              />
+              <div className="absolute -bottom-3 -right-3 rotate-[2deg] bg-[#C1121F] px-4 py-2">
                 <span className="font-sans-app text-[9px] uppercase tracking-[0.3em] text-[#F5F5F0]">
                   La Maga
                 </span>
@@ -70,14 +75,11 @@ export default function LibraryPreviewSection({
             </div>
           </div>
 
-          <div className="md:col-span-7">
-            <p className="font-sans-app text-[11px] font-medium uppercase tracking-[0.4em] text-[#A6B86B]">
-              <span className="mr-3 tabular-nums text-[#FF7F70]">{index}</span>
-              {eyebrow}
-            </p>
+          <div className="relative z-10 md:col-span-7 md:-ml-10">
+            <Folio number={index} label={eyebrow} tone="night" variant="stacked" />
             <h2
-              className="mt-5 font-playfair font-black leading-[0.95] tracking-tight text-[#F5F5F0]"
-              style={{ fontSize: 'clamp(1.9rem, 4.5vw, 3.4rem)' }}
+              className="mt-8 font-playfair font-black leading-[0.9] tracking-[-0.03em] text-[#F5F5F0]"
+              style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.4rem)' }}
             >
               {title} <span className="italic text-[#FF7F70]">{emphasis}</span>
             </h2>
@@ -88,7 +90,7 @@ export default function LibraryPreviewSection({
             ) : null}
 
             {categories.length > 0 ? (
-              <ul className="mt-8 flex flex-col gap-4 border-t border-[#4A5728] pt-8">
+              <ul className="mt-9 flex flex-col gap-4 border-t border-[#4A5728] pt-8">
                 {categories.map((category) => (
                   <li key={category.title} className="flex items-baseline gap-3">
                     <span aria-hidden="true" className="text-[#FF7F70]">

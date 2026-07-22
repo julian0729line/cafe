@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import LinkButton from '@/components/ui/LinkButton'
 import type { HeroCta, HeroHighlight } from './HeroSection'
@@ -30,6 +29,15 @@ const FALLBACK_MEDIA_BACKGROUND =
   'radial-gradient(80% 70% at 60% 40%, rgba(166,184,107,0.18), transparent 65%),' +
   'linear-gradient(160deg, #3d4720 0%, #2a331a 55%, #1f2713 100%)'
 
+/**
+ * Hero cinematográfico des-encajado (iteración 2). El video real del café manda
+ * a sangre completa: una capa `object-cover` desenfocada llena el fondo sin
+ * bordes de caja, y el mismo metraje nítido se ve contenido encima, preservando
+ * su composición vertical. El copy vive anclado abajo-izquierda como un cartel
+ * (no en un panel central). Sin scrim en bloque: sólo un degradado direccional
+ * inferior para legibilidad. Client Component (único del home junto a la
+ * atmósfera). Conserva el patrón `mounted`/`reduce` y el gate de reproducción.
+ */
 export default function ScrollExpansionHero({
   eyebrow,
   title,
@@ -48,10 +56,6 @@ export default function ScrollExpansionHero({
   const ref = useRef<HTMLElement>(null)
   const prefersReduced = useReducedMotion()
 
-  // `reduce` se mantiene en `false` durante el render del servidor y el primer
-  // render del cliente (evita mismatch de hidratación con reduced motion) y
-  // solo adopta la preferencia real tras montar, vía requestAnimationFrame
-  // (no es setState síncrono en efecto: cumple react-hooks/set-state-in-effect).
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true))
@@ -59,25 +63,22 @@ export default function ScrollExpansionHero({
   }, [])
   const reduce = mounted && Boolean(prefersReduced)
 
-  // El video anuncia que puede reproducirse (evento del propio elemento, no
-  // setState síncrono en el cuerpo de un efecto: no aplica react-hooks/set-state-in-effect).
   const videoRef = useRef<HTMLVideoElement>(null)
+  const bgVideoRef = useRef<HTMLVideoElement>(null)
   const [videoReady, setVideoReady] = useState(false)
   const handleVideoReady = () => setVideoReady(true)
-  // Con reduced motion se muestra siempre el poster, sin importar si el video
-  // ya está listo: `showVideo` es la única fuente de verdad del crossfade.
   const showVideo = videoReady && !reduce
 
-  // Control imperativo de reproducción: el atributo HTML `autoPlay` no conoce
-  // la preferencia de movimiento reducido del usuario, así que se gatea aquí.
   useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-    if (reduce) {
-      video.pause()
-      return
+    const els = [videoRef.current, bgVideoRef.current]
+    for (const video of els) {
+      if (!video) continue
+      if (reduce) {
+        video.pause()
+        continue
+      }
+      video.play().catch(() => {})
     }
-    video.play().catch(() => {})
   }, [reduce])
 
   const { scrollYProgress } = useScroll({
@@ -85,15 +86,12 @@ export default function ScrollExpansionHero({
     offset: ['start start', 'end start'],
   })
 
-  // La expansión ocurre mientras el bloque está fijado (primeros ~45% del track).
-  // Con reduced motion, todos los rangos quedan en su estado final (estáticos).
-  const scale = useTransform(scrollYProgress, [0, 0.45], reduce ? [1, 1] : [0.72, 1])
-  const radius = useTransform(scrollYProgress, [0, 0.45], reduce ? [0, 0] : [28, 0])
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.45], reduce ? [0.4, 0.4] : [0.56, 0.4])
-  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.4], reduce ? [0, 0] : [1, 0])
-  const contentY = useTransform(scrollYProgress, [0, 0.45], reduce ? [0, 0] : [0, -32])
+  // Movimiento sobrio: leve escala de ambiente (no una "tarjeta que crece") y
+  // parallax del copy. Con reduced motion, todo queda en su estado final.
+  const mediaScale = useTransform(scrollYProgress, [0, 0.5], reduce ? [1, 1] : [1.05, 1.12])
+  const contentY = useTransform(scrollYProgress, [0, 0.5], reduce ? [0, 0] : [0, -40])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.4], reduce ? [1, 1] : [1, 0.35])
 
-  // El título es un único `<h1>`; se compone visualmente en dos líneas.
   const lead = titleLead ?? title
   const accent = titleAccent
 
@@ -101,47 +99,16 @@ export default function ScrollExpansionHero({
     <section
       ref={ref}
       aria-label="Presentación de Café Valparaíso"
-      className="relative h-[160vh] border-b border-[#4A5728] bg-[#181f0d] md:h-[185vh]"
+      className="relative h-[150vh] bg-[#12180a] md:h-[175vh]"
     >
-      {/* Fondo que se desvanece a medida que el medio llena la pantalla */}
-      <motion.div
-        aria-hidden="true"
-        style={{ opacity: backgroundOpacity }}
-        className="pointer-events-none absolute inset-0 z-0"
-      >
-        <div className="aurora h-full w-full">
-          <div
-            className="aurora-blob"
-            style={{
-              top: '-8%',
-              left: '-6%',
-              width: '55vw',
-              height: '55vw',
-              background: 'radial-gradient(circle, rgba(201,162,39,0.45), transparent 65%)',
-            }}
-          />
-          <div
-            className="aurora-blob b2"
-            style={{
-              bottom: '-12%',
-              right: '-8%',
-              width: '48vw',
-              height: '48vw',
-              background: 'radial-gradient(circle, rgba(193,18,31,0.34), transparent 65%)',
-            }}
-          />
-        </div>
-      </motion.div>
-
-      {/* Bloque fijado: aquí vive el medio que se expande y el copy editorial */}
-      <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden px-4 md:px-8">
-        {/* Medio (video real o fondo cinematográfico de reserva) */}
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
+        {/* Escena a sangre completa */}
         <motion.div
           aria-hidden="true"
-          style={{ scale, borderRadius: radius, willChange: 'transform' }}
-          className="absolute inset-0 z-0 overflow-hidden"
+          style={{ scale: mediaScale, willChange: 'transform' }}
+          className="absolute inset-0 z-0"
         >
-          {/* Capa base: degradado editorial de reserva, siempre presente, nunca pantalla negra */}
+          {/* Capa base de reserva: nunca pantalla negra */}
           <div
             className="absolute inset-0 h-full w-full"
             style={{
@@ -151,36 +118,29 @@ export default function ScrollExpansionHero({
             }}
           />
 
-          {/* Fondo ambiental (solo tablet/desktop): poster oscurecido y desenfocado
-              que rellena los laterales cuando el video vertical se ve completo */}
-          {posterSrc ? (
-            <Image
-              aria-hidden="true"
-              src={posterSrc}
-              alt=""
-              fill
-              sizes="100vw"
-              className="hidden scale-110 object-cover brightness-[0.55] blur-2xl md:block"
-            />
-          ) : null}
-
           {videoSrc ? (
             <>
-              {/* Poster en primer plano: mismo recorte que el video, se desvanece al reproducir */}
-              {posterSrc ? (
-                <Image
-                  aria-hidden="true"
-                  src={posterSrc}
-                  alt=""
-                  fill
-                  priority
-                  sizes="100vw"
-                  className={`object-cover transition-opacity duration-700 ease-out md:object-contain ${
-                    showVideo ? 'opacity-0' : 'opacity-100'
-                  }`}
-                />
-              ) : null}
+              {/* Respaldo desenfocado a sangre completa: mata el borde de caja
+                  y llena los costados del video vertical sin barras. */}
+              <video
+                ref={bgVideoRef}
+                className={`absolute inset-0 h-full w-full scale-110 object-cover blur-2xl brightness-[0.5] transition-opacity duration-700 ease-out ${
+                  showVideo ? 'opacity-100' : 'opacity-0'
+                }`}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls={false}
+                disablePictureInPicture
+                aria-hidden="true"
+              >
+                <source src={videoSrc} type="video/mp4" />
+              </video>
 
+              {/* Metraje nítido: cover en móvil (poco recorte en pantalla
+                  vertical), contain en desktop (preserva la composición). */}
               <video
                 ref={videoRef}
                 onCanPlay={handleVideoReady}
@@ -204,92 +164,97 @@ export default function ScrollExpansionHero({
             </>
           ) : null}
 
-          {/* Scrim + gradiente inferior para legibilidad del copy sobre el medio */}
-          <motion.div style={{ opacity: overlayOpacity }} className="absolute inset-0 bg-[#181f0d]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#181f0d]/90 via-[#181f0d]/25 to-[#181f0d]/45" />
-          {/* Grano cinematográfico sutil */}
+          {/* Degradado direccional inferior (no un bloque de scrim): el video
+              respira arriba, el texto se lee sobre oscuridad abajo. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12180a] via-[#12180a]/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#12180a]/70 via-transparent to-transparent" />
           <span className="grain-soft" />
         </motion.div>
 
         {/* Micro-labels editoriales de las esquinas superiores */}
         {topLeftLabel || topRightLabel ? (
-          <div className="fade-up fade-up-1 pointer-events-none absolute inset-x-4 top-6 z-10 flex items-start justify-between md:inset-x-10 md:top-10">
+          <div className="fade-up fade-up-1 pointer-events-none absolute inset-x-5 top-6 z-10 flex items-start justify-between md:inset-x-10 md:top-9">
             {topLeftLabel ? (
-              <span className="font-sans-app text-[10px] uppercase tracking-[0.4em] text-[#F5F5F0]/60">
+              <span className="font-sans-app text-[10px] uppercase tracking-[0.4em] text-[#F5F5F0]/70">
                 {topLeftLabel}
               </span>
             ) : (
               <span />
             )}
             {topRightLabel ? (
-              <span className="text-right font-sans-app text-[10px] uppercase tracking-[0.4em] text-[#F5F5F0]/60">
+              <span className="text-right font-sans-app text-[10px] uppercase tracking-[0.4em] text-[#F5F5F0]/70">
                 {topRightLabel}
               </span>
             ) : null}
           </div>
         ) : null}
 
-        {/* Copy editorial: visible e interactivo desde el inicio (fade-up al cargar) */}
+        {/* Copy anclado abajo-izquierda, como un cartel. El título sangra el
+            borde izquierdo del contenedor con tracking negativo. */}
         <motion.div
-          style={{ y: contentY }}
-          className="relative z-10 mx-auto w-full max-w-5xl text-center"
+          style={{ y: contentY, opacity: contentOpacity }}
+          className="absolute inset-x-0 bottom-0 z-10 px-5 pb-14 md:px-10 md:pb-20"
         >
-          <p className="fade-up fade-up-1 font-sans-app text-[0.6875rem] font-bold uppercase tracking-[0.35em] text-[#C9A227]">
-            {eyebrow}
-          </p>
+          <div className="mx-auto w-full max-w-7xl">
+            <p className="fade-up fade-up-1 font-sans-app text-[0.6875rem] font-bold uppercase tracking-[0.4em] text-[#C9A227]">
+              {eyebrow}
+            </p>
 
-          <h1
-            className="fade-up fade-up-2 mt-5 font-playfair font-black leading-[0.88] tracking-tight text-[#F5F5F0]"
-            style={{ fontSize: 'clamp(3rem, 10vw, 8rem)' }}
-          >
-            <span className="block">{lead}</span>
-            {accent ? <span className="block italic text-[#FF7F70]">{accent}</span> : null}
-          </h1>
+            <h1
+              className="fade-up fade-up-2 mt-4 font-playfair font-black leading-[0.82] tracking-[-0.04em] text-[#F5F5F0]"
+              style={{ fontSize: 'clamp(3.5rem, 14vw, 11rem)' }}
+            >
+              <span className="block">{lead}</span>
+              {accent ? <span className="-mt-2 block italic text-[#FF7F70] md:-mt-4">{accent}</span> : null}
+            </h1>
 
-          <p className="fade-up fade-up-3 mx-auto mt-6 max-w-xl font-playfair text-lg italic leading-relaxed text-[#F5F5F0]/85 md:text-xl">
-            {description}
-          </p>
+            <div className="fade-up fade-up-3 mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <p className="max-w-md font-playfair text-lg italic leading-relaxed text-[#F5F5F0]/85 md:text-xl">
+                {description}
+              </p>
 
-          {primaryCta || secondaryCta ? (
-            <div className="fade-up fade-up-4 mt-9 flex flex-wrap items-center justify-center gap-5">
-              {primaryCta ? (
-                <LinkButton
-                  href={primaryCta.href}
-                  variant="primary"
-                  size="lg"
-                  {...(primaryCta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  aria-label={primaryCta.ariaLabel ?? primaryCta.label}
-                >
-                  {primaryCta.label}
-                </LinkButton>
-              ) : null}
-              {secondaryCta ? (
-                <LinkButton
-                  href={secondaryCta.href}
-                  variant="ghost"
-                  size="lg"
-                  className="border-[#F5F5F0]/40 text-[#F5F5F0] hover:border-[#F5F5F0]"
-                  {...(secondaryCta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  aria-label={secondaryCta.ariaLabel ?? secondaryCta.label}
-                >
-                  {secondaryCta.label}
-                </LinkButton>
+              {primaryCta || secondaryCta ? (
+                <div className="flex flex-wrap items-center gap-4">
+                  {primaryCta ? (
+                    <LinkButton
+                      href={primaryCta.href}
+                      variant="primary"
+                      size="lg"
+                      {...(primaryCta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                      aria-label={primaryCta.ariaLabel ?? primaryCta.label}
+                    >
+                      {primaryCta.label}
+                    </LinkButton>
+                  ) : null}
+                  {secondaryCta ? (
+                    <LinkButton
+                      href={secondaryCta.href}
+                      variant="ghost"
+                      size="lg"
+                      className="border-[#F5F5F0]/40 text-[#F5F5F0] hover:border-[#F5F5F0]"
+                      {...(secondaryCta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                      aria-label={secondaryCta.ariaLabel ?? secondaryCta.label}
+                    >
+                      {secondaryCta.label}
+                    </LinkButton>
+                  ) : null}
+                </div>
               ) : null}
             </div>
-          ) : null}
 
-          {highlights.length > 0 ? (
-            <ul className="fade-up fade-up-4 mx-auto mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              {highlights.map((highlight) => (
-                <li
-                  key={highlight.label}
-                  className="font-sans-app text-[10px] font-bold uppercase tracking-[0.2em] text-[#D9DCC4]"
-                >
-                  <span className="text-[#A6B86B]">{highlight.label}:</span> {highlight.value}
-                </li>
-              ))}
-            </ul>
-          ) : null}
+            {highlights.length > 0 ? (
+              <ul className="fade-up fade-up-4 mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-[#F5F5F0]/15 pt-5">
+                {highlights.map((highlight) => (
+                  <li
+                    key={highlight.label}
+                    className="font-sans-app text-[10px] font-bold uppercase tracking-[0.2em] text-[#D9DCC4]"
+                  >
+                    <span className="text-[#A6B86B]">{highlight.label}:</span> {highlight.value}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
         </motion.div>
       </div>
     </section>

@@ -1,5 +1,7 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import Folio from '@/components/ui/Folio'
+import GhostType from '@/components/ui/GhostType'
 
 export type MenuPreviewItem = {
   title: string
@@ -32,9 +34,9 @@ const DEFAULT_ITEMS: MenuPreviewItem[] = [
 
 /**
  * «Gastronomía / Menú» — lista editorial sobre marfil con hover-fill rojo
- * (`.menu-row`/`.menu-fill`). La información (número, línea y descripción) es
- * siempre visible: el hover solo añade el relleno decorativo. Sin precios ni
- * platos inventados. Server Component.
+ * (`.menu-row`/`.menu-fill`), el mejor micro-momento interactivo del sitio.
+ * Encabezado asimétrico con folio y tipografía-imagen de fondo. La información
+ * es siempre visible; el hover solo añade el relleno. Server Component.
  */
 export default function MenuPreviewSection({
   index = '03',
@@ -47,37 +49,47 @@ export default function MenuPreviewSection({
   className = '',
 }: MenuPreviewSectionProps) {
   return (
-    <section className={cn('border-b border-[rgba(28,25,18,0.12)] bg-[#F5F5F0] py-20 md:py-32', className)}>
-      <Container variant="default">
-        <p className="font-sans-app text-[11px] font-medium uppercase tracking-[0.4em] text-[#4A5728]">
-          <span className="mr-3 tabular-nums text-[#C1121F]">{index}</span>
-          {eyebrow}
-        </p>
-        <h2
-          className="mt-5 max-w-3xl font-playfair font-black leading-[0.95] tracking-tight text-[#181f0d]"
-          style={{ fontSize: 'clamp(1.9rem, 4.5vw, 3.4rem)' }}
-        >
-          {title} <span className="italic text-[#C1121F]">{emphasis}</span>
-        </h2>
+    <section
+      className={cn('relative overflow-hidden bg-[#F5F5F0] py-24 md:py-36', className)}
+    >
+      <GhostType tone="paper" position="right-bottom" sizeVw={28} opacity={0.05}>
+        Carta
+      </GhostType>
+
+      <Container variant="default" className="relative">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-8">
+            <Folio number={index} label={eyebrow} tone="paper" variant="stacked" />
+            <h2
+              className="mt-8 max-w-3xl font-playfair font-black leading-[0.9] tracking-[-0.03em] text-[#181f0d]"
+              style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.2rem)' }}
+            >
+              {title} <span className="italic text-[#C1121F]">{emphasis}</span>
+            </h2>
+          </div>
+        </div>
 
         {items.length > 0 ? (
-          <ul className="mt-12 border-t border-[#181f0d]/10">
+          <ul className="mt-14 border-t border-[#181f0d]/10">
             {items.map((item, i) => (
               <li
                 key={item.title}
-                className="menu-row group flex items-baseline justify-between gap-4 border-b border-[#181f0d]/10 py-5"
+                className="menu-row group flex items-baseline justify-between gap-4 border-b border-[#181f0d]/10 py-6"
               >
                 <span className="menu-fill" aria-hidden="true" />
-                <span className="relative z-10 flex items-baseline gap-4">
+                <span className="relative z-10 flex items-baseline gap-5">
                   <span className="font-sans-app text-[11px] tabular-nums text-[#C1121F] transition-colors group-hover:text-[#F5F5F0]/70">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="font-playfair text-2xl text-[#181f0d] transition-colors group-hover:text-[#F5F5F0] md:text-3xl">
+                  <span
+                    className="font-playfair leading-[0.95] text-[#181f0d] transition-colors group-hover:text-[#F5F5F0]"
+                    style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.6rem)' }}
+                  >
                     {item.category ?? item.title}
                   </span>
                 </span>
                 {item.description ? (
-                  <span className="relative z-10 max-w-[52%] pl-6 text-right font-playfair text-sm italic text-[#4A5728] transition-colors group-hover:text-[#F5F5F0] md:text-base">
+                  <span className="relative z-10 hidden max-w-[46%] pl-6 text-right font-playfair text-sm italic text-[#4A5728] transition-colors group-hover:text-[#F5F5F0] sm:block md:text-base">
                     {item.description}
                   </span>
                 ) : null}
