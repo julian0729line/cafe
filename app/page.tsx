@@ -73,11 +73,16 @@ export default function HomePage() {
         agenda={u.agenda}
         library={u.library}
         spaces={u.spaces}
-        microphrase={homeContent.microphrases.universe}
       />
 
-      {/* 3 · Atmósfera — respiración visual breve */}
-      <AtmosphereBreakSection microphrase={homeContent.atmosphere.microphrase} />
+      {/* 3 · Atmósfera — respiración visual con «Tapeo Cortázar» (entrada) */}
+      <AtmosphereBreakSection
+        kicker={homeContent.atmosphere.kicker}
+        dishLead={homeContent.atmosphere.dishLead}
+        dishAccent={homeContent.atmosphere.dishAccent}
+        ingredients={homeContent.atmosphere.ingredients}
+        microphrase={homeContent.atmosphere.microphrase}
+      />
 
       {/* 4 · Cierre de reserva */}
       <ReservationCTASection
