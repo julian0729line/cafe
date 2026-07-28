@@ -1,13 +1,20 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
-import Microphrase from './Microphrase'
+import LomoBestiarioCinemagraph from './LomoBestiarioCinemagraph'
 
 type Cta = { label: string; href: string }
 
 export interface UniverseSectionProps {
   eyebrow?: string
-  menu: { piece: string; name: string; tags: readonly string[]; cta: Cta }
+  menu: {
+    piece: string
+    name: string
+    dishLead: string
+    dishAccent: string
+    ingredients: string
+    cta: Cta
+  }
   agenda: {
     piece: string
     name: string
@@ -17,7 +24,6 @@ export interface UniverseSectionProps {
   }
   library: { piece: string; name: string; line: string; cta: Cta }
   spaces: { piece: string; name: string; sedes: readonly string[]; line: string; cta: Cta }
-  microphrase?: string
 }
 
 function Piece({ href, className, children }: { href: string; className: string; children: ReactNode }) {
@@ -68,7 +74,6 @@ export default function UniverseSection({
   agenda,
   library,
   spaces,
-  microphrase,
 }: UniverseSectionProps) {
   return (
     <section aria-label="Universo Café Valparaíso" className="relative overflow-hidden bg-[#F5F5F0] py-20 md:py-28">
@@ -77,46 +82,19 @@ export default function UniverseSection({
           {eyebrow}
         </p>
 
-        {microphrase ? (
-          <Microphrase tone="paper" className="right-6 top-16 text-2xl max-[400px]:hidden md:right-10 md:top-20 md:text-3xl">
-            {microphrase}
-          </Microphrase>
-        ) : null}
-
         <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
-          {/* MENÚ — pieza principal, sensorial (duotono + grano sobre noche) */}
+          {/* MENÚ — cinemagraph del plato insignia «Lomo Bestiario» */}
           <Piece
             href={menu.cta.href}
-            className="min-h-[19rem] border-[#4A5728] bg-[#181f0d] md:col-span-7 md:min-h-[24rem]"
+            className="min-h-[22rem] border-[#4A5728] bg-[#12180a] md:col-span-7 md:min-h-[26rem]"
           >
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(150deg, rgba(52,62,28,.35), rgba(193,18,31,.28) 72%, rgba(122,34,48,.4))',
-              }}
+            <LomoBestiarioCinemagraph
+              label={`${menu.piece} · ${menu.name}`}
+              dishLead={menu.dishLead}
+              dishAccent={menu.dishAccent}
+              ingredients={menu.ingredients}
+              accessLabel={menu.cta.label}
             />
-            <span className="grain-soft" aria-hidden="true" />
-            <span className="relative">
-              <PieceLabel piece={menu.piece} tone="night" />
-            </span>
-            <span className="relative">
-              <span
-                className="block font-playfair font-black leading-[0.85] tracking-[-0.03em] text-[#F5F5F0]"
-                style={{ fontSize: 'clamp(2.6rem, 6vw, 4.6rem)' }}
-              >
-                {menu.name}
-              </span>
-              <span className="mt-5 flex flex-wrap gap-x-4 gap-y-1">
-                {menu.tags.map((t) => (
-                  <span key={t} className="font-playfair text-lg italic text-[#D9DCC4] md:text-xl">
-                    {t}
-                  </span>
-                ))}
-              </span>
-              <Access label={menu.cta.label} tone="coral" />
-            </span>
           </Piece>
 
           {/* AGENDA — papel, temporal (evento real si existe; si no, descriptor) */}

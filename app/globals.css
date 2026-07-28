@@ -8,6 +8,7 @@
   --color-red-brand:    #C1121F;
   --color-red-dark:     #960E17;
   --color-off-white:    #F5F5F0;
+  --color-ink:          #1E2410;
   --color-background:   #343E1C;
   --color-foreground:   #F5F5F0;
   --font-playfair:      var(--font-playfair);
@@ -360,4 +361,96 @@ body {
   pointer-events: none;
   transform-origin: left;
   transition: all 0.2s ease;
+}
+
+/* ── Lomo Bestiario — cinemagraph (Menú / Universo) ─────────────────────────
+   Fotografía real que "respira": push-in sobre imagen única con origen en el
+   centro del plato (pseudo-parallax sin fantasma), respiración de luz y grain
+   estático. Solo transform/opacity. Fiel al plato, sin deformación. */
+@keyframes lomo-plato {
+  from { transform: scale(1) translateY(0); }
+  to   { transform: scale(1.045) translateY(-4px); }
+}
+@keyframes lomo-luz {
+  from { opacity: 0.06; }
+  to   { opacity: 0.14; }
+}
+.lomo-plato {
+  transform-origin: 51% 60%; /* centro del medallón de carne */
+  will-change: transform;
+  animation: lomo-plato 8s ease-in-out infinite alternate;
+}
+.lomo-luz {
+  will-change: opacity;
+  mix-blend-mode: soft-light;
+  opacity: 0.06;
+  animation: lomo-luz 6s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lomo-plato, .lomo-luz { animation: none !important; }
+  .lomo-plato { transform: none !important; }
+  .lomo-luz { opacity: 0.1 !important; }
+}
+
+/* ── Tapeo Cortázar — cinemagraph de la escena Atmósfera ────────────────────
+   Segundo plato real (una entrada) como protagonista de su propia escena: un
+   plato iluminado que emerge de la oscuridad («cine de autor»). Mismo método
+   que el Lomo (solo transform/opacity, sin deformar la comida), push-in algo
+   mayor porque se muestra contenido, no a sangre. Loop exacto por `alternate`. */
+@keyframes tapeo-plato {
+  from { transform: scale(1.02) translateY(0); }
+  to   { transform: scale(1.075) translateY(-6px); }
+}
+@keyframes tapeo-luz {
+  from { opacity: 0.10; }
+  to   { opacity: 0.22; }
+}
+.tapeo-plato {
+  transform-origin: 50% 46%; /* racimo central de tostadas y guarnición */
+  will-change: transform;
+  animation: tapeo-plato 9s ease-in-out infinite alternate;
+}
+.tapeo-luz {
+  will-change: opacity;
+  mix-blend-mode: soft-light;
+  opacity: 0.10;
+  animation: tapeo-luz 7s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tapeo-plato, .tapeo-luz { animation: none !important; }
+  .tapeo-plato { transform: scale(1.02) !important; }
+  .tapeo-luz { opacity: 0.16 !important; }
+}
+
+/* ── Bestiario /menu — la ilustración viva respira SOLO en hover/focus ──────
+   En un catálogo, seis fotos respirando a la vez pelean contra el escaneo (y
+   leen como «hecho por IA»). Aquí la ilustración está QUIETA por defecto —sin
+   `will-change`, sin animación— y solo cobra vida cuando su banda (`.especimen`)
+   recibe `:hover`/`:focus-within`: un protagonista a la vez. En táctil (sin
+   hover) y con `prefers-reduced-motion` queda estática, sin lógica extra.
+   Parámetros por ítem vía CSS vars: `--especimen-origin` (foco del push-in),
+   `--especimen-scale` (tope de zoom, moderado por la resolución de la fuente),
+   `--especimen-luz-min/max`. Solo transform/opacity; loop exacto por `alternate`. */
+@keyframes especimen-respira {
+  from { transform: scale(1) translateY(0); }
+  to   { transform: scale(var(--especimen-scale, 1.03)) translateY(-4px); }
+}
+@keyframes especimen-luz {
+  from { opacity: var(--especimen-luz-min, 0.08); }
+  to   { opacity: var(--especimen-luz-max, 0.18); }
+}
+.especimen-plato { transform-origin: var(--especimen-origin, 50% 50%); }
+.especimen-luz { mix-blend-mode: soft-light; opacity: 0; }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .especimen:hover .especimen-plato,
+  .especimen:focus-within .especimen-plato {
+    will-change: transform;
+    animation: especimen-respira var(--especimen-dur, 8s) ease-in-out infinite alternate;
+  }
+  .especimen:hover .especimen-luz,
+  .especimen:focus-within .especimen-luz {
+    will-change: opacity;
+    animation: especimen-luz var(--especimen-luz-dur, 6.5s) ease-in-out infinite alternate;
+  }
 }

@@ -9,7 +9,7 @@
 
 import { siteConfig } from '@/data/site'
 import { eventCategories, eventsConfig, featuredEvents } from '@/data/events'
-import { menuCategories, menuConfig } from '@/data/menu'
+import { menuConfig } from '@/data/menu'
 import { libraryConfig } from '@/data/library'
 import { spacesConfig } from '@/data/spaces'
 
@@ -41,7 +41,11 @@ export const homeContent = {
     menu: {
       piece: '01',
       name: 'Menú',
-      tags: [...menuCategories], // Café · Cocina · Coctelería · Postres
+      // Plato insignia (cinemagraph). Nombre e ingredientes confirmados por el
+      // negocio; van como texto real en el DOM. La carta completa vive en /menu.
+      dishLead: 'Lomo',
+      dishAccent: 'Bestiario',
+      ingredients: 'Pasta · hongos · cebolla crocante',
       cta: { label: 'Ver menú', href: menuConfig.ctaHref },
     },
     agenda: {
@@ -67,9 +71,17 @@ export const homeContent = {
     },
   },
 
-  // 3 · ATMÓSFERA — respiración visual breve (solo CSS, sin segundo video, sin
-  // CTA, sin párrafo). Una microfrase.
+  // 3 · ATMÓSFERA — la respiración de la mitad del recorrido, ahora con un
+  // protagonista propio: «Tapeo Cortázar», una entrada real de la casa, como
+  // cinemagraph que emerge de la oscuridad. Escena distinta a la del Lomo, así
+  // que nunca compiten en el mismo viewport. Nombre e ingredientes confirmados,
+  // van como texto real en el DOM. Sin CTA (sigue siendo un respiro, no un
+  // acceso): la carta completa vive en /menu.
   atmosphere: {
+    kicker: 'Entrada de la casa',
+    dishLead: 'Tapeo',
+    dishAccent: 'Cortázar',
+    ingredients: 'Pan dorado · jamón curado · rúgula · almendra · glaseado',
     microphrase: 'Nos vemos adentro',
   },
 
@@ -81,9 +93,10 @@ export const homeContent = {
     // respetar el presupuesto de accesos del Home.
   },
 
-  // Microfrases flotantes del recorrido (máx. 3, decorativas, aria-hidden).
+  // Microfrases flotantes del recorrido (decorativas, aria-hidden). Se retira
+  // la del universo: cuando el cinemagraph del plato está visible, nada más
+  // compite con él en ese viewport.
   microphrases: {
     hero: 'Café de por medio',
-    universe: 'Mesa para quedarse',
   },
 } as const

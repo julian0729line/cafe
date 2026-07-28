@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
 import MenuHero from '@/components/sections/menu/MenuHero'
 import MenuCategoriesSection from '@/components/sections/menu/MenuCategoriesSection'
+import MenuFeaturedSection from '@/components/sections/menu/MenuFeaturedSection'
 import MenuClosingSection from '@/components/sections/menu/MenuClosingSection'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
-import { menuCategories, menuPreviewItems } from '@/data/menu'
+import { menuCategories, menuFeatured, menuPreviewItems } from '@/data/menu'
 import { createPageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = createPageMetadata({
@@ -58,6 +59,7 @@ export default function MenuPage() {
     >
       <MenuHero />
       <MenuCategoriesSection categories={categoryLines} />
+      <MenuFeaturedSection items={menuFeatured} />
       <MenuClosingSection />
     </PublicShell>
   )
