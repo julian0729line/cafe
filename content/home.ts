@@ -1,22 +1,20 @@
 /**
  * Textos del home compacto — Café Valparaíso.
  *
- * Arquitectura de cuatro momentos: Hero → Universo (4 accesos) → Atmósfera →
- * Cierre de reserva. Texto mínimo: el Home orienta y da acceso; las páginas
- * internas explican. Solo datos confirmados; sin fechas, precios, direcciones,
- * aforos ni artistas inventados. No importa ningún componente.
+ * Arquitectura de cuatro momentos: Hero → Universo (Menú, Espacios) →
+ * Atmósfera → Cierre de reserva. Texto mínimo: el Home orienta y da acceso;
+ * las páginas internas explican. Solo datos confirmados; sin fechas, precios,
+ * direcciones, aforos ni artistas inventados. No importa ningún componente.
+ *
+ * El sitio quedó reducido a cuatro páginas (Home, Menú, Espacios, Contacto):
+ * Agenda y Librería La Maga se retiraron, y Reservas se reemplazó por el
+ * canal real (WhatsApp) en cada CTA de "Reservar".
  */
 
 import { siteConfig } from '@/data/site'
-import { eventCategories, eventsConfig, featuredEvents } from '@/data/events'
 import { menuConfig } from '@/data/menu'
-import { libraryConfig } from '@/data/library'
 import { spacesConfig } from '@/data/spaces'
-
-// Próximo evento real (si existe). Hoy `featuredEvents` está vacío a propósito:
-// no hay eventos confirmados, así que la pieza Agenda no inventa fecha ni
-// nombre — muestra el acceso con un descriptor de categorías confirmadas.
-const nextEvent = featuredEvents[0] ?? null
+import { contactConfig } from '@/data/contact'
 
 export const homeContent = {
   // 1 · HERO — se entiende en cinco segundos. Nombre + una línea + dos accesos.
@@ -25,15 +23,15 @@ export const homeContent = {
     titleLead: 'Café',
     titleAccent: 'Valparaíso',
     tagline: 'Café, cocina y cultura en Cali.',
-    primaryCta: { label: 'Reservar', href: '/reservas' },
-    secondaryCta: { label: 'Ver agenda', href: eventsConfig.ctaHref },
+    primaryCta: { label: 'Reservar', href: contactConfig.whatsappHref, external: true },
+    secondaryCta: { label: 'Ver menú', href: menuConfig.ctaHref },
     videoSrc: '/media/valparaiso-home.mp4',
     // Poster aplazado (sin archivo real): el hero degrada con el fondo editorial
     // de reserva. Ver docs/HERO_VIDEO_REAL.md.
     posterSrc: undefined as string | undefined,
   },
 
-  // 2 · UNIVERSO VALPARAÍSO — cuatro accesos en una sola composición. Misma
+  // 2 · UNIVERSO VALPARAÍSO — dos accesos en una sola composición. Misma
   // gramática (nombre protagonista + una línea + acceso), distinta escala y
   // superficie por pieza.
   universe: {
@@ -48,22 +46,8 @@ export const homeContent = {
       ingredients: 'Pasta · hongos · cebolla crocante',
       cta: { label: 'Ver menú', href: menuConfig.ctaHref },
     },
-    agenda: {
-      piece: '02',
-      name: 'Agenda',
-      // Descriptor de categorías confirmadas (no es un evento inventado).
-      line: `${eventCategories[0]}, ${eventCategories[1].toLowerCase()} y ${eventCategories[2].toLowerCase()}.`,
-      event: nextEvent, // null mientras no haya evento confirmado
-      cta: { label: 'Ver agenda', href: eventsConfig.ctaHref },
-    },
-    library: {
-      piece: '03',
-      name: 'Librería La Maga',
-      line: 'Para cuando el amor duele o florece.',
-      cta: { label: 'Conocer La Maga', href: libraryConfig.ctaHref },
-    },
     spaces: {
-      piece: '04',
+      piece: '02',
       name: 'Espacios',
       sedes: spacesConfig.sedes, // ['Pance', 'Juanambú']
       line: 'Dos sedes para encontrarnos.',
@@ -88,7 +72,7 @@ export const homeContent = {
   // 4 · CIERRE — el único gran momento rojo, corto. Sin párrafo ni ghost word.
   reservationCta: {
     title: 'Conversemos sobre tu próxima reserva.',
-    primaryCta: { label: 'Reservar', href: '/reservas' },
+    primaryCta: { label: 'Reservar por WhatsApp', href: contactConfig.whatsappHref, external: true },
     // «Contacto» vive en el navbar y el footer; no se duplica aquí para
     // respetar el presupuesto de accesos del Home.
   },

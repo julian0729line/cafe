@@ -66,12 +66,10 @@ export default function HomePage() {
         posterSrc={homeContent.hero.posterSrc}
       />
 
-      {/* 2 · Universo Valparaíso — cuatro accesos */}
+      {/* 2 · Universo Valparaíso — dos accesos */}
       <UniverseSection
         eyebrow={u.eyebrow}
         menu={u.menu}
-        agenda={u.agenda}
-        library={u.library}
         spaces={u.spaces}
       />
 

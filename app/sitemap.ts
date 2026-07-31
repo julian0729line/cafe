@@ -7,10 +7,7 @@ const PUBLIC_ROUTES: Array<{
   priority: number
 }> = [
   { path: '/', changeFrequency: 'weekly', priority: 1 },
-  { path: '/agenda', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/menu', changeFrequency: 'monthly', priority: 0.8 },
-  { path: '/reservas', changeFrequency: 'monthly', priority: 0.7 },
-  { path: '/libreria', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/espacios', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/contacto', changeFrequency: 'monthly', priority: 0.6 },
 ]

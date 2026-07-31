@@ -1,4 +1,5 @@
 import ScrollExpansionHero from './ScrollExpansionHero'
+import { contactConfig } from '@/data/contact'
 
 export type HeroCta = {
   label: string
@@ -34,8 +35,8 @@ export default function HeroSection({
   titleLead = 'Café',
   titleAccent = 'Valparaíso',
   tagline = 'Café, cocina y cultura en Cali.',
-  primaryCta = { label: 'Reservar', href: '/reservas' },
-  secondaryCta = { label: 'Ver agenda', href: '/agenda' },
+  primaryCta = { label: 'Reservar', href: contactConfig.whatsappHref, external: true },
+  secondaryCta = { label: 'Ver menú', href: '/menu' },
   microphrase,
   videoSrc,
   posterSrc,

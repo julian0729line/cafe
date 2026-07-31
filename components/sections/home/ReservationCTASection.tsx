@@ -1,5 +1,6 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import { contactConfig } from '@/data/contact'
 
 export type ReservationCta = {
   label: string
@@ -26,7 +27,7 @@ function cn(...classes: Array<string | false | undefined>) {
  */
 export default function ReservationCTASection({
   title = 'Conversemos sobre tu próxima reserva.',
-  primaryCta = { label: 'Reservar', href: '/reservas' },
+  primaryCta = { label: 'Reservar por WhatsApp', href: contactConfig.whatsappHref, external: true },
   className = '',
 }: ReservationCTASectionProps) {
   return (

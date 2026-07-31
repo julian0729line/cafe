@@ -33,12 +33,12 @@ export default function PortadaCarta({
             <p className="font-sans-app text-[0.7rem] font-bold uppercase tracking-[0.22em] text-[#FF7F70]">
               {eyebrow}
             </p>
-            <h1
+            <h2
               className="mt-3 font-playfair font-semibold leading-[0.9] tracking-[-0.02em] text-balance"
               style={{ fontSize: 'clamp(3.25rem, 9vw, 5rem)' }}
             >
               {dish.nameLead} <span className="italic text-[#FF7F70]">{dish.nameAccent}</span>
-            </h1>
+            </h2>
             <p
               className="mt-3 max-w-[24ch] font-playfair leading-snug text-[#F5F5F0]/75"
               style={{ fontSize: 'clamp(1.1rem, 2vw, 1.4rem)' }}
