@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, type Variants } from 'motion/react'
+import { motion, useReducedMotion, type Variants } from 'motion/react'
 
 type Line = { text: string; accent?: boolean; italic?: boolean; tail?: string }
 
@@ -31,6 +31,8 @@ export function PageHero({
   size?: string
   maxWidth?: string
 }) {
+  const reduce = useReducedMotion()
+
   return (
     <div className="relative px-8 py-24 md:py-28 border-b border-[#4A5728] overflow-hidden vignette noise">
       <div className="aurora">
@@ -51,7 +53,7 @@ export function PageHero({
 
       <motion.div
         variants={container}
-        initial="hidden"
+        initial={reduce ? false : 'hidden'}
         animate="show"
         className={`${maxWidth} mx-auto relative z-10`}
       >

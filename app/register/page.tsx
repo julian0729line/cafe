@@ -100,50 +100,59 @@ export default function RegisterPage() {
 
             <form onSubmit={handleRegister} className="space-y-5">
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A5728] mb-2">
+                <label htmlFor="register-nombre" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A5728] mb-2">
                   Nombre
                 </label>
                 <input
+                  id="register-nombre"
                   type="text"
                   required
+                  autoComplete="name"
                   value={nombre}
                   onChange={e => setNombre(e.target.value)}
                   placeholder="Tu nombre"
+                  aria-describedby={error ? 'register-error' : undefined}
                   className="w-full border-2 border-[#343E1C] bg-white px-4 py-3 text-sm text-[#343E1C] focus:outline-none focus:border-[#C1121F] focus:ring-2 focus:ring-[#C1121F]/20 transition-shadow rounded-none placeholder:text-[#8a8a80]"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A5728] mb-2">
+                <label htmlFor="register-email" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A5728] mb-2">
                   Correo electrónico
                 </label>
                 <input
+                  id="register-email"
                   type="email"
                   required
+                  autoComplete="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="tu@email.com"
+                  aria-describedby={error ? 'register-error' : undefined}
                   className="w-full border-2 border-[#343E1C] bg-white px-4 py-3 text-sm text-[#343E1C] focus:outline-none focus:border-[#C1121F] focus:ring-2 focus:ring-[#C1121F]/20 transition-shadow rounded-none placeholder:text-[#8a8a80]"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A5728] mb-2">
+                <label htmlFor="register-password" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-[#4A5728] mb-2">
                   Contraseña
                 </label>
                 <input
+                  id="register-password"
                   type="password"
                   required
                   minLength={6}
+                  autoComplete="new-password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="Mínimo 6 caracteres"
+                  aria-describedby={error ? 'register-error' : undefined}
                   className="w-full border-2 border-[#343E1C] bg-white px-4 py-3 text-sm text-[#343E1C] focus:outline-none focus:border-[#C1121F] focus:ring-2 focus:ring-[#C1121F]/20 transition-shadow rounded-none placeholder:text-[#8a8a80]"
                 />
               </div>
 
               {error && (
-                <div className="border-2 border-[#C1121F] bg-[#C1121F]/10 px-4 py-3">
+                <div id="register-error" role="alert" className="border-2 border-[#C1121F] bg-[#C1121F]/10 px-4 py-3">
                   <p className="text-[#960E17] text-[10px] font-bold tracking-widest uppercase">{error}</p>
                 </div>
               )}

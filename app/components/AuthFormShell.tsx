@@ -25,6 +25,10 @@ export function AuthFormShell({
 }) {
   return (
     <div className="min-h-screen flex">
+      {/* Único h1 real de la página: AuthAside solo lo muestra visualmente
+          en desktop (oculto bajo lg), así que en móvil este es el único
+          encabezado que un lector de pantalla encuentra. */}
+      <h1 className="sr-only">{titleTop} {titleAccent}</h1>
       <AuthAside eyebrow={eyebrow} titleTop={titleTop} titleAccent={titleAccent} quote={quote} />
 
       <div className="w-full lg:w-[45%] bg-[#F5F5F0] flex flex-col">

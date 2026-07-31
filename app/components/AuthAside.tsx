@@ -49,14 +49,17 @@ export function AuthAside({
         <p className="fade-up fade-up-1 font-sans-app text-[10px] font-bold tracking-[0.3em] uppercase text-[#C9A227] mb-6">
           {eyebrow}
         </p>
-        <h1
+        {/* Decorativo: el h1 real y accesible vive en AuthFormShell (sr-only),
+            porque este panel completo se oculta bajo el breakpoint lg. */}
+        <p
+          aria-hidden="true"
           className="fade-up fade-up-2 font-playfair font-black leading-[0.9] text-[#F5F5F0] mb-3"
           style={{ fontSize: 'clamp(3rem, 6.2vw, 6.5rem)' }}
         >
           {titleTop}
           <br />
           <span className="italic text-[#FF7F70]">{titleAccent}</span>
-        </h1>
+        </p>
         <div className="fade-up fade-up-3 flex gap-3 mt-6 mb-8">
           <div className="w-16 h-[3px] bg-[#C1121F]" />
           <div className="w-8 h-[3px] bg-[#A6B86B]" />

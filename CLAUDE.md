@@ -76,16 +76,21 @@ profile on signup) and `supabase/admin.sql`. Admin gating keys off
   `.map-pin`, `.menu-item`. **Every animated class is also disabled in the single
   `@media (prefers-reduced-motion: reduce)` block — add new animations there too.**
 - **Motion components** (`app/components/`, using `motion/react`) are isolated
-  `'use client'` leaves so `app/page.tsx` stays a Server Component: `Hero`,
-  `Nav` (floating glass + IntersectionObserver scroll-spy + mobile menu),
-  `Reveal`, `Counter`, `ScrollProgress`, `Parallax`, `MagneticButton`, and
+  `'use client'` leaves so `app/page.tsx` stays a Server Component: `Reveal`,
+  `Counter`, `ScrollProgress`, `Parallax`, `MagneticButton`, `PageHero`, and
   `AuthAside` (shared login/register panel). JS animations gate on
-  `useReducedMotion()`.
-- **`MediaSlot`** (a Server Component) is the **video-ready slot**: it renders a
-  `<video>`/`<img>` with duotone treatment when given a path, else an
-  art-directed placeholder tile. Drop files in `public/media/` and set the path —
-  see `public/media/README.md`. The hero video is toggled by `HERO_VIDEO` in
-  `app/components/Hero.tsx`.
+  `useReducedMotion()`. The public navbar is `components/layout/PublicNavbar.tsx`
+  (Server Component; no client-side mobile menu). The home hero is
+  `components/sections/home/ScrollExpansionHero.tsx`, wrapped by
+  `HeroSection.tsx` — earlier iterations lived in `app/components/Hero.tsx` and
+  `Nav.tsx`, which were removed once nothing imported them; don't recreate that
+  naming.
+- **`MediaSlot`** (`app/components/MediaSlot.tsx`, a Server Component) is the
+  **video-ready slot**: it renders a `<video>`/`<img>` with duotone treatment
+  when given a path, else an art-directed placeholder tile. Drop files in
+  `public/media/` and set the path — see `public/media/README.md`. The home
+  hero video path is set in `content/home.ts` (`hero.videoSrc`), not hardcoded
+  in a component.
 
 ### Lint constraints that bite
 
