@@ -1,5 +1,13 @@
 # Desplegar el Café Literario (gratis) y verlo desde cualquier lugar
 
+> **Ya está conectado a Vercel** vía la integración de GitHub (dos
+> proyectos: `cafe` y `cafe-rv1d`) — cada Pull Request genera su propia URL
+> de vista previa automáticamente, visible como check en el PR, y cada push
+> a `main` despliega a producción. Lo de abajo (Render/Netlify) documenta
+> cómo conectar un hosting alternativo si se decide dejar Vercel más
+> adelante (por su límite de uso no-comercial en el plan gratis — ver
+> "Sobre Vercel"), no un paso pendiente por hacer.
+
 El objetivo: conectar el repo a un hosting **una sola vez**. Desde ahí, cada
 cambio que se suba a GitHub se publica solo — sin terminal, funciona desde el
 celular.

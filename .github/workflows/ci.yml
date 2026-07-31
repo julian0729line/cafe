@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      # Sin variables de entorno a propósito: el build debe pasar así (ver
+      # CLAUDE.md) — client pages no pueden llamar createClient() en
+      # render/module scope, o el prerender falla como pasó antes en Vercel.
+      - name: Build (sin env — invariante del proyecto)
+        run: npm run build
