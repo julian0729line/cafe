@@ -3,6 +3,7 @@ import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/data/site";
 import { getBaseUrl } from "@/lib/seo";
+import { buildLocalBusinessJsonLd } from "@/lib/structured-data";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -50,9 +51,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const localBusinessJsonLd = buildLocalBusinessJsonLd();
+
   return (
     <html lang="es" className={`${playfair.variable} ${dmSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {localBusinessJsonLd.map((entry, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(entry).replace(/</g, "\\u003c"),
+            }}
+          />
+        ))}
+        {children}
+      </body>
     </html>
   );
 }
