@@ -30,6 +30,7 @@ const footerContactItems = contactConfig.reservationChannels.map((channel) => ({
   label: 'Contacto',
   value: channel.label,
   href: channel.href,
+  external: channel.href.startsWith('http'),
 }))
 
 const u = homeContent.universe

@@ -39,6 +39,7 @@ export default function MenuPage() {
           label: 'Contacto',
           value: channel.label,
           href: channel.href,
+          external: channel.href.startsWith('http'),
         })),
         copyright: `© ${new Date().getFullYear()} ${siteConfig.name}. Todos los derechos reservados.`,
       }}
