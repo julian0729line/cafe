@@ -41,6 +41,27 @@ export default function GastroSceneSection({
   }, [])
   const reduce = mounted && Boolean(prefersReduced)
 
+  // El hero ya reproduce este mismo archivo más arriba en la página; se monta
+  // (y por lo tanto se descarga) recién cuando la sección se acerca al
+  // viewport, en vez de competir por ancho de banda desde el primer render.
+  const sectionRef = useRef<HTMLElement>(null)
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '400px 0px' }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const video = videoRef.current
@@ -50,15 +71,16 @@ export default function GastroSceneSection({
       return
     }
     video.play().catch(() => {})
-  }, [reduce])
+  }, [reduce, shouldLoadVideo])
 
   return (
     <section
+      ref={sectionRef}
       aria-label="La gastronomía de Café Valparaíso"
       className="relative flex min-h-[92vh] items-end overflow-hidden bg-[#12180a] py-20 md:py-28"
     >
       {/* Metraje real a sangre completa */}
-      {videoSrc ? (
+      {videoSrc && shouldLoadVideo ? (
         <video
           ref={videoRef}
           className="absolute inset-0 z-0 h-full w-full object-cover"

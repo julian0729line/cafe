@@ -69,6 +69,19 @@ export default function ScrollExpansionHero({
   const handleVideoReady = () => setVideoReady(true)
   const showVideo = videoReady && !reduce
 
+  // La capa de fondo desenfocada solo existe para tapar el letterbox que deja
+  // `object-contain` en desktop. En móvil el video nítido ya usa `object-cover`
+  // y llena el marco por completo, así que ahí esa segunda copia del mismo
+  // archivo no aporta nada visual — no tiene sentido descargarla dos veces.
+  const [showBgVideo, setShowBgVideo] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const update = () => setShowBgVideo(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
   useEffect(() => {
     const els = [videoRef.current, bgVideoRef.current]
     for (const video of els) {
@@ -121,23 +134,28 @@ export default function ScrollExpansionHero({
           {videoSrc ? (
             <>
               {/* Respaldo desenfocado a sangre completa: mata el borde de caja
-                  y llena los costados del video vertical sin barras. */}
-              <video
-                ref={bgVideoRef}
-                className={`absolute inset-0 h-full w-full scale-110 object-cover blur-2xl brightness-[0.5] transition-opacity duration-700 ease-out ${
-                  showVideo ? 'opacity-100' : 'opacity-0'
-                }`}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                controls={false}
-                disablePictureInPicture
-                aria-hidden="true"
-              >
-                <source src={videoSrc} type="video/mp4" />
-              </video>
+                  y llena los costados del video vertical sin barras. Solo se
+                  monta en desktop (ver showBgVideo) — en móvil el video nítido
+                  ya cubre el marco entero con object-cover, así que esta
+                  segunda copia del mismo archivo no tendría nada que tapar. */}
+              {showBgVideo ? (
+                <video
+                  ref={bgVideoRef}
+                  className={`absolute inset-0 h-full w-full scale-110 object-cover blur-2xl brightness-[0.5] transition-opacity duration-700 ease-out ${
+                    showVideo ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  controls={false}
+                  disablePictureInPicture
+                  aria-hidden="true"
+                >
+                  <source src={videoSrc} type="video/mp4" />
+                </video>
+              ) : null}
 
               {/* Metraje nítido: cover en móvil (poco recorte en pantalla
                   vertical), contain en desktop (preserva la composición). */}

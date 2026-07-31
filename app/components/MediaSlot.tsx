@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 
 /**
  * Ranura de medios lista para tus videos/fotos.
@@ -42,8 +43,13 @@ export function MediaSlot({
           src={video}
         />
       ) : image ? (
-        /* eslint-disable-next-line @next/next/no-img-element */
-        <img className="media-zoom" src={image} alt={label ?? ''} />
+        <Image
+          className="media-zoom"
+          src={image}
+          alt={label ?? ''}
+          fill
+          sizes="(min-width: 1024px) 33vw, 100vw"
+        />
       ) : null}
 
       {hasMedia && <div className="media-scrim" />}
