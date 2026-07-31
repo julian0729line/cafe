@@ -36,7 +36,7 @@ export default function EditarPerfilPage() {
       setLoading(false)
     }
     cargar()
-  }, [])
+  }, [router])
 
   async function handleGuardar(e: React.FormEvent) {
     e.preventDefault()

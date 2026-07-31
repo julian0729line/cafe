@@ -29,9 +29,8 @@ Mientras `posterSrc` sea `undefined`, el hero degrada de forma segura: sin
 capa ambiental, sin crossfade, sin 404 ni ícono roto — el video aparece
 directamente sobre el degradado editorial de reserva en cuanto está listo.
 
-> Nota: `app/components/Hero.tsx` (con la constante `HERO_VIDEO`) es un
-> componente legado que **no** se usa en el home actual; no forma parte de
-> este flujo.
+> Nota: el componente legado `app/components/Hero.tsx` (con la constante
+> `HERO_VIDEO`) ya se eliminó del repo — nunca formó parte de este flujo.
 
 ## Galería "El ambiente"
 Cada mosaico acepta video o imagen. En `app/page.tsx`, en el arreglo `AMBIENTE`,

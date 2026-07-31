@@ -83,7 +83,7 @@ export default function HomeMediaFrame({
             {label ? (
               <span className="font-playfair text-lg italic text-[#F5F5F0]/85">{label}</span>
             ) : null}
-            <span className="font-sans-app text-[10px] uppercase tracking-[0.25em] text-[#8A9A52]">
+            <span className="font-sans-app text-[10px] uppercase tracking-[0.25em] text-[#A6B86B]">
               {caption ?? 'Imagen pendiente'}
             </span>
           </div>
