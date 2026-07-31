@@ -1,5 +1,6 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import { contactConfig } from '@/data/contact'
 
 export type SpaceOccasionLine = {
   title: string
@@ -14,7 +15,7 @@ export interface SpacesOccasionsSectionProps {
   emphasis?: string
   description?: string
   occasions?: SpaceOccasionLine[]
-  cta?: { label: string; href: string }
+  cta?: { label: string; href: string; external?: boolean }
   className?: string
 }
 
@@ -26,7 +27,8 @@ function cn(...classes: Array<string | false | undefined>) {
  * Tipos de encuentro reales (`spacesPreview` en `data/spaces.ts`), en un
  * módulo de dos columnas con divisores finos — no cards, no la fila de
  * ancho completo ya usada en Agenda/Menú/Librería. Sin bodas, conferencias
- * ni otros usos no confirmados. Conduce a `/reservas`. Server Component.
+ * ni otros usos no confirmados. Conduce al WhatsApp real de reservas.
+ * Server Component.
  */
 export default function SpacesOccasionsSection({
   index = '04',
@@ -35,7 +37,7 @@ export default function SpacesOccasionsSection({
   emphasis = 'una escala y un ritmo distinto.',
   description = 'Estas son las formas de encuentro que ya conviven en Café Valparaíso.',
   occasions = [],
-  cta = { label: 'Ir a reservas', href: '/reservas' },
+  cta = { label: 'Escribir por WhatsApp', href: contactConfig.whatsappHref, external: true },
   className = '',
 }: SpacesOccasionsSectionProps) {
   return (
@@ -84,7 +86,12 @@ export default function SpacesOccasionsSection({
 
         {cta ? (
           <div className="mt-14">
-            <LinkButton href={cta.href} variant="secondary" size="md">
+            <LinkButton
+              href={cta.href}
+              variant="secondary"
+              size="md"
+              {...(cta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+            >
               {cta.label}
             </LinkButton>
           </div>

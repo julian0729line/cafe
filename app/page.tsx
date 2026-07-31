@@ -1,11 +1,8 @@
 import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
 import HeroSection from '@/components/sections/home/HeroSection'
-import AboutSection from '@/components/sections/home/AboutSection'
-import CulturePreviewSection from '@/components/sections/home/CulturePreviewSection'
-import GastroSceneSection from '@/components/sections/home/GastroSceneSection'
-import LibraryPreviewSection from '@/components/sections/home/LibraryPreviewSection'
-import SpacesPreviewSection from '@/components/sections/home/SpacesPreviewSection'
+import UniverseSection from '@/components/sections/home/UniverseSection'
+import AtmosphereBreakSection from '@/components/sections/home/AtmosphereBreakSection'
 import ReservationCTASection from '@/components/sections/home/ReservationCTASection'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
@@ -33,25 +30,10 @@ const footerContactItems = contactConfig.reservationChannels.map((channel) => ({
   label: 'Contacto',
   value: channel.label,
   href: channel.href,
+  external: channel.href.startsWith('http'),
 }))
 
-const cultureLines = homeContent.culture.lines.map((line) => ({
-  number: line.number,
-  title: line.title,
-  description: line.description,
-  status: line.status,
-}))
-
-const libraryCategories = homeContent.library.categories.map((category) => ({
-  title: category.title,
-  description: category.description,
-}))
-
-const aboutKeywords = [...homeContent.about.keywords]
-const spacesSedes = [...homeContent.spaces.sedes]
-const spacesKinds = [...homeContent.spaces.kinds]
-const heroHighlights = [...homeContent.hero.highlights]
-const gastroLines = [...homeContent.gastroScene.lines]
+const u = homeContent.universe
 
 export default function HomePage() {
   return (
@@ -59,7 +41,7 @@ export default function HomePage() {
       navbar={{
         brandLabel: siteConfig.name,
         brandHref: publicNavigation.brandHref,
-        eyebrow: homeContent.hero.eyebrow,
+        eyebrow: siteConfig.concept,
         navItems,
         cta: publicNavigation.cta,
         activeHref: '/',
@@ -72,76 +54,39 @@ export default function HomePage() {
         copyright: `© ${new Date().getFullYear()} ${siteConfig.name}. Todos los derechos reservados.`,
       }}
     >
+      {/* 1 · Hero cinematográfico compacto */}
       <HeroSection
-        eyebrow={homeContent.hero.eyebrow}
         title={homeContent.hero.title}
         titleLead={homeContent.hero.titleLead}
         titleAccent={homeContent.hero.titleAccent}
-        description={homeContent.hero.description}
-        topLeftLabel={homeContent.hero.topLeftLabel}
-        topRightLabel={homeContent.hero.topRightLabel}
+        tagline={homeContent.hero.tagline}
         primaryCta={homeContent.hero.primaryCta}
         secondaryCta={homeContent.hero.secondaryCta}
-        highlights={heroHighlights}
+        microphrase={homeContent.microphrases.hero}
         videoSrc={homeContent.hero.videoSrc}
         posterSrc={homeContent.hero.posterSrc}
       />
-      <AboutSection
-        index={homeContent.about.index}
-        eyebrow={homeContent.about.eyebrow}
-        title={homeContent.about.title}
-        emphasis={homeContent.about.emphasis}
-        lead={homeContent.about.lead}
-        body={homeContent.about.body}
-        aside={homeContent.about.aside}
-        keywords={aboutKeywords}
+
+      {/* 2 · Universo Valparaíso — dos accesos */}
+      <UniverseSection
+        eyebrow={u.eyebrow}
+        menu={u.menu}
+        spaces={u.spaces}
       />
-      <CulturePreviewSection
-        index={homeContent.culture.index}
-        eyebrow={homeContent.culture.eyebrow}
-        title={homeContent.culture.title}
-        emphasis={homeContent.culture.emphasis}
-        description={homeContent.culture.description}
-        lines={cultureLines}
-        cta={homeContent.culture.cta}
+
+      {/* 3 · Atmósfera — respiración visual con «Tapeo Cortázar» (entrada) */}
+      <AtmosphereBreakSection
+        kicker={homeContent.atmosphere.kicker}
+        dishLead={homeContent.atmosphere.dishLead}
+        dishAccent={homeContent.atmosphere.dishAccent}
+        ingredients={homeContent.atmosphere.ingredients}
+        microphrase={homeContent.atmosphere.microphrase}
       />
-      <GastroSceneSection
-        eyebrow={homeContent.gastroScene.eyebrow}
-        statement={homeContent.gastroScene.statement}
-        emphasis={homeContent.gastroScene.emphasis}
-        lead={homeContent.gastroScene.lead}
-        lines={gastroLines}
-        videoSrc={homeContent.gastroScene.videoSrc}
-        cta={homeContent.gastroScene.cta}
-      />
-      <LibraryPreviewSection
-        index={homeContent.library.index}
-        eyebrow={homeContent.library.eyebrow}
-        title={homeContent.library.title}
-        emphasis={homeContent.library.emphasis}
-        description={homeContent.library.description}
-        categories={libraryCategories}
-        mediaLabel={homeContent.library.mediaLabel}
-        cta={homeContent.library.cta}
-      />
-      <SpacesPreviewSection
-        index={homeContent.spaces.index}
-        eyebrow={homeContent.spaces.eyebrow}
-        title={homeContent.spaces.title}
-        emphasis={homeContent.spaces.emphasis}
-        description={homeContent.spaces.description}
-        sedes={spacesSedes}
-        kinds={spacesKinds}
-        note={homeContent.spaces.note}
-        primaryCta={homeContent.spaces.primaryCta}
-        secondaryCta={homeContent.spaces.secondaryCta}
-      />
+
+      {/* 4 · Cierre de reserva */}
       <ReservationCTASection
-        eyebrow={homeContent.reservationCta.eyebrow}
         title={homeContent.reservationCta.title}
-        description={homeContent.reservationCta.description}
         primaryCta={homeContent.reservationCta.primaryCta}
-        secondaryCta={homeContent.reservationCta.secondaryCta}
       />
     </PublicShell>
   )

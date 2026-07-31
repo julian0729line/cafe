@@ -1,7 +1,8 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import { contactConfig } from '@/data/contact'
 
-export type MenuClosingCta = { label: string; href: string }
+export type MenuClosingCta = { label: string; href: string; external?: boolean }
 
 export interface MenuClosingSectionProps {
   title?: string
@@ -15,12 +16,12 @@ function cn(...classes: Array<string | false | undefined>) {
 
 /**
  * Cierre editorial de Menú sobre verde profundo (distinto del rojo de
- * Agenda/Home), con grano y un único CTA a reservas. Sin políticas de
- * reserva inventadas. Server Component.
+ * Home), con grano y un único CTA al WhatsApp real de reservas. Sin
+ * políticas de reserva inventadas. Server Component.
  */
 export default function MenuClosingSection({
   title = 'Una mesa, una conversación y algo para compartir.',
-  cta = { label: 'Reservar', href: '/reservas' },
+  cta = { label: 'Reservar por WhatsApp', href: contactConfig.whatsappHref, external: true },
   className = '',
 }: MenuClosingSectionProps) {
   return (
@@ -35,7 +36,12 @@ export default function MenuClosingSection({
         </h2>
         {cta ? (
           <div className="mt-9">
-            <LinkButton href={cta.href} variant="secondary" size="lg">
+            <LinkButton
+              href={cta.href}
+              variant="secondary"
+              size="lg"
+              {...(cta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+            >
               {cta.label}
             </LinkButton>
           </div>

@@ -1,9 +1,5 @@
 import ScrollExpansionHero from './ScrollExpansionHero'
-
-export type HeroHighlight = {
-  label: string
-  value: string
-}
+import { contactConfig } from '@/data/contact'
 
 export type HeroCta = {
   label: string
@@ -13,63 +9,48 @@ export type HeroCta = {
 }
 
 export interface HeroSectionProps {
-  eyebrow?: string
   title?: string
   /** Composición visual del título en dos líneas (un único `<h1>`). */
   titleLead?: string
   titleAccent?: string
-  description?: string
-  /** Micro-labels editoriales en las esquinas superiores del hero. */
-  topLeftLabel?: string
-  topRightLabel?: string
+  /** Línea breve bajo el título (una sola). */
+  tagline?: string
   primaryCta?: HeroCta
   secondaryCta?: HeroCta
-  highlights?: HeroHighlight[]
-  /** Assets opcionales del hero. Si no existen, se usa un fondo cinematográfico de reserva. */
+  /** Microfrase editorial flotante, decorativa. */
+  microphrase?: string
+  /** Assets opcionales del hero. Si no existen, se usa un fondo de reserva. */
   videoSrc?: string
   posterSrc?: string
   backgroundSrc?: string
 }
 
-const DEFAULT_HIGHLIGHTS: HeroHighlight[] = [
-  { label: 'Ciudad', value: 'Cali' },
-  { label: 'Sedes', value: 'Pance y Juanambú' },
-  { label: 'Librería', value: 'La Maga' },
-]
-
 /**
- * Wrapper editorial (Server Component) del hero del home. Toda la lógica de
- * animación ligada al scroll vive en el único Client Component del home,
- * `ScrollExpansionHero`. Este wrapper solo resuelve defaults de contenido y
- * pasa las props necesarias.
+ * Wrapper editorial (Server Component) del hero compacto del home. Toda la
+ * lógica de animación ligada al scroll vive en el Client Component
+ * `ScrollExpansionHero`. Este wrapper solo resuelve defaults y pasa props.
  */
 export default function HeroSection({
-  eyebrow = 'Café literario, cultural, artístico y gastronómico',
   title = 'Café Valparaíso',
   titleLead = 'Café',
   titleAccent = 'Valparaíso',
-  description = 'Un lugar para leer, conversar y comer. Sedes en Pance y Juanambú, en Cali.',
-  topLeftLabel = 'Café · Cultura · Cocina',
-  topRightLabel = 'Cali, Colombia',
-  primaryCta = { label: 'Reservar', href: '/reservas' },
-  secondaryCta = { label: 'Ver agenda', href: '/agenda' },
-  highlights = DEFAULT_HIGHLIGHTS,
+  tagline = 'Café, cocina y cultura en Cali.',
+  primaryCta = { label: 'Reservar', href: contactConfig.whatsappHref, external: true },
+  secondaryCta = { label: 'Ver menú', href: '/menu' },
+  microphrase,
   videoSrc,
   posterSrc,
   backgroundSrc,
 }: HeroSectionProps) {
   return (
     <ScrollExpansionHero
-      eyebrow={eyebrow}
       title={title}
       titleLead={titleLead}
       titleAccent={titleAccent}
-      description={description}
-      topLeftLabel={topLeftLabel}
-      topRightLabel={topRightLabel}
+      tagline={tagline}
       primaryCta={primaryCta}
       secondaryCta={secondaryCta}
-      highlights={highlights}
+      microphrase={microphrase}
       videoSrc={videoSrc}
       posterSrc={posterSrc}
       backgroundSrc={backgroundSrc}

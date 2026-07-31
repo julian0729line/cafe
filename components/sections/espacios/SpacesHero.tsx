@@ -1,5 +1,6 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import { contactConfig } from '@/data/contact'
 
 export interface SpacesHeroProps {
   eyebrow?: string
@@ -7,7 +8,7 @@ export interface SpacesHeroProps {
   titleAccent?: string
   description?: string
   index?: string
-  cta?: { label: string; href: string }
+  cta?: { label: string; href: string; external?: boolean }
   className?: string
 }
 
@@ -25,9 +26,9 @@ export default function SpacesHero({
   eyebrow = 'Pance y Juanambú',
   titleLead = 'Espacios para',
   titleAccent = 'encontrarnos.',
-  description = 'Encuentros, celebraciones, reuniones y actividades culturales, con la misma identidad editorial de Café Valparaíso.',
+  description,
   index = '01',
-  cta = { label: 'Solicitar una reserva', href: '/reservas' },
+  cta = { label: 'Solicitar una reserva', href: contactConfig.whatsappHref, external: true },
   className = '',
 }: SpacesHeroProps) {
   return (
@@ -67,7 +68,12 @@ export default function SpacesHero({
           ) : null}
           {cta ? (
             <div className="mt-10">
-              <LinkButton href={cta.href} variant="secondary" size="lg">
+              <LinkButton
+                href={cta.href}
+                variant="secondary"
+                size="lg"
+                {...(cta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+              >
                 {cta.label}
               </LinkButton>
             </div>

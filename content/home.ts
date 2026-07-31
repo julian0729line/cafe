@@ -1,145 +1,86 @@
 /**
- * Textos estructurados del home — Café Valparaíso.
+ * Textos del home compacto — Café Valparaíso.
  *
- * Compone datos de `data/` en la forma que consumen las secciones de
- * `components/sections/home/`. No importa ningún componente: solo datos.
- * Todo el contenido es confirmado o descriptivo/seguro: no hay fechas,
- * precios, direcciones, aforos ni artistas inventados.
+ * Arquitectura de cuatro momentos: Hero → Universo (Menú, Espacios) →
+ * Atmósfera → Cierre de reserva. Texto mínimo: el Home orienta y da acceso;
+ * las páginas internas explican. Solo datos confirmados; sin fechas, precios,
+ * direcciones, aforos ni artistas inventados. No importa ningún componente.
+ *
+ * El sitio quedó reducido a cuatro páginas (Home, Menú, Espacios, Contacto):
+ * Agenda y Librería La Maga se retiraron, y Reservas se reemplazó por el
+ * canal real (WhatsApp) en cada CTA de "Reservar".
  */
 
 import { siteConfig } from '@/data/site'
-import { eventCategories, eventsConfig } from '@/data/events'
-import { menuPreviewItems, menuConfig } from '@/data/menu'
-import { libraryCategories, libraryConfig } from '@/data/library'
-import { spacesPreview, spacesConfig } from '@/data/spaces'
-
-// Descripciones editoriales seguras para cada línea de la agenda. Las
-// categorías vienen de `data/events.ts`; aquí solo se les da una glosa breve
-// (sin fechas, artistas ni precios).
-const AGENDA_GLOSSES: Record<(typeof eventCategories)[number], string> = {
-  'Clubes de lectura': 'Encuentros alrededor de un libro, con la Librería La Maga.',
-  'Música en vivo': 'Sesiones acústicas entre conversaciones y café.',
-  Conversaciones: 'Charlas con autores, artistas y voces de la ciudad.',
-  'Arte y cultura': 'Talleres, lecturas y actividades culturales.',
-}
-
-const agendaLines = eventCategories.map((category, index) => ({
-  number: String(index + 1).padStart(2, '0'),
-  title: category,
-  description: AGENDA_GLOSSES[category],
-  status: 'Programación próxima',
-}))
+import { menuConfig } from '@/data/menu'
+import { spacesConfig } from '@/data/spaces'
+import { contactConfig } from '@/data/contact'
 
 export const homeContent = {
-  // Escena gastronómica (iteración 2, Icónico B) — usa el metraje real del café
-  // como textura cinematográfica a sangre completa, con las líneas confirmadas
-  // del menú superpuestas. Reemplaza al interludio rojo y a la lista plana del
-  // menú: la gastronomía deja de ser lista y pasa a ser escena. Sin platos,
-  // precios ni datos inventados. `videoSrc` reutiliza el asset real ya existente.
-  gastroScene: {
-    eyebrow: 'Gastronomía',
-    statement: 'Se come sin prisa,',
-    emphasis: 'se lee sin reloj.',
-    lead: 'Café de especialidad, cocina de autor y una mesa que no tiene apuro. La carta con precios se comparte en la mesa.',
-    lines: ['Café de especialidad', 'Cocina de autor', 'Coctelería de temporada', 'Postres de la casa'],
-    videoSrc: '/media/valparaiso-home.mp4',
-    cta: { label: 'Ver menú', href: '/menu' },
-  },
+  // 1 · HERO — se entiende en cinco segundos. Nombre + una línea + dos accesos.
   hero: {
-    // Kicker breve y confirmado (sedes + ciudad). Antes repetía el concepto que
-    // ya vive en el navbar y en los micro-labels; se elimina esa redundancia.
-    eyebrow: 'Pance & Juanambú · Cali',
-    // El h1 es un único string; la sección lo compone visualmente en dos líneas.
     title: siteConfig.name,
     titleLead: 'Café',
     titleAccent: 'Valparaíso',
-    description: 'Un lugar para leer, conversar y comer. Sedes en Pance y Juanambú, en Cali.',
-    topLeftLabel: 'Café · Cultura · Cocina',
-    topRightLabel: `${siteConfig.city}, ${siteConfig.country}`,
-    primaryCta: { label: 'Reservar', href: '/reservas' },
-    secondaryCta: { label: 'Ver agenda', href: '/agenda' },
-    highlights: [
-      { label: 'Ciudad', value: siteConfig.city },
-      { label: 'Sedes', value: 'Pance y Juanambú' },
-      { label: 'Librería', value: 'La Maga' },
-    ],
+    tagline: 'Café, cocina y cultura en Cali.',
+    primaryCta: { label: 'Reservar', href: contactConfig.whatsappHref, external: true },
+    secondaryCta: { label: 'Ver menú', href: menuConfig.ctaHref },
     videoSrc: '/media/valparaiso-home.mp4',
-    // El poster queda aplazado (sin archivo real disponible todavía): el hero
-    // degrada de forma segura sin él (fallback editorial CSS, sin capa
-    // ambiental, sin crossfade, sin 404 ni ícono roto). Cuando exista
-    // public/media/valparaiso-home-poster.webp, activarlo es solo asignar su
-    // ruta aquí — ver docs/HERO_VIDEO_REAL.md.
+    // Poster aplazado (sin archivo real): el hero degrada con el fondo editorial
+    // de reserva. Ver docs/HERO_VIDEO_REAL.md.
     posterSrc: undefined as string | undefined,
   },
-  about: {
-    index: '01',
-    eyebrow: 'Qué es Café Valparaíso',
-    title: 'Más que un café,',
-    emphasis: 'un lugar de encuentro.',
-    lead: siteConfig.description,
-    body: 'Aquí el café, los libros y la conversación comparten la misma mesa: gastronomía sin prisa, encuentros que cambian con las semanas y una comunidad que vuelve.',
-    aside: 'La cultura no es un evento aparte: es parte de la mesa.',
-    keywords: [
-      'Literatura',
-      'Café',
-      'Cocina',
-      'Arte',
-      'Música',
-      'Conversaciones',
-      'Comunidad',
-      'Cali',
-      'Pance y Juanambú',
-    ],
+
+  // 2 · UNIVERSO VALPARAÍSO — dos accesos en una sola composición. Misma
+  // gramática (nombre protagonista + una línea + acceso), distinta escala y
+  // superficie por pieza.
+  universe: {
+    eyebrow: 'Universo Valparaíso',
+    menu: {
+      piece: '01',
+      name: 'Menú',
+      // Plato insignia (cinemagraph). Nombre e ingredientes confirmados por el
+      // negocio; van como texto real en el DOM. La carta completa vive en /menu.
+      dishLead: 'Lomo',
+      dishAccent: 'Bestiario',
+      ingredients: 'Pasta · hongos · cebolla crocante',
+      cta: { label: 'Ver menú', href: menuConfig.ctaHref },
+    },
+    spaces: {
+      piece: '02',
+      name: 'Espacios',
+      sedes: spacesConfig.sedes, // ['Pance', 'Juanambú']
+      line: 'Dos sedes para encontrarnos.',
+      cta: { label: 'Ver espacios', href: spacesConfig.ctaHref },
+    },
   },
-  culture: {
-    index: '02',
-    eyebrow: 'Agenda cultural',
-    title: 'Cosas que pasan',
-    emphasis: 'cuando la voz se comparte.',
-    description:
-      'Programación cultural en construcción; publicamos las fechas cuando estén confirmadas.',
-    lines: agendaLines,
-    cta: { label: 'Ver agenda', href: eventsConfig.ctaHref },
+
+  // 3 · ATMÓSFERA — la respiración de la mitad del recorrido, ahora con un
+  // protagonista propio: «Tapeo Cortázar», una entrada real de la casa, como
+  // cinemagraph que emerge de la oscuridad. Escena distinta a la del Lomo, así
+  // que nunca compiten en el mismo viewport. Nombre e ingredientes confirmados,
+  // van como texto real en el DOM. Sin CTA (sigue siendo un respiro, no un
+  // acceso): la carta completa vive en /menu.
+  atmosphere: {
+    kicker: 'Entrada de la casa',
+    dishLead: 'Tapeo',
+    dishAccent: 'Cortázar',
+    ingredients: 'Pan dorado · jamón curado · rúgula · almendra · glaseado',
+    microphrase: 'Nos vemos adentro',
   },
-  menu: {
-    index: '03',
-    eyebrow: 'Gastronomía',
-    title: 'Toda buena lectura',
-    emphasis: 'pide su bebida.',
-    items: menuPreviewItems,
-    note: 'La carta con precios se comparte en la mesa.',
-    cta: { label: 'Ver menú', href: menuConfig.ctaHref },
-  },
-  library: {
-    index: '03',
-    eyebrow: libraryConfig.name, // «Librería La Maga»
-    title: 'Un estante que',
-    emphasis: 'conversa con la carta.',
-    description:
-      'Curaduría literaria hecha a mano y clubes de lectura que empiezan con un café servido. Aquí los libros no solo se leen: se conversan.',
-    categories: libraryCategories,
-    mediaLabel: libraryConfig.name,
-    cta: { label: 'Conocer Librería La Maga', href: libraryConfig.ctaHref },
-  },
-  spaces: {
-    index: '04',
-    eyebrow: 'Espacios y reservas',
-    title: 'Salas y rincones',
-    emphasis: 'para reunir gente.',
-    description:
-      'Encuentros, celebraciones, reuniones y actividades culturales en nuestras sedes de Pance y Juanambú.',
-    sedes: spacesConfig.sedes,
-    kinds: spacesPreview.map((space) => space.title),
-    note: 'Aforos y tarifas, pendientes de confirmar.',
-    primaryCta: { label: 'Ver espacios', href: spacesConfig.ctaHref },
-    secondaryCta: { label: 'Reservar', href: '/reservas' },
-  },
+
+  // 4 · CIERRE — el único gran momento rojo, corto. Sin párrafo ni ghost word.
   reservationCta: {
-    eyebrow: 'Planea tu visita',
     title: 'Conversemos sobre tu próxima reserva.',
-    description:
-      'Escríbenos para tu reserva, tu evento o tu próxima lectura. Te esperamos en Pance y Juanambú.',
-    primaryCta: { label: 'Reservar', href: '/reservas' },
-    secondaryCta: { label: 'Contacto', href: '/contacto' },
+    primaryCta: { label: 'Reservar por WhatsApp', href: contactConfig.whatsappHref, external: true },
+    // «Contacto» vive en el navbar y el footer; no se duplica aquí para
+    // respetar el presupuesto de accesos del Home.
+  },
+
+  // Microfrases flotantes del recorrido (decorativas, aria-hidden). Se retira
+  // la del universo: cuando el cinemagraph del plato está visible, nada más
+  // compite con él en ese viewport.
+  microphrases: {
+    hero: 'Café de por medio',
   },
 } as const

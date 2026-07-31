@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
 import MenuHero from '@/components/sections/menu/MenuHero'
-import MenuCategoriesSection from '@/components/sections/menu/MenuCategoriesSection'
+import MenuNumeroSection from '@/components/sections/menu/numero/MenuNumeroSection'
 import MenuClosingSection from '@/components/sections/menu/MenuClosingSection'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
-import { menuCategories, menuPreviewItems } from '@/data/menu'
 import { createPageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = createPageMetadata({
@@ -14,18 +13,6 @@ export const metadata: Metadata = createPageMetadata({
   description:
     'Conoce las líneas gastronómicas de Café Valparaíso: café, cocina, coctelería y postres en un espacio cultural en Cali.',
   path: '/menu',
-})
-
-function nullableToUndefined<T>(value: T | null): T | undefined {
-  return value ?? undefined
-}
-
-const categoryLines = menuCategories.map((category) => {
-  const item = menuPreviewItems.find((preview) => preview.category === category)
-  return {
-    title: category,
-    description: nullableToUndefined(item?.description ?? null),
-  }
 })
 
 export default function MenuPage() {
@@ -52,12 +39,13 @@ export default function MenuPage() {
           label: 'Contacto',
           value: channel.label,
           href: channel.href,
+          external: channel.href.startsWith('http'),
         })),
         copyright: `© ${new Date().getFullYear()} ${siteConfig.name}. Todos los derechos reservados.`,
       }}
     >
       <MenuHero />
-      <MenuCategoriesSection categories={categoryLines} />
+      <MenuNumeroSection />
       <MenuClosingSection />
     </PublicShell>
   )

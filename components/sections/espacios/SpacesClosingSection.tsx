@@ -1,7 +1,8 @@
 import Container from '@/components/ui/Container'
 import LinkButton from '@/components/ui/LinkButton'
+import { contactConfig } from '@/data/contact'
 
-export type SpacesClosingCta = { label: string; href: string }
+export type SpacesClosingCta = { label: string; href: string; external?: boolean }
 
 export interface SpacesClosingSectionProps {
   title?: string
@@ -21,7 +22,7 @@ function cn(...classes: Array<string | false | undefined>) {
  */
 export default function SpacesClosingSection({
   title = 'Tu próximo encuentro puede empezar aquí.',
-  primaryCta = { label: 'Solicitar una reserva', href: '/reservas' },
+  primaryCta = { label: 'Solicitar una reserva', href: contactConfig.whatsappHref, external: true },
   secondaryCta = { label: 'Contacto', href: '/contacto' },
   className = '',
 }: SpacesClosingSectionProps) {
@@ -43,7 +44,12 @@ export default function SpacesClosingSection({
         {primaryCta || secondaryCta ? (
           <div className="mt-9 flex flex-wrap items-center justify-center gap-5">
             {primaryCta ? (
-              <LinkButton href={primaryCta.href} variant="secondary" size="lg">
+              <LinkButton
+                href={primaryCta.href}
+                variant="secondary"
+                size="lg"
+                {...(primaryCta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+              >
                 {primaryCta.label}
               </LinkButton>
             ) : null}

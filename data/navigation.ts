@@ -1,23 +1,25 @@
 /**
- * Navegación pública futura — Café Valparaíso.
+ * Navegación pública — Café Valparaíso.
  *
- * `items` apunta a rutas del escaparate público que todavía no existen como
- * páginas reales (se crearán en un GOAL posterior). Es válido que hoy no
- * resuelvan: este archivo no se conecta a ningún componente en este GOAL.
+ * Cuatro páginas a propósito: Inicio, Menú, Espacios y Contacto. Agenda,
+ * Librería y Reservas se retiraron del sitio — la reserva real siempre fue
+ * por WhatsApp, nunca un formulario propio, así que el CTA de "Reservar"
+ * apunta directo allá en vez de a una página intermedia.
  */
+
+import { contactConfig } from '@/data/contact'
 
 export const publicNavigation = {
   brandHref: '/',
   items: [
     { label: 'Inicio', href: '/' },
-    { label: 'Agenda', href: '/agenda' },
     { label: 'Menú', href: '/menu' },
-    { label: 'Librería', href: '/libreria' },
     { label: 'Espacios', href: '/espacios' },
     { label: 'Contacto', href: '/contacto' },
   ],
   cta: {
     label: 'Reservar',
-    href: '/reservas',
+    href: contactConfig.whatsappHref,
+    external: true,
   },
 } as const
