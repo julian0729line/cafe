@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import PublicShell from '@/components/layout/PublicShell'
 import ContactoHero from '@/components/sections/contacto/ContactoHero'
 import ContactoChannelsSection from '@/components/sections/contacto/ContactoChannelsSection'
+import ContactoFormSection from '@/components/sections/contacto/ContactoFormSection'
 import ContactoLocationsSection from '@/components/sections/contacto/ContactoLocationsSection'
 import ContactoClosingSection from '@/components/sections/contacto/ContactoClosingSection'
 import { siteConfig } from '@/data/site'
@@ -75,7 +76,8 @@ export default function ContactoPage() {
     >
       <ContactoHero whatsappHref={contactConfig.whatsappHref} />
       <ContactoChannelsSection channels={knownChannels} />
-      <ContactoLocationsSection locations={locations} />
+      <ContactoFormSection />
+      <ContactoLocationsSection index="04" locations={locations} />
       <ContactoClosingSection
         primaryCta={{ label: 'Escribir por WhatsApp', href: contactConfig.whatsappHref, external: true }}
       />
