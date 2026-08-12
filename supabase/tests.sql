@@ -309,6 +309,49 @@ rollback;
 
 
 -- ===========================================================================
+-- 15. ¿Una petición autenticada real llega como `authenticated`?
+--
+-- Las pruebas 1-14 SIMULAN el rol con `set local role`. Eso valida las
+-- políticas, pero no demuestra que PostgREST use ese mismo rol en el proyecto
+-- real — y de ahí depende el trigger `preservar_rol`, que solo bloquea cuando
+-- `current_user = 'authenticated'`.
+--
+-- Este bloque es la parte que NO se puede resolver desde el editor SQL: hay
+-- que entrar por la API. Con la sesión iniciada en la app, saca el access
+-- token (`supabase.auth.getSession()` en la consola del navegador) y lanza:
+--
+--   curl -i -X PATCH \
+--     "https://<PROYECTO>.supabase.co/rest/v1/perfiles?id=eq.<TU_UUID>" \
+--     -H "apikey: <ANON_KEY>" \
+--     -H "Authorization: Bearer <ACCESS_TOKEN>" \
+--     -H "Content-Type: application/json" \
+--     -d '{"rol":"admin"}'
+--
+-- ESPERADO: 401/403 con un error de privilegios sobre `perfiles`.
+--   - Si responde 2xx, la escalada sigue abierta: NO fusionar ni dar por
+--     bueno el hardening.
+--   - Si responde con el mensaje del trigger («El rol de un perfil no puede
+--     modificarse desde la API pública»), significa que el grant de columna
+--     no está aplicado pero el trigger sí — revisa el punto 4 de admin.sql.
+--
+-- Y el equivalente que SÍ debe funcionar, para descartar un falso positivo
+-- en el que todo esté bloqueado:
+--
+--   curl -i -X PATCH \
+--     "https://<PROYECTO>.supabase.co/rest/v1/perfiles?id=eq.<TU_UUID>" \
+--     -H "apikey: <ANON_KEY>" \
+--     -H "Authorization: Bearer <ACCESS_TOKEN>" \
+--     -H "Content-Type: application/json" \
+--     -H "Prefer: resolution=merge-duplicates" \
+--     -d '{"nombre":"Prueba"}'
+--
+-- ESPERADO: 2xx. Esto es además lo que confirma el punto abierto del PR: que
+-- el `upsert` real de PostgREST convive con los grants por columna.
+-- Hazlo con un usuario de prueba, no con la cuenta del dueño.
+-- ===========================================================================
+
+
+-- ===========================================================================
 -- EXTRA — inventario de privilegios (solo lectura, sin cambiar de rol)
 -- ===========================================================================
 

@@ -210,10 +210,15 @@ create policy "Ver propio perfil"
 
 -- Permisiva: se suma (OR) a la anterior. Un admin ve su fila por la primera
 -- política y las demás por esta. Llama al helper, nunca a `perfiles`.
+--
+-- El `select` que envuelve al helper NO es decorativo: sin él, Postgres puede
+-- ejecutar la función una vez POR FILA. Envuelta, se evalúa una sola vez por
+-- statement como InitPlan. En una política de rol como esta la diferencia es
+-- grande, y aquí pesa porque /admin lee la tabla entera de una sentada.
 create policy "Admin ve todos los perfiles"
   on public.perfiles for select
   to authenticated
-  using (private.es_admin());
+  using ((select private.es_admin()));
 
 create policy "Insertar propio perfil"
   on public.perfiles for insert
