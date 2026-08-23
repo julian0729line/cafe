@@ -9,6 +9,7 @@
 
 import { siteConfig } from '@/data/site'
 import { contactConfig } from '@/data/contact'
+import { faqItems } from '@/data/faq'
 import { getBaseUrl } from '@/lib/seo'
 
 // El WhatsApp ya está confirmado en formato internacional (`whatsappHref`);
@@ -42,4 +43,24 @@ export function buildLocalBusinessJsonLd(): object[] {
         name: siteConfig.name,
       },
     }))
+}
+
+/**
+ * JSON-LD `FAQPage` para /contacto, a partir de `data/faq.ts` (única fuente
+ * de verdad de las preguntas). Solo se llama en la página que renderiza esa
+ * misma FAQ, para que el schema describa contenido real visible en el DOM.
+ */
+export function buildFaqJsonLd(): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
 }

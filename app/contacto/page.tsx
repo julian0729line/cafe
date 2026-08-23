@@ -4,11 +4,14 @@ import ContactoHero from '@/components/sections/contacto/ContactoHero'
 import ContactoChannelsSection from '@/components/sections/contacto/ContactoChannelsSection'
 import ContactoFormSection from '@/components/sections/contacto/ContactoFormSection'
 import ContactoLocationsSection from '@/components/sections/contacto/ContactoLocationsSection'
+import ContactoFaqSection from '@/components/sections/contacto/ContactoFaqSection'
 import ContactoClosingSection from '@/components/sections/contacto/ContactoClosingSection'
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
+import { faqItems } from '@/data/faq'
 import { createPageMetadata } from '@/lib/seo'
+import { buildFaqJsonLd } from '@/lib/structured-data'
 
 export const metadata: Metadata = createPageMetadata({
   title: 'Contacto',
@@ -46,6 +49,8 @@ const locations = contactConfig.locations.map((location) => ({
 }))
 
 export default function ContactoPage() {
+  const faqJsonLd = buildFaqJsonLd()
+
   return (
     <PublicShell
       navbar={{
@@ -78,8 +83,13 @@ export default function ContactoPage() {
       <ContactoChannelsSection channels={knownChannels} />
       <ContactoFormSection />
       <ContactoLocationsSection index="04" locations={locations} />
+      <ContactoFaqSection items={faqItems} />
       <ContactoClosingSection
         primaryCta={{ label: 'Escribir por WhatsApp', href: contactConfig.whatsappHref, external: true }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, '\\u003c') }}
       />
     </PublicShell>
   )
