@@ -132,8 +132,28 @@ export default function ScrollExpansionHero({
             </video>
           ) : null}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#12180a] via-[#12180a]/45 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#12180a]/70 via-transparent to-transparent" />
+          {/* El velo existe para que el texto se lea, no para teñir la escena.
+              Antes cubría el cuadro entero al 45% y aplanaba el café real a
+              monocromo oliva: las paredes rojas, el turquesa y la luz cálida
+              son justamente la autenticidad que sostiene la página. Ahora la
+              densidad se concentra donde vive el copy y despeja rápido hacia
+              arriba. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to top, #12180a 0%, rgba(18,24,10,0.84) 20%, rgba(18,24,10,0.34) 46%, rgba(18,24,10,0.06) 68%, transparent 84%)',
+            }}
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to right, rgba(18,24,10,0.62) 0%, rgba(18,24,10,0.18) 34%, transparent 62%)',
+            }}
+          />
           <span className="grain-soft" />
         </motion.div>
 
@@ -143,10 +163,18 @@ export default function ScrollExpansionHero({
           </Microphrase>
         ) : null}
 
-        {/* Copy anclado abajo-izquierda, como un cartel. */}
+        {/* Copy anclado abajo-izquierda, como un cartel.
+
+            El `pb-52` en móvil no es capricho. El navbar es `sticky` y ocupa
+            sitio en el flujo, así que esta caja de `100svh` empieza por debajo
+            de él y su borde inferior cae fuera de pantalla justo esa altura.
+            Sumado a la barra fija de reserva, los dos CTA quedaban enterrados y
+            la tagline chocaba con la barra. El padding los devuelve al viewport.
+            El arreglo de fondo es que la caja descuente la altura del navbar;
+            mientras tanto, esto mantiene el hero usable en móvil. */}
         <motion.div
           style={{ y: contentY, opacity: contentOpacity }}
-          className="absolute inset-x-0 bottom-0 z-10 px-5 pb-14 md:px-10 md:pb-20"
+          className="absolute inset-x-0 bottom-0 z-10 px-5 pb-52 md:px-10 md:pb-28"
         >
           <div className="mx-auto w-full max-w-7xl">
             <h1
