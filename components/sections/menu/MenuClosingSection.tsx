@@ -7,6 +7,7 @@ export type MenuClosingCta = { label: string; href: string; external?: boolean }
 export interface MenuClosingSectionProps {
   title?: string
   cta?: MenuClosingCta
+  secondaryCta?: MenuClosingCta | null
   className?: string
 }
 
@@ -22,6 +23,7 @@ function cn(...classes: Array<string | false | undefined>) {
 export default function MenuClosingSection({
   title = 'Una mesa, una conversación y algo para compartir.',
   cta = { label: 'Reservar por WhatsApp', href: contactConfig.whatsappHref, external: true },
+  secondaryCta = { label: 'Ver espacios', href: '/espacios' },
   className = '',
 }: MenuClosingSectionProps) {
   return (
@@ -34,16 +36,23 @@ export default function MenuClosingSection({
         >
           {title}
         </h2>
-        {cta ? (
-          <div className="mt-9">
-            <LinkButton
-              href={cta.href}
-              variant="secondary"
-              size="lg"
-              {...(cta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
-            >
-              {cta.label}
-            </LinkButton>
+        {cta || secondaryCta ? (
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-5">
+            {cta ? (
+              <LinkButton
+                href={cta.href}
+                variant="secondary"
+                size="lg"
+                {...(cta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+              >
+                {cta.label}
+              </LinkButton>
+            ) : null}
+            {secondaryCta ? (
+              <LinkButton href={secondaryCta.href} variant="ghost" size="lg">
+                {secondaryCta.label}
+              </LinkButton>
+            ) : null}
           </div>
         ) : null}
       </Container>
