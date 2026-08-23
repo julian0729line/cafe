@@ -86,7 +86,7 @@ Hex values, most-used first. Three minimum; five is better.
 
 ## Recurring props and elements
 
-> Devices, packaging, mascot, signature objects. Include the substitution defaults you want, e.g. "generic laptop — space-black aluminum, no visible logo" · "phone — matte black, screen off or soft neutral glow"
+> Devices, packaging, mascot, signature objects. Include the substitution defaults you want, e.g. "generic laptop → space-black aluminum, no visible logo" · "phone → matte black, screen off or soft neutral glow"
 
 ---
 

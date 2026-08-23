@@ -4,18 +4,18 @@ Three complete deliveries. Read one that matches the job at hand rather than all
 
 **Contents**
 
-1. Concept mode — image (product ad)
-2. Reference mode — image (reverse-engineered portrait)
+1. Concept mode → image (product ad)
+2. Reference mode → image (reverse-engineered portrait)
 3. Still → video (animating a generated frame)
 4. The intake round, in practice
 
 ---
 
-## 1. Concept mode — image
+## 1. Concept mode → image
 
 **User said:** "I need a hero shot of our new ceramic pour-over kettle for the product page. Something premium."
 
-**Intake asked** (one round, four questions): format — 1:1 for the page grid · surface — warm neutral, not white · mood — quiet craftsmanship · palette — open. Everything else decided and logged.
+**Intake asked** (one round, four questions): format → 1:1 for the page grid · surface → warm neutral, not white · mood → quiet craftsmanship · palette → open. Everything else decided and logged.
 
 ---
 
@@ -68,7 +68,7 @@ Product name, price, and any badge set in Figma over the right-hand negative spa
 
 ---
 
-## 2. Reference mode — image
+## 2. Reference mode → image
 
 **User said:** "Recreate this look for my client, but make it a man in his forties in a workshop." *(reference attached: high-contrast environmental portrait)*
 

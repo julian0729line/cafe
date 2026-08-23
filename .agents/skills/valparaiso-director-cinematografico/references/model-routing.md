@@ -71,7 +71,7 @@ For a recurring character, training a Soul ID (5–20 photos, roughly 10 minutes
 | Model | Use for | Key parameters |
 |---|---|---|
 | `seedream_v5_pro` | Visual reasoning, instruction-based editing, up to 2K | `resolution`: 1k \| 1.5k \| 2k · `remove_bg` · `is_inpaint` |
-| `seedream_v4_5` | 4K output, precise control, transformations | `quality`: basic (≈4K) \| high (≈6K) |
+| `seedream_v4_5` | 4K output, precise control, transformations | `quality`: basic (→4K) \| high (→~6K) |
 | `flux_2` | Tight literal prompt adherence | `variant`: pro \| flex \| max · `resolution`: 1k \| 2k |
 | `flux_kontext` | Context-aware editing and style transfer | — |
 | `cinematic_studio_2_5` | Cinematic stills up to 4K | `resolution`: 1k \| 2k \| 4k |
