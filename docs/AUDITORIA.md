@@ -3,6 +3,16 @@
 **GOAL 01 · Línea base previa a refactor** · Fecha: 2026-07-02 · Commit auditado: `c61edbe`
 Rama: `claude/terminal-md-project-context-joayuj`
 
+> **Nota de estado (2026-08-22):** este documento es la fotografía inicial del
+> proyecto, antes de las 4 páginas comerciales, el rebranding a Café
+> Valparaíso y el hardening de RLS. Ya no describe el estado actual — para
+> eso, ver `CLAUDE.md` y `docs/README.md`. En particular: las rutas
+> comerciales, `/contacto` con datos reales y el canal de reservas por
+> WhatsApp de las §§13/14 ya existen; y el fix de escalada de privilegios
+> RLS en `perfiles` (recursión + `private.es_admin()` + revokes de columna)
+> ya está mergeado en `supabase/admin.sql`, con `supabase/tests.sql` (18
+> casos) como referencia de verificación.
+
 ---
 
 ## 1. Resumen ejecutivo
