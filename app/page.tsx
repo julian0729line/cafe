@@ -11,13 +11,17 @@ import { homeContent } from '@/content/home'
 import { menuFeatured } from '@/data/menu'
 import { createPageMetadata } from '@/lib/seo'
 
+// El meta-título usa `seo.title` (con la línea "Café literario y cultural en
+// Cali"), no `seo.defaultTitle`: el `<h1>` del hero ya muestra "Café
+// Valparaíso" a pantalla completa, así que repetir exactamente esas mismas
+// dos palabras como meta-título sería un duplicado H1/título innecesario.
 export const metadata: Metadata = {
   ...createPageMetadata({
-    title: siteConfig.seo.defaultTitle,
+    title: siteConfig.seo.title,
     description: siteConfig.seo.description,
     path: '/',
   }),
-  title: { absolute: siteConfig.seo.defaultTitle },
+  title: { absolute: siteConfig.seo.title },
 }
 
 const navItems = publicNavigation.items.map((item) => ({ ...item }))
