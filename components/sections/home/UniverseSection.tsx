@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
 
@@ -7,56 +6,78 @@ type Cta = { label: string; href: string }
 export interface UniverseSectionProps {
   eyebrow?: string
   menu: {
-    piece: string
-    name: string
-    dishLead: string
-    dishAccent: string
-    ingredients: string
+    piece?: string
+    name?: string
+    dishLead?: string
+    dishAccent?: string
+    ingredients?: string
     cta: Cta
   }
-  spaces: { piece: string; name: string; sedes: readonly string[]; line: string; cta: Cta }
+  spaces: { piece?: string; name?: string; sedes: readonly string[]; line: string; cta: Cta }
 }
 
-function Piece({ href, className, children }: { href: string; className: string; children: ReactNode }) {
+type RowProps = {
+  href: string
+  /** El nombre es el protagonista de la fila: va en Playfair, grande. */
+  name: React.ReactNode
+  line: string
+  access: string
+}
+
+/**
+ * Una fila editorial. No es una tarjeta: no tiene marco, ni fondo propio, ni
+ * etiqueta numerada. Lo único que la separa de la siguiente es una regla fina,
+ * y lo único que la sostiene es el aire alrededor del nombre.
+ *
+ * Toda la fila es el enlace, así que el área de toque en móvil es la pieza
+ * completa y no solo el texto del acceso.
+ */
+function Row({ href, name, line, access }: RowProps) {
   return (
     <Link
       href={href}
-      className={`group relative flex flex-col justify-between overflow-hidden border p-7 transition-transform duration-300 ease-out hover:-translate-y-1 md:p-9 ${className}`}
+      className="group block border-b border-[rgba(28,25,18,0.14)] py-10 motion-safe:transition-colors motion-safe:duration-500 hover:bg-[rgba(28,25,18,0.025)] md:py-14"
     >
-      {children}
+      <div className="grid grid-cols-12 items-baseline gap-x-6 gap-y-4">
+        <h3 className="col-span-12 md:col-span-6">
+          <span className="block font-playfair font-black leading-[0.9] tracking-[-0.03em] text-[#181f0d] motion-safe:transition-transform motion-safe:duration-500 md:group-hover:translate-x-2">
+            {name}
+          </span>
+        </h3>
+
+        <p className="col-span-12 font-sans-app text-base leading-relaxed text-[#4A5728] md:col-span-4">
+          {line}
+        </p>
+
+        <span className="col-span-12 inline-flex items-center gap-3 font-sans-app text-[11px] font-bold uppercase tracking-[0.22em] text-[#7A2230] md:col-span-2 md:justify-end">
+          {access}
+          {/* La línea que se extiende: el único movimiento de la sección. */}
+          <span
+            aria-hidden="true"
+            className="block h-px w-6 bg-[#C1121F] motion-safe:transition-all motion-safe:duration-500 md:group-hover:w-10"
+          />
+        </span>
+      </div>
     </Link>
   )
 }
 
-function Access({ label, tone }: { label: string; tone: 'coral' | 'wine' }) {
-  const c = tone === 'coral' ? 'text-[#FF7F70]' : 'text-[#7A2230]'
-  return (
-    <span
-      className={`mt-8 inline-flex items-center gap-2 font-sans-app text-[11px] font-bold uppercase tracking-[0.22em] ${c}`}
-    >
-      {label}
-      <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-    </span>
-  )
-}
-
-function PieceLabel({ piece, tone }: { piece: string; tone: 'night' | 'paper' }) {
-  const c = tone === 'night' ? 'text-[#A6B86B]' : 'text-[#4A5728]'
-  const n = tone === 'night' ? 'text-[#FF7F70]' : 'text-[#C1121F]'
-  return (
-    <span className={`font-sans-app text-[10px] font-bold uppercase tracking-[0.3em] ${c}`}>
-      <span className={`mr-2 tabular-nums ${n}`}>{piece}</span>
-      Acceso
-    </span>
-  )
-}
-
 /**
- * Universo Valparaíso — el corazón del Home. Dos accesos (Menú, Espacios) en
- * una sola composición. Comparten la gramática de las «cartas de lugar»
- * (nombre protagonista + una línea útil + acceso), pero varían en escala,
- * superficie y énfasis. Cada pieza es un enlace-carta completo. Sin párrafos,
- * sin marcos-foto vacíos, sin ghost type. Server Component.
+ * Universo Valparaíso — los accesos del Home, en filas editoriales.
+ *
+ * Antes eran dos tarjetas con marco, fondo propio y una etiqueta «01 · Acceso»
+ * cada una. Eso convertía cada acceso en un afiche y ponía dos protagonistas
+ * compitiendo en el mismo viewport. Ahora el protagonista es la tipografía y el
+ * espacio negativo: filas de ancho completo separadas por una regla fina, sin
+ * marcos y sin numeración decorativa.
+ *
+ * La carta va primero pero deliberadamente contenida: ya tuvo su momento
+ * protagonista arriba, en «La carta en movimiento».
+ *
+ * Movimiento: una sola idea, y solo en escritorio con hover disponible. El
+ * nombre se desplaza unos píxeles y la línea del acceso se extiende. Nada
+ * depende del hover para funcionar, así que en móvil la sección está completa
+ * sin interacción. Server Component.
  */
 export default function UniverseSection({
   eyebrow = 'Universo Valparaíso',
@@ -64,60 +85,43 @@ export default function UniverseSection({
   spaces,
 }: UniverseSectionProps) {
   return (
-    <section aria-label="Universo Café Valparaíso" className="relative overflow-hidden bg-[#F5F5F0] py-20 md:py-28">
+    <section
+      aria-label="Universo Café Valparaíso"
+      className="relative overflow-hidden bg-[#F5F5F0] py-20 md:py-32"
+    >
       <Container variant="default" className="relative">
-        <p className="mb-8 font-sans-app text-[11px] font-medium uppercase tracking-[0.4em] text-[#4A5728] md:mb-10">
+        <p className="font-sans-app text-[11px] font-medium uppercase tracking-[0.4em] text-[#4A5728]">
           {eyebrow}
         </p>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
-          {/* MENÚ — secundario a propósito. La carta ya tuvo su protagonismo
-              arriba, en «La carta en movimiento»: repetir aquí el cinemagraph
-              del Lomo pondría dos protagonistas gastronómicos en el mismo
-              recorrido. Queda como acceso tipográfico, sin fotografía. */}
-          <Piece
+        <div className="mt-10 border-t border-[rgba(28,25,18,0.14)] md:mt-14">
+          <Row
             href={menu.cta.href}
-            className="min-h-[16rem] border-[#4A5728] bg-[#12180a] md:col-span-5 md:min-h-[26rem]"
-          >
-            <PieceLabel piece={menu.piece} tone="night" />
-            <span>
-              <span
-                className="block font-playfair font-black leading-[0.9] tracking-[-0.03em] text-[#F5F5F0]"
-                style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)' }}
-              >
-                La carta
-              </span>
-              <span className="mt-4 block font-sans-app text-sm leading-relaxed text-[#A6B86B]">
-                Cocina de autor, café de especialidad y postres de la casa.
-              </span>
-              <Access label={menu.cta.label} tone="coral" />
-            </span>
-          </Piece>
+            name={<span style={{ fontSize: 'clamp(2.4rem, 6vw, 4.5rem)' }}>La carta</span>}
+            line="Cocina de autor, café de especialidad y postres de la casa."
+            access={menu.cta.label}
+          />
 
-          {/* ESPACIOS — papel, arquitectónica (dos sedes como par tipográfico) */}
-          <Piece
+          <Row
             href={spaces.cta.href}
-            className="min-h-[22rem] border-[rgba(28,25,18,.16)] bg-[#F7F1E6] md:col-span-7 md:min-h-[26rem]"
-          >
-            <PieceLabel piece={spaces.piece} tone="paper" />
-            <span>
-              <span className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
+            name={
+              <span className="flex flex-wrap items-baseline gap-x-5">
                 {spaces.sedes.map((sede, i) => (
                   <span
                     key={sede}
-                    className="font-playfair font-black leading-[0.9] tracking-[-0.03em] text-[#181f0d]"
-                    style={{ fontSize: i === 0 ? 'clamp(2.2rem, 5vw, 3.8rem)' : 'clamp(1.8rem, 4vw, 3rem)' }}
+                    style={{
+                      fontSize:
+                        i === 0 ? 'clamp(2.4rem, 6vw, 4.5rem)' : 'clamp(1.9rem, 4.6vw, 3.4rem)',
+                    }}
                   >
                     {sede}
                   </span>
                 ))}
               </span>
-              <span className="mt-4 block font-sans-app text-sm leading-relaxed text-[#4A5728]">
-                {spaces.line}
-              </span>
-              <Access label={spaces.cta.label} tone="wine" />
-            </span>
-          </Piece>
+            }
+            line={spaces.line}
+            access={spaces.cta.label}
+          />
         </div>
       </Container>
     </section>
