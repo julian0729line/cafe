@@ -418,6 +418,7 @@ Leer solo la que corresponde al trabajo en curso.
 | `references/video-direction.md` | Vocabulario de movimiento, formato de bloques, encadenado de planos, keyframes, dirección de audio. Antes de escribir cualquier prompt de video. |
 | `references/output-templates.md` | Paquetes completos de ejemplo para modo concepto, modo referencia y still→video. La primera vez que entregas en una sesión. |
 | `references/brand-kit-template.md` | La plantilla en blanco, y al final el kit ya rellenado de Café Valparaíso. |
+| `PROMPT.md` | La misma metodología como directiva autosuficiente en español, para pegar fuera de este repo donde no hay skills. No conoce los candados de Valparaíso. |
 
 Los catálogos cambian: cuando una referencia contradiga a `models_explore`,
 gana `models_explore`.
