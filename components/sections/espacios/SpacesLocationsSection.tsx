@@ -1,8 +1,11 @@
+import Image from 'next/image'
 import Container from '@/components/ui/Container'
 
 export type SpaceLocationLine = {
   name: string
   city: string
+  /** Foto real de la sede. Si falta, la sede conserva su bloque tipográfico. */
+  photo?: { src: string; alt: string; aspect?: string } | null
 }
 
 export interface SpacesLocationsSectionProps {
@@ -21,11 +24,16 @@ function cn(...classes: Array<string | false | undefined>) {
 
 /**
  * Sedes confirmadas de Café Valparaíso (`spacesConfig.sedes` / `contactConfig.locations`
- * en `data/spaces.ts` y `data/contact.ts`): solo nombre y ciudad — sin
- * dirección, capacidad ni fotografía, porque no están confirmadas todavía.
- * Composición tipográfica alternada (una sede a la izquierda, la otra
- * desplazada a la derecha) en vez de una cuadrícula uniforme de cards.
- * Server Component.
+ * en `data/spaces.ts` y `data/contact.ts`): nombre y ciudad — sin dirección
+ * ni capacidad, porque no están confirmadas todavía. Composición tipográfica
+ * alternada (una sede a la izquierda, la otra desplazada a la derecha) en vez
+ * de una cuadrícula uniforme de cards.
+ *
+ * La fotografía es **opcional por sede** (`sedePhotos`): la sede que tenga
+ * foto real la muestra junto a su bloque; la que no, conserva el tratamiento
+ * tipográfico intacto. Así una sede sin material no aparece como un hueco
+ * roto al lado de otra ilustrada — que es justo el riesgo mientras solo una
+ * de las dos tenga fotos. Server Component: sin JS.
  */
 export default function SpacesLocationsSection({
   index = '03',
@@ -57,23 +65,52 @@ export default function SpacesLocationsSection({
           <div className="mt-16 flex flex-col gap-16 md:gap-20">
             {locations.map((location, i) => {
               const isRight = i % 2 === 1
+              const photo = location.photo
               return (
                 <div
                   key={location.name}
                   className={cn(
-                    'max-w-md border-t border-[#4A5728] pt-8',
+                    'border-t border-[#4A5728] pt-8',
+                    photo ? 'max-w-3xl' : 'max-w-md',
                     isRight ? 'md:ml-auto md:border-t-0 md:border-l md:pl-10 md:pt-0' : ''
                   )}
                 >
-                  <span className="font-sans-app text-[11px] font-bold tabular-nums tracking-[0.2em] text-[#FF7F70]">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="mt-3 font-playfair text-3xl text-[#F5F5F0] md:text-4xl">
-                    {location.name}
-                  </h3>
-                  <p className="mt-2 font-sans-app text-sm uppercase tracking-[0.25em] text-[#8A9A52]">
-                    {location.city}
-                  </p>
+                  <div
+                    className={cn(
+                      photo ? 'md:flex md:items-end md:gap-10' : '',
+                      photo && isRight ? 'md:flex-row-reverse' : ''
+                    )}
+                  >
+                    <div className={photo ? 'md:flex-1' : ''}>
+                      <span className="font-sans-app text-[11px] font-bold tabular-nums tracking-[0.2em] text-[#FF7F70]">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="mt-3 font-playfair text-3xl text-[#F5F5F0] md:text-4xl">
+                        {location.name}
+                      </h3>
+                      <p className="mt-2 font-sans-app text-sm uppercase tracking-[0.25em] text-[#8A9A52]">
+                        {location.city}
+                      </p>
+                    </div>
+
+                    {photo ? (
+                      <figure
+                        className="relative mt-8 overflow-hidden rounded-[3px] border border-[#4A5728]/60 md:mt-0 md:flex-1"
+                        style={{ aspectRatio: photo.aspect ?? '4 / 5' }}
+                      >
+                        {/* `fill` + `sizes`: Next sirve avif/webp y el tamaño
+                            justo para cada viewport (next.config.ts ya declara
+                            ambos formatos). Un solo archivo fuente basta. */}
+                        <Image
+                          src={photo.src}
+                          alt={photo.alt}
+                          fill
+                          sizes="(min-width: 768px) 36vw, 100vw"
+                          className="object-cover"
+                        />
+                      </figure>
+                    ) : null}
+                  </div>
                 </div>
               )
             })}

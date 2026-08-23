@@ -8,7 +8,7 @@ import SpacesClosingSection from '@/components/sections/espacios/SpacesClosingSe
 import { siteConfig } from '@/data/site'
 import { publicNavigation } from '@/data/navigation'
 import { contactConfig } from '@/data/contact'
-import { spacesPreview, spacesConfig } from '@/data/spaces'
+import { spacesPreview, spacesConfig, sedePhotos } from '@/data/spaces'
 import { createPageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = createPageMetadata({
@@ -22,12 +22,12 @@ function nullableToUndefined<T>(value: T | null): T | undefined {
   return value ?? undefined
 }
 
-// Sedes confirmadas: solo nombre y ciudad (`spacesConfig.sedes`,
-// `contactConfig.locations`). Sin dirección, capacidad ni fotografía, porque
-// no están confirmadas todavía.
+// Sedes confirmadas (`spacesConfig.sedes`, `contactConfig.locations`): nombre,
+// ciudad y —solo si existe material real de esa sede— su fotografía. Sin
+// dirección ni capacidad, que siguen sin confirmarse.
 const locations = spacesConfig.sedes.map((name) => {
   const match = contactConfig.locations.find((location) => location.name === name)
-  return { name, city: match?.city ?? siteConfig.city }
+  return { name, city: match?.city ?? siteConfig.city, photo: sedePhotos[name] }
 })
 
 // Tipos de encuentro confirmados (`spacesPreview`), sin inventar categorías.

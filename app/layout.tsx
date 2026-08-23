@@ -4,6 +4,7 @@ import "./globals.css";
 import { siteConfig } from "@/data/site";
 import { getBaseUrl } from "@/lib/seo";
 import { buildLocalBusinessJsonLd } from "@/lib/structured-data";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -44,6 +45,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // Verificación de Google Search Console: sin `NEXT_PUBLIC_GSC_VERIFICATION`
+  // configurada, Next.js simplemente omite el meta tag (no-op).
+  ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } }
+    : {}),
 };
 
 export default function RootLayout({
@@ -65,6 +71,7 @@ export default function RootLayout({
             }}
           />
         ))}
+        <GoogleAnalytics />
         {children}
       </body>
     </html>

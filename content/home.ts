@@ -31,7 +31,18 @@ export const homeContent = {
     posterSrc: undefined as string | undefined,
   },
 
-  // 2 · UNIVERSO VALPARAÍSO — dos accesos en una sola composición. Misma
+  // 2 · LA CARTA EN MOVIMIENTO — el único momento experimental del Home. Una
+  // sola caja visual y los platos cruzándose con el scroll: una misma mesa
+  // presentando distintos momentos, no cinco tarjetas. Nombres e ingredientes
+  // confirmados por el negocio (`data/menu.ts`); sin precios, que no están
+  // confirmados en los datos.
+  carta: {
+    eyebrow: 'La carta',
+    slugs: ['lomo', 'te-chai', 'capuccino-licor', 'blanca-mujer', 'tapeo'] as const,
+    cta: { label: 'Ver la carta', href: menuConfig.ctaHref },
+  },
+
+  // 3 · UNIVERSO VALPARAÍSO — dos accesos en una sola composición. Misma
   // gramática (nombre protagonista + una línea + acceso), distinta escala y
   // superficie por pieza.
   universe: {
@@ -55,7 +66,7 @@ export const homeContent = {
     },
   },
 
-  // 3 · ATMÓSFERA — la respiración de la mitad del recorrido, ahora con un
+  // (retirada) ATMÓSFERA — la respiración de la mitad del recorrido, ahora con un
   // protagonista propio: «Tapeo Cortázar», una entrada real de la casa, como
   // cinemagraph que emerge de la oscuridad. Escena distinta a la del Lomo, así
   // que nunca compiten en el mismo viewport. Nombre e ingredientes confirmados,

@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
-import LomoBestiarioCinemagraph from './LomoBestiarioCinemagraph'
 
 type Cta = { label: string; href: string }
 
@@ -72,24 +71,33 @@ export default function UniverseSection({
         </p>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
-          {/* MENÚ — cinemagraph del plato insignia «Lomo Bestiario» */}
+          {/* MENÚ — secundario a propósito. La carta ya tuvo su protagonismo
+              arriba, en «La carta en movimiento»: repetir aquí el cinemagraph
+              del Lomo pondría dos protagonistas gastronómicos en el mismo
+              recorrido. Queda como acceso tipográfico, sin fotografía. */}
           <Piece
             href={menu.cta.href}
-            className="min-h-[22rem] border-[#4A5728] bg-[#12180a] md:col-span-7 md:min-h-[26rem]"
+            className="min-h-[16rem] border-[#4A5728] bg-[#12180a] md:col-span-5 md:min-h-[26rem]"
           >
-            <LomoBestiarioCinemagraph
-              label={`${menu.piece} · ${menu.name}`}
-              dishLead={menu.dishLead}
-              dishAccent={menu.dishAccent}
-              ingredients={menu.ingredients}
-              accessLabel={menu.cta.label}
-            />
+            <PieceLabel piece={menu.piece} tone="night" />
+            <span>
+              <span
+                className="block font-playfair font-black leading-[0.9] tracking-[-0.03em] text-[#F5F5F0]"
+                style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)' }}
+              >
+                La carta
+              </span>
+              <span className="mt-4 block font-sans-app text-sm leading-relaxed text-[#A6B86B]">
+                Cocina de autor, café de especialidad y postres de la casa.
+              </span>
+              <Access label={menu.cta.label} tone="coral" />
+            </span>
           </Piece>
 
           {/* ESPACIOS — papel, arquitectónica (dos sedes como par tipográfico) */}
           <Piece
             href={spaces.cta.href}
-            className="min-h-[22rem] border-[rgba(28,25,18,.16)] bg-[#F7F1E6] md:col-span-5 md:min-h-[26rem]"
+            className="min-h-[22rem] border-[rgba(28,25,18,.16)] bg-[#F7F1E6] md:col-span-7 md:min-h-[26rem]"
           >
             <PieceLabel piece={spaces.piece} tone="paper" />
             <span>

@@ -1,4 +1,6 @@
 import Container from '@/components/ui/Container'
+import LinkButton from '@/components/ui/LinkButton'
+import { contactConfig } from '@/data/contact'
 
 export interface MenuHeroProps {
   eyebrow?: string
@@ -7,6 +9,7 @@ export interface MenuHeroProps {
   description?: string
   note?: string
   index?: string
+  cta?: { label: string; href: string; external?: boolean } | null
   className?: string
 }
 
@@ -26,6 +29,7 @@ export default function MenuHero({
   description = 'Café, cocina, coctelería y postres.',
   note = 'Nuestras líneas gastronómicas, con identidad propia.',
   index = '01',
+  cta = { label: 'Reservar por WhatsApp', href: contactConfig.whatsappHref, external: true },
   className = '',
 }: MenuHeroProps) {
   return (
@@ -57,6 +61,18 @@ export default function MenuHero({
           <p className="mt-3 max-w-xl font-sans-app text-base leading-relaxed text-[#4A5728]">
             {note}
           </p>
+        ) : null}
+        {cta ? (
+          <div className="mt-10">
+            <LinkButton
+              href={cta.href}
+              variant="secondary"
+              size="lg"
+              {...(cta.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+            >
+              {cta.label}
+            </LinkButton>
+          </div>
         ) : null}
       </Container>
     </section>

@@ -454,3 +454,119 @@ body {
     animation: especimen-luz var(--especimen-luz-dur, 6.5s) ease-in-out infinite alternate;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   LA CARTA EN MOVIMIENTO (home)
+
+   Una sola caja visual donde los platos hacen crossfade atados al progreso del
+   scroll. Se resuelve con `animation-timeline`, sin una línea de JavaScript:
+   la sección es un Server Component y el crossfade es reversible por
+   construcción, porque una timeline de scroll va hacia los dos lados.
+
+   Cada plato recibe su tramo con `--from` / `--to` en línea. Los tramos se
+   solapan a propósito: ese solape ES el crossfade.
+
+   Solo se animan `opacity` y `transform` (escala máxima 1.03).
+   --------------------------------------------------------------------------- */
+
+.carta-track {
+  view-timeline-name: --carta;
+  view-timeline-axis: block;
+}
+
+.carta-stack {
+  display: grid;
+}
+
+.carta-item {
+  grid-area: 1 / 1;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .carta-item > * {
+      opacity: 0;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --carta;
+      animation-range: cover var(--from) cover var(--to);
+      will-change: opacity, transform;
+    }
+
+    .carta-item .carta-media {
+      animation-name: carta-cross;
+    }
+
+    /* El texto NO cruza como la foto. Dos fotos superpuestas a media opacidad
+       son un crossfade; dos NOMBRES superpuestos son ilegibles. El nombre
+       aparece solo cuando su plato ya se asentó, en una ventana que no toca la
+       del plato vecino. */
+    .carta-item .carta-copy {
+      animation-name: carta-copy;
+    }
+  }
+}
+
+@keyframes carta-copy {
+  0%,
+  26% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  36%,
+  64% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  74%,
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes carta-cross {
+  0% {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  22% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  78% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+}
+
+/* Movimiento reducido: la pila se desarma en una lista compacta. Ningún plato
+   depende del scroll, ninguno queda oculto y la sección deja de ser alta. */
+@media (prefers-reduced-motion: reduce) {
+  .carta-track {
+    height: auto !important;
+    view-timeline-name: none;
+  }
+
+  .carta-sticky {
+    position: static !important;
+    height: auto !important;
+    padding-block: 3rem;
+  }
+
+  .carta-stack {
+    gap: 3.5rem;
+  }
+
+  .carta-item,
+  .carta-item > * {
+    grid-area: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
