@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
+import ShareButton from '@/components/ui/ShareButton'
 
 export type FooterLink = {
   label: string
@@ -122,21 +123,24 @@ export default function PublicFooter({
 
         <div className="mt-12 flex flex-col gap-4 border-t border-[rgba(245,245,240,0.12)] pt-6 md:flex-row md:items-center md:justify-between">
           <p className="font-sans-app text-xs text-[#D9DCC4]">{copyright}</p>
-          {legalLinks.length > 0 ? (
-            <ul aria-label="Enlaces legales" className="flex flex-wrap gap-4">
-              {legalLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="press font-sans-app text-xs text-[#D9DCC4] transition-colors hover:text-[#F5F5F0]"
-                    {...(link.external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+          <div className="flex flex-wrap items-center gap-5">
+            {legalLinks.length > 0 ? (
+              <ul aria-label="Enlaces legales" className="flex flex-wrap gap-4">
+                {legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="press font-sans-app text-xs text-[#D9DCC4] transition-colors hover:text-[#F5F5F0]"
+                      {...(link.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            <ShareButton title={brand} text={description} className="text-[#D9DCC4] hover:text-[#F5F5F0]" />
+          </div>
         </div>
       </Container>
     </footer>

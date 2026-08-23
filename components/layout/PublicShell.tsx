@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import PublicNavbar from './PublicNavbar'
 import PublicFooter from './PublicFooter'
+import MobileStickyCta from './MobileStickyCta'
 import type { PublicNavItem, PublicNavbarCta } from './PublicNavbar'
 import type { FooterColumn, FooterContactItem, FooterLink } from './PublicFooter'
 
@@ -51,10 +52,11 @@ export default function PublicShell({
         Saltar al contenido principal
       </a>
       {showNavbar ? <PublicNavbar {...navbar} /> : null}
-      <main id="contenido-principal" tabIndex={-1} className={cn('flex-1', mainClassName)}>
+      <main id="contenido-principal" tabIndex={-1} className={cn('flex-1 pb-16 md:pb-0', mainClassName)}>
         {children}
       </main>
       {showFooter ? <PublicFooter {...footer} /> : null}
+      {showNavbar ? <MobileStickyCta /> : null}
     </div>
   )
 }
