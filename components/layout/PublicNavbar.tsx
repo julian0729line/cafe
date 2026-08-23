@@ -53,7 +53,7 @@ export default function PublicNavbar({
           <div className="flex items-center justify-between gap-4">
             <Link
               href={brandHref}
-              className="press flex flex-col leading-none"
+              className="press -my-1 flex min-h-11 flex-col justify-center leading-none"
               aria-label={brandLabel}
             >
               {eyebrow ? (
