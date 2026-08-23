@@ -82,10 +82,11 @@ export default function SpacesLocationsSection({
                     )}
                   >
                     <div className={photo ? 'md:flex-1' : ''}>
-                      <span className="font-sans-app text-[11px] font-bold tabular-nums tracking-[0.2em] text-[#FF7F70]">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <h3 className="mt-3 font-playfair text-3xl text-[#F5F5F0] md:text-4xl">
+                      {/* Sin contador por sede: la pagina ya numera sus
+                          secciones (01 a 04), asi que un «01»/«02» aqui dentro
+                          de la seccion 03 hacia leer 01, 02, 04 y parecia que
+                          faltaba una. El nombre de la sede es el protagonista. */}
+                      <h3 className="font-playfair text-3xl text-[#F5F5F0] md:text-4xl">
                         {location.name}
                       </h3>
                       <p className="mt-2 font-sans-app text-sm uppercase tracking-[0.25em] text-[#8A9A52]">

@@ -20,8 +20,12 @@ function cn(...classes: Array<string | false | undefined>) {
   return classes.filter(Boolean).join(' ')
 }
 
+// Campos sobre papel, no cajas de navegador. El blanco puro con borde gris al
+// 20% leia como formulario por defecto sobre el crema de la seccion: fuera de
+// paleta y con mas borde del que pide el sistema. Ahora son marfil con una
+// linea fina oliva, y el foco lo marca el rojo de la casa.
 const inputClasses =
-  'w-full rounded-sm border-2 border-[#181f0d]/20 bg-white px-4 py-3 font-sans-app text-sm text-[#181f0d] placeholder:text-[#8a8a80] focus:border-[#C1121F] focus:outline-none focus:ring-2 focus:ring-[#C1121F]/20 transition-shadow'
+  'w-full rounded-[3px] border border-[#4A5728]/45 bg-[#FDFCF7] px-4 py-3 font-sans-app text-sm text-[#181f0d] placeholder:text-[#8a8a80] transition-colors focus:border-[#C1121F] focus:outline-none focus:ring-2 focus:ring-[#C1121F]/25'
 
 const labelClasses =
   'mb-2 block font-sans-app text-[10px] font-bold uppercase tracking-[0.2em] text-[#4A5728]'
