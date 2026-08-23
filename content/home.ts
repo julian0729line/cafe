@@ -66,20 +66,6 @@ export const homeContent = {
     },
   },
 
-  // (retirada) ATMÓSFERA — la respiración de la mitad del recorrido, ahora con un
-  // protagonista propio: «Tapeo Cortázar», una entrada real de la casa, como
-  // cinemagraph que emerge de la oscuridad. Escena distinta a la del Lomo, así
-  // que nunca compiten en el mismo viewport. Nombre e ingredientes confirmados,
-  // van como texto real en el DOM. Sin CTA (sigue siendo un respiro, no un
-  // acceso): la carta completa vive en /menu.
-  atmosphere: {
-    kicker: 'Entrada de la casa',
-    dishLead: 'Tapeo',
-    dishAccent: 'Cortázar',
-    ingredients: 'Pan dorado · jamón curado · rúgula · almendra · glaseado',
-    microphrase: 'Nos vemos adentro',
-  },
-
   // 4 · CIERRE — el único gran momento rojo, corto. Sin párrafo ni ghost word.
   reservationCta: {
     title: 'Conversemos sobre tu próxima reserva.',
@@ -88,9 +74,11 @@ export const homeContent = {
     // respetar el presupuesto de accesos del Home.
   },
 
-  // Microfrases flotantes del recorrido (decorativas, aria-hidden). Se retira
-  // la del universo: cuando el cinemagraph del plato está visible, nada más
-  // compite con él en ese viewport.
+  // Microfrases flotantes del recorrido (decorativas, aria-hidden). Queda una
+  // sola: «Nos vemos adentro» vivía en la sección Atmósfera, que se retiró al
+  // entrar «La carta en movimiento». El presupuesto de la skill directora
+  // permite dos por página, así que hay sitio para una segunda si algún día
+  // encuentra un lugar donde no compita con el CTA del cierre.
   microphrases: {
     hero: 'Café de por medio',
   },

@@ -40,7 +40,7 @@ export default function ShareButton({ title, text, className = '' }: ShareButton
     <button
       type="button"
       onClick={handleShare}
-      className={`press inline-flex items-center gap-2 font-sans-app text-[11px] font-bold uppercase tracking-[0.2em] transition-colors duration-300 ${className}`}
+      className={`press -my-2 inline-flex min-h-11 items-center gap-2 font-sans-app text-[11px] font-bold uppercase tracking-[0.2em] transition-colors duration-300 ${className}`}
       aria-label="Compartir esta página"
     >
       <svg

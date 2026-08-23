@@ -39,7 +39,7 @@ function FooterLinkAnchor({ label, href, external }: FooterLink) {
   return (
     <Link
       href={href}
-      className="press font-sans-app text-sm text-[#A6B86B] transition-colors hover:text-[#F5F5F0]"
+      className="press -my-2 inline-flex min-h-11 items-center font-sans-app text-sm text-[#A6B86B] transition-colors hover:text-[#F5F5F0]"
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
     >
       {label}
@@ -106,7 +106,7 @@ export default function PublicFooter({
                     {item.href ? (
                       <Link
                         href={item.href}
-                        className="press text-[#A6B86B] transition-colors hover:text-[#F5F5F0]"
+                        className="press -my-2 inline-flex min-h-11 items-center text-[#A6B86B] transition-colors hover:text-[#F5F5F0]"
                         {...(item.external ? { target: '_blank', rel: 'noreferrer' } : {})}
                       >
                         {item.value}
@@ -130,7 +130,7 @@ export default function PublicFooter({
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="press font-sans-app text-xs text-[#D9DCC4] transition-colors hover:text-[#F5F5F0]"
+                      className="press -my-2 inline-flex min-h-11 items-center font-sans-app text-xs text-[#D9DCC4] transition-colors hover:text-[#F5F5F0]"
                       {...(link.external ? { target: '_blank', rel: 'noreferrer' } : {})}
                     >
                       {link.label}
