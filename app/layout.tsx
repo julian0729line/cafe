@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Playfair_Display, DM_Sans, Caveat } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/data/site";
 import { getBaseUrl } from "@/lib/seo";
@@ -17,6 +17,15 @@ const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
+});
+
+// Voz manuscrita de la landing: notas al margen, números de sección y
+// etiquetas de capítulo. Deliberadamente separada de las otras dos — es lo
+// que distingue el estilo de una tarjeta corriente.
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -60,7 +69,10 @@ export default function RootLayout({
   const localBusinessJsonLd = buildLocalBusinessJsonLd();
 
   return (
-    <html lang="es" className={`${playfair.variable} ${dmSans.variable} h-full antialiased`}>
+    <html
+      lang="es"
+      className={`${playfair.variable} ${dmSans.variable} ${caveat.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">
         {localBusinessJsonLd.map((entry, index) => (
           <script

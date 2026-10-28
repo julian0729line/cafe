@@ -570,3 +570,190 @@ body {
     animation: none !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LANDING «literario hand-drawn» (v4) — app/page.tsx
+   ──────────────────────────────────────────────────────────────────────────
+   Capa aislada del sistema anterior: todo bajo `.valpa` o con prefijo
+   `ck-`/`hd-`, para que las rutas antiguas sigan con el sistema oliva-oscuro.
+
+   La identidad vive en tres decisiones, no en la paleta:
+     · radios IRREGULARES (dos valores por esquina) — simulan trazo a mano
+     · sombras SÓLIDAS y desplazadas, sin blur — se leen como papel recortado
+     · tipografía manuscrita (Caveat) como voz aparte, rotada unos grados
+   Quitar cualquiera de las tres y el estilo cae a "tarjeta de Bootstrap".
+
+   Todo va dentro de `@layer components` A PROPÓSITO. Fuera de las capas, el
+   CSS plano gana siempre a las utilidades de Tailwind, y entonces un
+   `bg-[#C1121F]` sobre `.ck-sticker` no pinta nada — que es exactamente el
+   bug que tuvo la primera versión de este archivo.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+  .valpa {
+    --ink: #181f0d;
+    --cream: #F5F5F0;
+    --red: #C1121F;
+    --tint: #E4E8CF;
+
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-dm-sans), Arial, sans-serif;
+  }
+
+  .valpa section[id] { scroll-margin-top: 92px; }
+
+  /* ── Tipografía ── */
+  .ck-d {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+  .hd-hand {
+    font-family: var(--font-caveat), ui-rounded, cursive;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  /* ── Superficies ──
+     Los dos valores por esquina (`18px 8px / 10px 20px`) son lo que hace que
+     el borde parezca dibujado: cada esquina tiene radio horizontal y vertical
+     distintos, así que ninguna es un arco de círculo. */
+  .ck-card {
+    border: 2px solid var(--ink);
+    border-radius: 18px 8px 20px 10px / 10px 20px 8px 18px;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  article.ck-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .ck-card-sm {
+    border: 2px solid var(--ink);
+    border-radius: 12px 6px 14px 7px / 7px 14px 6px 12px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .ck-card-lg { box-shadow: 6px 6px 0 var(--ink); }
+  /* Sobre fondo oscuro la sombra ink desaparece: se invierte a crema. */
+  .ck-on-dark { border-color: var(--cream); box-shadow: 4px 4px 0 var(--cream); }
+  article.ck-on-dark:hover { box-shadow: 6px 6px 0 var(--cream); }
+
+  /* ── Botones ── */
+  .ck-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-dm-sans), Arial, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    border: 2px solid var(--ink);
+    border-radius: 14px 6px 12px 7px / 7px 12px 6px 14px;
+    padding: 14px 26px;
+    min-height: 52px;
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    cursor: pointer;
+  }
+  .ck-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+  .ck-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+  .ck-btn:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+  .ck-red   { background: var(--red);   color: var(--cream); }
+  .ck-cream { background: var(--cream); color: var(--ink); }
+  .ck-ink   { background: var(--ink);   color: var(--cream); }
+  .ck-btn.ck-on-dark { border-color: var(--cream); box-shadow: 3px 3px 0 var(--cream); }
+  .ck-btn.ck-on-dark:hover { box-shadow: 4px 4px 0 var(--cream); }
+  .ck-btn.ck-on-dark:active { box-shadow: 1px 1px 0 var(--cream); }
+
+  /* ── Piezas sueltas ── */
+  .ck-sticker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    background: var(--cream);
+    color: var(--ink);
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .hd-box { border-radius: 20px 8px 18px 10px / 10px 18px 8px 20px; }
+  .hd-nav { border-radius: 22px 10px 20px 12px / 12px 20px 10px 22px; }
+  .ck-input {
+    width: 100%;
+    border: 2px solid var(--ink);
+    border-radius: 10px 5px 11px 6px / 6px 11px 5px 10px;
+    padding: 13px 16px;
+    font-size: 16px; /* por debajo de 16px, iOS hace zoom al enfocar */
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    min-height: 52px;
+  }
+  .ck-input:focus { box-shadow: 3px 3px 0 var(--red); }
+  .ck-dots {
+    background-image: radial-gradient(#181f0d12 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* ── Trazos dibujados ──
+     El subrayado es un SVG con `preserveAspectRatio="none"`: se estira al
+     ancho de la palabra, así que no hay dos ondas iguales en la página. */
+  .hd-u {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C 30 3, 55 11, 85 6 S 140 3, 165 7 S 190 9, 198 5' fill='none' stroke='%23C1121F' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 100% 0.22em;
+    background-position: 0 100%;
+    padding-bottom: 0.08em;
+  }
+  .hd-circle { position: relative; }
+  .hd-circle::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border: 2px solid currentColor;
+    border-radius: 52% 48% 55% 45% / 48% 55% 45% 52%;
+    transform: rotate(-8deg);
+  }
+  .hd-mark-light {
+    background: linear-gradient(104deg, transparent 2%, #181f0d55 3%, #181f0d55 97%, transparent 98%);
+    background-size: 100% 45%;
+    background-repeat: no-repeat;
+    background-position: 0 85%;
+    padding: 0 4px;
+  }
+
+  /* ── Movimiento ── */
+  .ck-marquee { animation: valpaMarquee 45s linear infinite; }
+  .valpa-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: var(--red);
+    transform-origin: 0 50%;
+    z-index: 60;
+  }
+  .valpa-reveal {
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .valpa-reveal-hidden { opacity: 0; transform: translateY(24px); }
+}
+
+@keyframes valpaMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ck-marquee { animation: none !important; }
+  .valpa-reveal { transition: none !important; }
+  .valpa-reveal-hidden { opacity: 1 !important; transform: none !important; }
+  .ck-card, .ck-btn { transition: none !important; }
+  article.ck-card:hover, .ck-btn:hover, .ck-btn:active { transform: none !important; }
+}
